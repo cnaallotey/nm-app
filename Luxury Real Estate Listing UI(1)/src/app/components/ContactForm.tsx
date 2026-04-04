@@ -85,7 +85,7 @@ export function ContactForm() {
                 className="mt-1 w-4 h-4 rounded border-white/20 bg-[#1A1A1A] text-[#C9A96E] focus:ring-[#C9A96E]"
               />
               <label htmlFor="consent" className="font-['Montserrat'] text-xs text-white/50 leading-relaxed">
-                By submitting this form, I agree to be contacted by  NOUVELLE MAISON regarding this property and other listings. I understand I can opt out at any time.
+                By submitting this form, I agree to be contacted by Nouvelle Maison Ltd. regarding this property and other listings. I understand I can opt out at any time.
               </label>
             </div>
 

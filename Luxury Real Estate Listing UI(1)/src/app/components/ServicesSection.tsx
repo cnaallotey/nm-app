@@ -4,23 +4,23 @@ import { Building2, Users, Award, Globe } from "lucide-react";
 const services = [
   {
     icon: <Building2 className="w-8 h-8" />,
-    title: "Property Acquisition",
-    description: "Expert guidance through every step of purchasing your dream estate, from initial search to final closing.",
+    title: "Property Sales",
+    description: "Connecting homebuyers to their properties of choice in a professional manner with competitive listings tailored to meet each buyer's lifestyle.",
   },
   {
     icon: <Users className="w-8 h-8" />,
-    title: "Concierge Services",
-    description: "White-glove service connecting you with architects, designers, and property management professionals.",
+    title: "Rentals",
+    description: "Technology-driven rental solutions that help renters acquire apartments with ease, supporting landlords with tenant filtering and occupancy assessment.",
   },
   {
     icon: <Award className="w-8 h-8" />,
-    title: "Market Analysis",
-    description: "In-depth market intelligence and valuation services to ensure optimal investment decisions.",
+    title: "Property Advisory",
+    description: "Independent, strategic advice across due diligence, property valuation, new space acquisition, compliance, and risk management.",
   },
   {
     icon: <Globe className="w-8 h-8" />,
-    title: "Global Network",
-    description: "Access to exclusive off-market opportunities through our West African luxury real estate network.",
+    title: "Property Development",
+    description: "Distinctive property designs that offer clients memorable living experiences, including remodelling and renovation services.",
   },
 ];
 
@@ -40,10 +40,10 @@ export function ServicesSection() {
               Redefining Luxury Real Estate
             </h2>
             <p className="font-['Montserrat'] text-base lg:text-lg font-light text-white/70 leading-relaxed mb-6">
-              For two decades,  NOUVELLE MAISON has been the trusted name in Ghana's luxury real estate, representing the nation's most exceptional properties and distinguished clientele.
+              Nouvelle Maison is a digital-driven realty solutions provider. We offer intelligent solutions that empower homeowners, property investors and real estate agents.
             </p>
             <p className="font-['Montserrat'] text-base lg:text-lg font-light text-white/70 leading-relaxed">
-              Our commitment to discretion, integrity, and unparalleled service has established us as the premier brokerage for ultra-luxury properties across Ghana and West Africa.
+              Founded in 2022 with the vision of providing real-time real estate solutions backed by digital technology, we bring professionalism into real estate with scientific but flexible service delivery.
             </p>
           </div>
 

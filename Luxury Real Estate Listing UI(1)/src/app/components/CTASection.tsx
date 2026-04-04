@@ -21,14 +21,14 @@ export function CTASection() {
         transition={{ duration: 0.6 }}
       >
         <h2 className="font-['Cormorant_Garamond'] text-5xl lg:text-7xl font-light text-white mb-6">
-          Begin Your Journey
+          Ready to Get Started?
         </h2>
         <p className="font-['Montserrat'] text-base lg:text-xl font-light text-white/70 mb-10 max-w-3xl mx-auto">
-          Whether you're seeking a primary residence, investment property, or vacation retreat, our team is ready to guide you to your perfect estate.
+          Whether you're buying, renting, or investing, our digital-driven solutions make property acquisition seamless and professional.
         </p>
         <div className="flex flex-col lg:flex-row items-center justify-center gap-4">
           <button className="px-10 py-4 bg-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all inline-flex items-center space-x-2 group">
-            <span>Schedule Consultation</span>
+            <span>Give Us a Call</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
           <button className="px-10 py-4 bg-transparent border border-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#C9A96E] hover:bg-[#C9A96E]/10 transition-all">
@@ -43,10 +43,10 @@ export function CTASection() {
               Call Us
             </div>
             <a
-              href="tel:+233302741234"
+              href="tel:+233302523984"
               className="font-['Montserrat'] text-lg text-white hover:text-[#C9A96E] transition-colors"
             >
-              +233 (0) 30 274 1234
+              +233 (0) 302 523 984
             </a>
           </div>
           <div>
@@ -54,10 +54,10 @@ export function CTASection() {
               Email Us
             </div>
             <a
-              href="mailto:info@prestigeestates.com.gh"
+              href="mailto:info@nouvellemaisonlimited.com"
               className="font-['Montserrat'] text-lg text-white hover:text-[#C9A96E] transition-colors"
             >
-              info@prestigeestates.com.gh
+              info@nouvellemaisonlimited.com
             </a>
           </div>
           <div>
@@ -65,7 +65,7 @@ export function CTASection() {
               Visit Us
             </div>
             <div className="font-['Montserrat'] text-lg text-white">
-              6 Rangoon Lane, Cantonments, Accra
+              No. 36 Lagos Avenue, East Legon
             </div>
           </div>
         </div>

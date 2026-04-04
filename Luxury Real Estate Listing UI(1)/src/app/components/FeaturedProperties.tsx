@@ -112,7 +112,7 @@ export function FeaturedProperties() {
                 </div>
 
                 {/* Property Stats */}
-                <div className="flex items-center justify-between px-2">
+                <div className="flex flex-col md:flex-row gap-y-2 md:items-center justify-between px-2">
                   <div className="font-['Cormorant_Garamond'] text-3xl font-light text-[#C9A96E]">
                     {property.price}
                   </div>

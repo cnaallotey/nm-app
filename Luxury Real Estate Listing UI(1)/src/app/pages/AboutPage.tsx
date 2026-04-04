@@ -69,7 +69,7 @@ const team = [
   {
     name: "Nana Ama Owusu",
     role: "Founder & Managing Director",
-    bio: "With over 20 years in Ghana's real estate industry, Nana Ama founded  NOUVELLE MAISON to bring world-class service to the Ghanaian luxury market.",
+    bio: "A visionary leader who founded Nouvelle Maison to bring digital-driven, professional real estate solutions to the Ghanaian market.",
     image:
       "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=600",
   },
@@ -97,27 +97,18 @@ const team = [
 ];
 
 const milestones = [
-  { year: "2005", event: " NOUVELLE MAISON founded in Cantonments, Accra" },
-  { year: "2009", event: "Expanded to Kumasi with our Ashanti Region office" },
+  { year: "2022", event: "Nouvelle Maison founded in East Legon, Accra" },
   {
-    year: "2013",
-    event: "Crossed GH₵ 500M in total sales volume",
+    year: "2023",
+    event: "Launched digital property sales and rental platform",
   },
   {
-    year: "2016",
-    event: "Launched our Diaspora Investor Programme",
-  },
-  {
-    year: "2019",
-    event: "Opened Takoradi office to serve the Western Region",
-  },
-  {
-    year: "2022",
-    event: "Surpassed GH₵ 2B in cumulative transactions",
+    year: "2024",
+    event: "Expanded services to include property advisory and development",
   },
   {
     year: "2025",
-    event: "Named Ghana's Most Trusted Luxury Real Estate Agency",
+    event: "Growing portfolio of property management and AirBnB solutions",
   },
 ];
 
@@ -140,12 +131,12 @@ export default function AboutPage() {
               Our Story
             </p>
             <h1 className="font-['Cormorant_Garamond'] text-5xl lg:text-7xl font-light text-white mb-6">
-              About  NOUVELLE MAISON
+              About Nouvelle Maison
             </h1>
             <p className="font-['Montserrat'] text-base font-light text-white/50 max-w-2xl mx-auto">
-              For two decades, we have been Ghana's most trusted name in luxury
-              real estate — connecting discerning clients with exceptional
-              properties across the nation.
+              A digital-driven realty solutions provider offering intelligent
+              solutions that empower homeowners, property investors and real
+              estate agents in Ghana.
             </p>
           </motion.div>
         </div>
@@ -162,30 +153,28 @@ export default function AboutPage() {
               transition={{ duration: 0.6 }}
             >
               <h2 className="font-['Cormorant_Garamond'] text-4xl lg:text-5xl font-light text-white mb-6">
-                Redefining Luxury
+                Digital-Driven
                 <br />
-                in Ghana
+                Realty Solutions
               </h2>
               <div className="space-y-5">
                 <p className="font-['Montserrat'] text-base font-light text-white/60 leading-relaxed">
-                  Founded in 2005 in the heart of Accra,  NOUVELLE MAISON was
-                  born from a simple belief: that Ghana's luxury property market
-                  deserved a brokerage that matched the calibre of the homes it
-                  represented.
+                  Nouvelle Maison is a digital-driven realty solutions provider.
+                  We offer intelligent solutions that empower homeowners,
+                  property investors and real estate agents.
                 </p>
                 <p className="font-['Montserrat'] text-base font-light text-white/60 leading-relaxed">
-                  From our first office in Cantonments, we set out to bring
-                  international standards of professionalism, discretion, and
-                  client care to the Ghanaian market. Today, with offices in
-                  Accra, Kumasi, and Takoradi, we serve clients across all
-                  regions of Ghana and a growing diaspora community worldwide.
+                  Founded in 2022 with the vision of providing real-time real
+                  estate solutions backed by digital technology, we are able to
+                  bring professionalism into real estate by providing scientific
+                  but flexible service delivery that gives power to the buyer.
                 </p>
                 <p className="font-['Montserrat'] text-base font-light text-white/60 leading-relaxed">
-                  Our team of specialists combines deep local knowledge with a
-                  global perspective, ensuring every client — whether buying
-                  their dream home, making a strategic investment, or selling a
-                  treasured estate — receives guidance that is both expert and
-                  deeply personal.
+                  Our mission is to offer all-in-one property solutions backed
+                  by digital technologies that simplify and enhance the living
+                  experience of our clients. Our vision is to become the
+                  foremost digital-driven property solutions firm in Africa by
+                  2030.
                 </p>
               </div>
             </motion.div>

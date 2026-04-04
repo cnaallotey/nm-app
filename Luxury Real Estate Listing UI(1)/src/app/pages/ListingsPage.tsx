@@ -312,9 +312,8 @@ export default function ListingsPage() {
               Luxury Properties
             </h1>
             <p className="font-['Montserrat'] text-base font-light text-white/50 max-w-2xl mx-auto">
-              Browse our curated portfolio of Ghana's most exceptional
-              residences, each selected for its unparalleled craftsmanship and
-              extraordinary setting.
+              Browse our curated portfolio of properties across Ghana,
+              each selected for comfort, style, and effortless luxury.
             </p>
           </motion.div>
         </div>
@@ -652,7 +651,7 @@ export default function ListingsPage() {
                       <h3 className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-2 group-hover:text-[#C9A96E] transition-colors">
                         {property.title}
                       </h3>
-                      <div className="flex items-center justify-between">
+                      <div className="flex flex-col md:flex-row gap-y-2 md:items-center justify-between">
                         <span className="font-['Cormorant_Garamond'] text-2xl font-light text-[#C9A96E]">
                           {property.price}
                         </span>

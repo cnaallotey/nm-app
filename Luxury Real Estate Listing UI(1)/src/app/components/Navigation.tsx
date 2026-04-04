@@ -17,10 +17,11 @@ export function Navigation() {
   }, []);
 
   const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+    { label: "Our Services", href: "/services" },
     { label: "Properties", href: "/listings" },
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Contact", href: "/contact" },
+    { label: "Contact Us", href: "/contact" },
   ];
 
   return (
@@ -81,11 +82,11 @@ export function Navigation() {
                 </span>
               </div>
               <a
-                href="tel:+233302741234"
+                href="tel:+233302523984"
                 className="flex items-center space-x-2 font-['Montserrat'] text-sm text-white/90 hover:text-[#C9A96E] transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                <span>+233 (0) 30 274 1234</span>
+                <span>+233 (0) 302 523 984</span>
               </a>
             </div>
 
@@ -142,14 +143,14 @@ export function Navigation() {
                 )
               )}
               <motion.a
-                href="tel:+233302741234"
+                href="tel:+233302523984"
                 className="flex items-center space-x-2 font-['Montserrat'] text-lg text-white/90 hover:text-[#C9A96E] transition-colors mt-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
                 <Phone className="w-5 h-5" />
-                <span>+233 (0) 30 274 1234</span>
+                <span>+233 (0) 302 523 984</span>
               </motion.a>
             </div>
           </motion.div>

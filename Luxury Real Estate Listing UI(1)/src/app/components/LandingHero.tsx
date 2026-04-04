@@ -37,12 +37,12 @@ export function LandingHero() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h1 className="font-['Cormorant_Garamond'] text-4xl sm:text-6xl lg:text-8xl font-light text-white mb-4 sm:mb-6 leading-tight">
-            Where Luxury
+            Luxury Living
             <br />
-            Meets Legacy
+            Within Reach
           </h1>
           <p className="font-['Montserrat'] text-sm sm:text-lg lg:text-xl font-light text-white/80 mb-8 sm:mb-12 max-w-2xl mx-auto">
-            Curating Ghana's most exceptional properties for discerning clientele since 2005
+            All-in-one digital realty solutions — crafted for comfort, style, and effortless luxury
           </p>
 
           {/* Search Bar */}
@@ -99,7 +99,7 @@ export function LandingHero() {
 
           {/* Quick Stats */}
           <motion.div
-            className="mt-10 sm:mt-20 grid grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto"
+            className="mt-10 sm:mt-20 grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -120,8 +120,8 @@ export function LandingHero() {
                 Properties Sold
               </div>
             </div>
-            <div>
-              <div className="font-['Cormorant_Garamond'] text-2xl sm:text-4xl lg:text-5xl font-light text-[#C9A96E] mb-1 sm:mb-2">
+            <div className="col-span-2 sm:col-span-1">
+              <div className="font-['Cormorant_Garamond']  text-2xl sm:text-4xl lg:text-5xl font-light text-[#C9A96E] mb-1 sm:mb-2">
                 20
               </div>
               <div className="font-['Montserrat'] text-[10px] sm:text-xs font-medium uppercase tracking-[0.1em] sm:tracking-[0.15em] text-white/60">

@@ -13,38 +13,22 @@ import { Footer } from "../components/Footer";
 
 const offices = [
   {
-    city: "Accra",
-    address: "6 Rangoon Lane, Cantonments",
-    region: "Greater Accra Region",
-    phone: "+233 (0) 30 274 1234",
-    email: "accra@prestigeestates.com.gh",
+    city: "East Legon, Accra",
+    address: "No. 36 Lagos Avenue",
+    region: "East Legon, Ghana",
+    phone: "+233 (0) 302 523 984",
+    email: "info@nouvellemaisonlimited.com",
     image:
       "https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=800",
-  },
-  {
-    city: "Kumasi",
-    address: "14 Harper Road, Nhyiaeso",
-    region: "Ashanti Region",
-    phone: "+233 (0) 32 209 1234",
-    email: "kumasi@prestigeestates.com.gh",
-    image:
-      "https://images.unsplash.com/photo-1534430480872-3498386e7856?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=800",
-  },
-  {
-    city: "Takoradi",
-    address: "22 Beach Road, Market Circle",
-    region: "Western Region",
-    phone: "+233 (0) 31 202 1234",
-    email: "takoradi@prestigeestates.com.gh",
-    image:
-      "https://images.unsplash.com/photo-1515896769750-31548aa180ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=800",
   },
 ];
 
 const inquiryTypes = [
-  "Buying a Property",
-  "Selling a Property",
-  "Property Valuation",
+  "Property Sales",
+  "Rentals",
+  "Property Advisory",
+  "Property Development",
+  "Property Management",
   "General Inquiry",
 ];
 
@@ -251,7 +235,7 @@ export default function ContactPage() {
                           htmlFor="contact-consent"
                           className="font-['Montserrat'] text-xs text-white/40 leading-relaxed"
                         >
-                          I agree to be contacted by  NOUVELLE MAISON and
+                          I agree to be contacted by Nouvelle Maison Ltd. and
                           understand I can opt out at any time. View our{" "}
                           <a
                             href="#"
@@ -291,7 +275,7 @@ export default function ContactPage() {
                 </h3>
                 <div className="space-y-5">
                   <a
-                    href="tel:+233302741234"
+                    href="tel:+233302523984"
                     className="flex items-center gap-4 group"
                   >
                     <div className="w-10 h-10 bg-[#C9A96E]/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#C9A96E]/20 transition-colors">
@@ -302,12 +286,12 @@ export default function ContactPage() {
                         Call Us
                       </p>
                       <p className="font-['Montserrat'] text-sm text-white/80 group-hover:text-[#C9A96E] transition-colors">
-                        +233 (0) 30 274 1234
+                        +233 (0) 302 523 984
                       </p>
                     </div>
                   </a>
                   <a
-                    href="mailto:info@prestigeestates.com.gh"
+                    href="mailto:info@nouvellemaisonlimited.com"
                     className="flex items-center gap-4 group"
                   >
                     <div className="w-10 h-10 bg-[#C9A96E]/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#C9A96E]/20 transition-colors">
@@ -318,7 +302,7 @@ export default function ContactPage() {
                         Email
                       </p>
                       <p className="font-['Montserrat'] text-sm text-white/80 group-hover:text-[#C9A96E] transition-colors">
-                        info@prestigeestates.com.gh
+                        info@nouvellemaisonlimited.com
                       </p>
                     </div>
                   </a>

@@ -23,60 +23,60 @@ import { Footer } from "../components/Footer";
 const coreServices = [
   {
     icon: <Building2 className="w-8 h-8" />,
-    title: "Property Acquisition",
+    title: "Property Sales",
     description:
-      "Expert guidance through every step of purchasing your dream property in Ghana — from identifying the right neighbourhood to final closing.",
+      "Nouvelle Maison connects homebuyers to their properties of choice in a professional manner. We offer competitive property listings tailored to meet each buyer's lifestyle and preference.",
     features: [
-      "Curated property shortlists tailored to your brief",
-      "Accompanied viewings with market commentary",
-      "Negotiation and offer management",
-      "Due diligence and title verification",
+      "Competitive property listings",
+      "Tailored to buyer lifestyle and preference",
+      "Professional property matching",
+      "End-to-end transaction support",
     ],
   },
   {
     icon: <TrendingUp className="w-8 h-8" />,
-    title: "Property Sales",
+    title: "Rentals",
     description:
-      "Strategic marketing and discreet representation to achieve the best possible outcome when selling your luxury property.",
+      "Technology-driven rental solutions that help renters acquire apartments with ease. Our system supports landlords with vacant property advertisements, applicant filtering and occupancy assessment.",
     features: [
-      "Professional photography and virtual tours",
-      "Targeted marketing to qualified buyers",
-      "Off-market and private sale options",
-      "Market positioning and pricing strategy",
+      "Vacant property advertisements",
+      "Applicant filtering and assessment",
+      "Buy-to-let investment optimisation",
+      "Commercial property rental management",
     ],
   },
   {
     icon: <Award className="w-8 h-8" />,
-    title: "Valuation & Advisory",
+    title: "Property Advisory",
     description:
-      "In-depth market intelligence and certified valuations to ensure you make optimal investment decisions with confidence.",
+      "We provide independent, strategic advice to aspiring homeowners, property developers, REITs, landlords, and agents across due diligence, valuation, compliance, and risk management.",
     features: [
-      "Certified property valuations",
-      "Investment feasibility analysis",
-      "Neighbourhood and trend reports",
-      "Portfolio review and strategy",
+      "Due diligence and compliance",
+      "Property valuation services",
+      "New space acquisition advisory",
+      "Risk management guidance",
     ],
   },
   {
     icon: <Globe className="w-8 h-8" />,
-    title: "Diaspora Investment",
+    title: "Property Development",
     description:
-      "A dedicated programme for Ghanaians abroad looking to invest in premium real estate back home, managed end-to-end on your behalf.",
+      "Nouvelle Maison creates distinctive property designs that offer clients memorable living experiences. Clients with existing properties can benefit from our remodelling and renovation services.",
     features: [
-      "Virtual property tours and walkthroughs",
-      "Trusted legal and surveyor referrals",
-      "Construction progress monitoring",
-      "Rental management and income remittance",
+      "Distinctive property design",
+      "Remodelling and renovation",
+      "Lifestyle-driven development",
+      "Value and functionality enhancement",
     ],
   },
 ];
 
 const additionalServices = [
   {
-    icon: <Users className="w-6 h-6" />,
-    title: "Concierge Services",
+    icon: <Home className="w-6 h-6" />,
+    title: "Property Management",
     description:
-      "White-glove service connecting you with architects, interior designers, and property management professionals.",
+      "On-site marketing, tenant and business center management, short period letting and AirBnB property management for landlords.",
   },
   {
     icon: <Search className="w-6 h-6" />,
@@ -85,34 +85,34 @@ const additionalServices = [
       "A bespoke search service for clients with specific requirements — we find what the open market cannot.",
   },
   {
+    icon: <Users className="w-6 h-6" />,
+    title: "Front-of-Office Reception",
+    description:
+      "Courier, post and visitor management services for residential and commercial properties.",
+  },
+  {
     icon: <FileText className="w-6 h-6" />,
     title: "Legal Coordination",
     description:
       "We coordinate with solicitors, surveyors, and the Lands Commission to ensure smooth, secure transactions.",
   },
   {
-    icon: <Handshake className="w-6 h-6" />,
-    title: "Relocation Assistance",
-    description:
-      "Comprehensive support for clients relocating to Ghana — from neighbourhood advice to school and utility setup.",
-  },
-  {
-    icon: <Home className="w-6 h-6" />,
-    title: "Property Management",
-    description:
-      "Ongoing management of your investment property, including tenant sourcing, maintenance, and rent collection.",
-  },
-  {
     icon: <Briefcase className="w-6 h-6" />,
-    title: "Corporate Real Estate",
+    title: "Investment Advisory",
     description:
-      "Sourcing premium office spaces, diplomatic residences, and executive housing for organisations operating in Ghana.",
+      "Strategic guidance for buy-to-let investments ensuring optimal returns for property investors in Ghana.",
   },
   {
     icon: <ShieldCheck className="w-6 h-6" />,
     title: "Due Diligence",
     description:
       "Thorough background checks on properties, titles, and sellers to protect you from fraud and encumbrances.",
+  },
+  {
+    icon: <Handshake className="w-6 h-6" />,
+    title: "AirBnB Management",
+    description:
+      "End-to-end AirBnB property management for landlords looking to maximise short-term rental income.",
   },
   {
     icon: <Landmark className="w-6 h-6" />,
@@ -171,8 +171,8 @@ export default function ServicesPage() {
               Our Services
             </h1>
             <p className="font-['Montserrat'] text-base font-light text-white/50 max-w-2xl mx-auto">
-              A comprehensive suite of luxury real estate services designed to
-              guide you through every stage of property ownership in Ghana.
+              All-in-one digital realty solutions designed to simplify and
+              enhance the living experience of our clients across Ghana.
             </p>
           </motion.div>
         </div>

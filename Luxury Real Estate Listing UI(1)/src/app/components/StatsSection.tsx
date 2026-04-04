@@ -22,9 +22,9 @@ const stats = [
   },
   {
     icon: <Globe className="w-8 h-8" />,
-    value: "12",
-    label: "Regions Covered",
-    description: "Across Ghana and West Africa",
+    value: "5",
+    label: "Core Services",
+    description: "Comprehensive realty solutions",
   },
 ];
 

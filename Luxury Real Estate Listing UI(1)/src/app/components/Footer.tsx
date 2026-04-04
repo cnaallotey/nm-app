@@ -3,10 +3,11 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router";
 
 const quickLinks = [
-  { label: "Properties", href: "/listings" },
+  { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Contact", href: "/contact" },
+  { label: "Our Services", href: "/services" },
+  { label: "Properties", href: "/listings" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 const propertyTypes = [
@@ -61,7 +62,7 @@ export function Footer() {
                  NOUVELLE MAISON
               </Link>
               <p className="font-['Montserrat'] text-sm text-white/50 leading-relaxed">
-                Curating exceptional properties for discerning clientele since 2005.
+                Digital-driven realty solutions provider since 2022.
               </p>
             </div>
 
@@ -112,33 +113,39 @@ export function Footer() {
                 <li className="flex items-start space-x-3">
                   <MapPin className="w-4 h-4 text-[#C9A96E] mt-1 flex-shrink-0" />
                   <span className="font-['Montserrat'] text-sm text-white/60 leading-relaxed">
-                    6 Rangoon Lane<br />Cantonments, Accra
+                    No. 36 Lagos Avenue<br />East Legon, Ghana
                   </span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <Phone className="w-4 h-4 text-[#C9A96E] mt-1 flex-shrink-0" />
                   <div className="space-y-1">
                     <a
-                      href="tel:+233302741234"
+                      href="tel:+233302523984"
                       className="block font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors"
                     >
-                      Accra: +233 (0) 30 274 1234
+                      +233 (0) 302 523 984
                     </a>
                     <a
-                      href="tel:+233322091234"
+                      href="tel:+233303983219"
                       className="block font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors"
                     >
-                      Kumasi: +233 (0) 32 209 1234
+                      +233 (0) 303 983 219
+                    </a>
+                    <a
+                      href="tel:+233257728848"
+                      className="block font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors"
+                    >
+                      +233 (0) 257 728 848
                     </a>
                   </div>
                 </li>
                 <li className="flex items-start space-x-3">
                   <Mail className="w-4 h-4 text-[#C9A96E] mt-1 flex-shrink-0" />
                   <a
-                    href="mailto:info@prestigeestates.com.gh"
+                    href="mailto:info@nouvellemaisonlimited.com"
                     className="font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors"
                   >
-                    info@prestigeestates.com.gh
+                    info@nouvellemaisonlimited.com
                   </a>
                 </li>
               </ul>
@@ -149,7 +156,7 @@ export function Footer() {
           <div className="pt-8 border-t border-white/5">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
               <p className="font-['Montserrat'] text-xs text-white/40">
-                © 2026  NOUVELLE MAISON. All rights reserved.
+                © 2025 Nouvelle Maison Ltd. All rights reserved.
               </p>
               <div className="flex items-center space-x-6">
                 <a
