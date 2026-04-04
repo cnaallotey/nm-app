@@ -6,6 +6,9 @@ import ListingsPage from "./pages/ListingsPage";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
 import ContactPage from "./pages/ContactPage";
+import LoginPage from "./admin/LoginPage";
+import AdminPage from "./admin/AdminPage";
+import { ProtectedRoute } from "./admin/ProtectedRoute";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -44,6 +47,19 @@ export const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactPage />,
+      },
+      {
+        path: "/admin/login",
+        element: <LoginPage />,
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/admin",
+            element: <AdminPage />,
+          },
+        ],
       },
     ],
   },

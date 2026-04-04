@@ -1,60 +1,10 @@
 import { motion } from "motion/react";
 import { ArrowRight, Bed, Bath, Maximize } from "lucide-react";
 import { Link } from "react-router";
+import allProperties from "@/data/properties.json";
+import type { Property } from "@/data/types";
 
-interface Property {
-  id: string;
-  title: string;
-  location: string;
-  price: string;
-  beds: number;
-  baths: number;
-  sqft: string;
-  image: string;
-}
-
-const featuredProperties: Property[] = [
-  {
-    id: "villa-serena",
-    title: "Villa Serena",
-    location: "East Legon, Accra",
-    price: "GH₵ 12,500,000",
-    beds: 7,
-    baths: 9,
-    sqft: "27,000",
-    image: "https://images.unsplash.com/photo-1758192838598-a1de4da5dcaf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB2aWxsYSUyMGV4dGVyaW9yJTIwcG9vbCUyMHN1bnNldHxlbnwxfHx8fDE3NzUyOTkwNjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  },
-  {
-    id: "modern-estate",
-    title: "Modern Architectural Estate",
-    location: "Airport Residential, Accra",
-    price: "GH₵ 18,750,000",
-    beds: 8,
-    baths: 12,
-    sqft: "32,000",
-    image: "https://images.unsplash.com/photo-1629787302738-2c6e9f3dada1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsdXh1cnklMjBtYW5zaW9uJTIwYXJjaGl0ZWN0dXJlfGVufDF8fHx8MTc3NTI5OTA2M3ww&ixlib=rb-4.1.0&q=80&w=1080",
-  },
-  {
-    id: "waterfront-penthouse",
-    title: "Waterfront Penthouse",
-    location: "Cantonments, Accra",
-    price: "GH₵ 15,900,000",
-    beds: 5,
-    baths: 7,
-    sqft: "18,500",
-    image: "https://images.unsplash.com/photo-1613545325268-9265e1609167?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob21lJTIwaW50ZXJpb3IlMjBsaXZpbmclMjByb29tfGVufDF8fHx8MTc3NTIwMjExM3ww&ixlib=rb-4.1.0&q=80&w=1080",
-  },
-  {
-    id: "contemporary-villa",
-    title: "Contemporary Villa",
-    location: "Trasacco Valley, Accra",
-    price: "GH₵ 9,800,000",
-    beds: 6,
-    baths: 8,
-    sqft: "22,400",
-    image: "https://images.unsplash.com/photo-1768039049614-f3c2bae3f1db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaWdoJTIwZW5kJTIwa2l0Y2hlbiUyMG1hcmJsZSUyMGNvdW50ZXJ0b3B8ZW58MXx8fHwxNzc1Mjk5MDY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-  },
-];
+const featuredProperties = allProperties.filter((p: Property) => p.featured);
 
 export function FeaturedProperties() {
   return (
