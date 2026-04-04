@@ -39,7 +39,7 @@ export function Navigation() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link to="/" className="font-['Cormorant_Garamond'] text-2xl font-light text-white tracking-wider">
+              <Link to="/" className="font-['Cormorant_Garamond'] md:text-2xl font-light text-white tracking-wider">
                  NOUVELLE MAISON
               </Link>
             </div>
