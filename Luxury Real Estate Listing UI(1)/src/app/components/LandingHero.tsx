@@ -18,7 +18,7 @@ export function LandingHero() {
   };
 
   return (
-    <div className="relative h-screen flex items-center justify-center overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden py-24 lg:py-0">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img
@@ -30,25 +30,25 @@ export function LandingHero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 text-center">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="font-['Cormorant_Garamond'] text-6xl lg:text-8xl font-light text-white mb-6 leading-tight">
+          <h1 className="font-['Cormorant_Garamond'] text-4xl sm:text-6xl lg:text-8xl font-light text-white mb-4 sm:mb-6 leading-tight">
             Where Luxury
             <br />
             Meets Legacy
           </h1>
-          <p className="font-['Montserrat'] text-lg lg:text-xl font-light text-white/80 mb-12 max-w-2xl mx-auto">
+          <p className="font-['Montserrat'] text-sm sm:text-lg lg:text-xl font-light text-white/80 mb-8 sm:mb-12 max-w-2xl mx-auto">
             Curating Ghana's most exceptional properties for discerning clientele since 2005
           </p>
 
           {/* Search Bar */}
-          <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-3">
-            <div className="flex flex-col lg:flex-row gap-3">
-              <div className="flex-1 flex items-center space-x-3 px-4 py-3 bg-white/5 rounded-lg">
+          <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-3">
+            <div className="flex flex-col lg:flex-row gap-2 sm:gap-3">
+              <div className="flex-1 flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 rounded-lg">
                 <MapPin className="w-5 h-5 text-[#C9A96E]" />
                 <input
                   type="text"
@@ -59,7 +59,7 @@ export function LandingHero() {
                   className="flex-1 bg-transparent border-none outline-none font-['Montserrat'] text-sm text-white placeholder:text-white/50"
                 />
               </div>
-              <div className="flex-1 flex items-center space-x-3 px-4 py-3 bg-white/5 rounded-lg">
+              <div className="flex-1 flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 rounded-lg">
                 <Home className="w-5 h-5 text-[#C9A96E]" />
                 <select
                   value={propertyType}
@@ -73,7 +73,7 @@ export function LandingHero() {
                   <option value="townhouse">Townhouse</option>
                 </select>
               </div>
-              <div className="flex-1 flex items-center space-x-3 px-4 py-3 bg-white/5 rounded-lg">
+              <div className="flex-1 flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 rounded-lg">
                 <DollarSign className="w-5 h-5 text-[#C9A96E]" />
                 <select
                   value={priceRange}
@@ -99,32 +99,32 @@ export function LandingHero() {
 
           {/* Quick Stats */}
           <motion.div
-            className="mt-20 grid grid-cols-3 gap-8 max-w-3xl mx-auto"
+            className="mt-10 sm:mt-20 grid grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <div>
-              <div className="font-['Cormorant_Garamond'] text-4xl lg:text-5xl font-light text-[#C9A96E] mb-2">
+              <div className="font-['Cormorant_Garamond'] text-2xl sm:text-4xl lg:text-5xl font-light text-[#C9A96E] mb-1 sm:mb-2">
                 GH₵ 2B+
               </div>
-              <div className="font-['Montserrat'] text-xs font-medium uppercase tracking-[0.15em] text-white/60">
+              <div className="font-['Montserrat'] text-[10px] sm:text-xs font-medium uppercase tracking-[0.1em] sm:tracking-[0.15em] text-white/60">
                 In Sales
               </div>
             </div>
             <div>
-              <div className="font-['Cormorant_Garamond'] text-4xl lg:text-5xl font-light text-[#C9A96E] mb-2">
+              <div className="font-['Cormorant_Garamond'] text-2xl sm:text-4xl lg:text-5xl font-light text-[#C9A96E] mb-1 sm:mb-2">
                 1,200+
               </div>
-              <div className="font-['Montserrat'] text-xs font-medium uppercase tracking-[0.15em] text-white/60">
+              <div className="font-['Montserrat'] text-[10px] sm:text-xs font-medium uppercase tracking-[0.1em] sm:tracking-[0.15em] text-white/60">
                 Properties Sold
               </div>
             </div>
             <div>
-              <div className="font-['Cormorant_Garamond'] text-4xl lg:text-5xl font-light text-[#C9A96E] mb-2">
+              <div className="font-['Cormorant_Garamond'] text-2xl sm:text-4xl lg:text-5xl font-light text-[#C9A96E] mb-1 sm:mb-2">
                 20
               </div>
-              <div className="font-['Montserrat'] text-xs font-medium uppercase tracking-[0.15em] text-white/60">
+              <div className="font-['Montserrat'] text-[10px] sm:text-xs font-medium uppercase tracking-[0.1em] sm:tracking-[0.15em] text-white/60">
                 Years Experience
               </div>
             </div>
