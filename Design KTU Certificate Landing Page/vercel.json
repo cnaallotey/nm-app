@@ -1,0 +1,14 @@
+{
+    "outputDirectory": "dist",
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/api/thrive-courses",
+      "destination": "https://www.thriveafrica.co/api/thrive-courses"
+    },
+    {
+      "source": "/api/ignite-courses",
+      "destination": "https://www.thriveafrica.co/api/ignite-courses"
+    }
+  ]
+}
