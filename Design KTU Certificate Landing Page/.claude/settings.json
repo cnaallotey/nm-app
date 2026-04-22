@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn add *)",
+      "Bash(yarn build *)",
+      "Bash(curl -s \"https://www.thriveafrica.co/api/thrive-courses\")",
+      "Bash(curl -s \"https://www.thriveafrica.co/api/ignite-courses\")",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(list\\(item.keys\\(\\)\\)\\) for item in data['items'][:1]]; print\\('---NAMES---'\\); [print\\(repr\\(item.get\\('name', item.get\\('title', item.get\\('slug', item.get\\('role'\\)\\)\\)\\)\\)\\) for item in data['items']]\")",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -sI \"https://www.thriveafrica.co/api/thrive-courses\")"
+    ]
+  }
+}

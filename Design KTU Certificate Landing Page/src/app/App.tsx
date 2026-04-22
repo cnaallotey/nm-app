@@ -1,0 +1,607 @@
+import { Accordion } from './components/Accordion';
+import { Tabs } from './components/Tabs';
+import { CertificateForm } from './components/CertificateForm';
+
+export default function App() {
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const faqItems = [
+    {
+      question: "What's the difference between the Thrive Africa and KTU certificate?",
+      answer: "Thrive Africa is free, digital, and not accredited. The KTU certificate is ₵300, hardcopy, and officially accredited by a public university."
+    },
+    {
+      question: "Can I pay in installments?",
+      answer: "Yes. Pay ₵100 deposit by 1st May to save ₵60. Pay the remaining balance one month before your course ends."
+    },
+    {
+      question: "When will I receive my KTU certificate?",
+      answer: "Within 1 month after your program ends."
+    },
+    {
+      question: "Do I still get the free certificate if I don't apply for KTU?",
+      answer: "Yes. The Thrive Africa Digital Certificate & Transcript is free for all students regardless."
+    },
+    {
+      question: "Is the KTU certificate accredited?",
+      answer: "Yes. KTU is an accredited public university in Ghana, making all issued certificates officially accredited."
+    }
+  ];
+
+  const certificateTabs = [
+    {
+      label: "Individual Courses",
+      content: (
+        <div className="grid md:grid-cols-3 gap-5">
+          {[
+            "Certificate in Advanced Data Science & Analytics",
+            "Certificate in Advanced Machine Learning & AI",
+            "Certificate in Advanced Cloud Computing",
+            "Certificate in Advanced Cybersecurity",
+            "Certificate in Generative AI & Advanced Prompt Engineering"
+          ].map((title, idx) => (
+            <div key={idx} className="bg-white border border-gray-200 rounded-xl p-5 hover:bg-pink-50 transition-colors">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-6 h-6 text-pink-600">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-[#1a1a1a] mb-1" style={{ fontSize: '15px', fontWeight: 600 }}>
+                    {title}
+                  </div>
+                  <div className="text-gray-400" style={{ fontSize: '12px' }}>
+                    Individual course certificate
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    },
+    {
+      label: "Course Bundles",
+      content: (
+        <div className="grid md:grid-cols-2 gap-5">
+          {[
+            { title: "Certificate in Advanced Data Science", combo: "Data Science & Analytics + Machine Learning & AI" },
+            { title: "Certificate in Advanced Cybersecurity with Advanced Cloud Computing", combo: "Cybersecurity + Cloud Computing" },
+            { title: "Certificate in Advanced Data Engineering", combo: "Data Science & Analytics + Cloud Computing" },
+            { title: "Certificate in Advanced AI-Engineering", combo: "Machine Learning & AI + Cloud Computing" }
+          ].map((item, idx) => (
+            <div key={idx} className="bg-white border border-gray-200 rounded-xl p-5 hover:bg-pink-50 transition-colors relative">
+              <span className="absolute top-3 right-3 bg-pink-100 text-pink-600 px-2 py-1 rounded-full" style={{ fontSize: '11px' }}>
+                Bundle
+              </span>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-6 h-6 text-pink-600">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-[#1a1a1a] mb-1" style={{ fontSize: '15px', fontWeight: 600 }}>
+                    {item.title}
+                  </div>
+                  <div className="text-gray-400" style={{ fontSize: '12px' }}>
+                    {item.combo}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    },
+    {
+      label: "AI-Powered Titles",
+      content: (
+        <div className="grid md:grid-cols-3 gap-5">
+          {[
+            "Certificate in Advanced AI-Powered Data Analytics",
+            "Certificate in Advanced AI-Powered Cybersecurity",
+            "Certificate in Advanced AI-Powered Cloud Computing",
+            "Certificate in Advanced AI-Powered Data Science",
+            "Certificate in Advanced AI-Powered Cybersecurity with Cloud Computing",
+            "Certificate in Advanced AI-Powered Data Engineering"
+          ].map((title, idx) => (
+            <div key={idx} className="bg-white border border-gray-200 rounded-xl p-5 hover:bg-pink-50 transition-colors relative">
+              <span className="absolute top-3 right-3 text-pink-500" style={{ fontSize: '16px' }}>✦</span>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-6 h-6 text-pink-600">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-[#1a1a1a] mb-1" style={{ fontSize: '15px', fontWeight: 600 }}>
+                    {title}
+                  </div>
+                  <div className="text-gray-400" style={{ fontSize: '12px' }}>
+                    AI-Powered certificate
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* SECTION 1 - HERO */}
+      <section id="top" className="bg-[#fdf2f8] py-12 md:py-24">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+          <div className="grid md:grid-cols-[60%_40%] gap-10 md:gap-12 items-center">
+            <div>
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 bg-white/70 backdrop-blur-sm  pr-4 sm:pr-5 py-2 w-fit max-w-full ">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <img src="/thrive-logo2.png" alt="Thrive Africa" className="h-7 sm:h-8 w-auto object-contain" />
+                  <span className="text-gray-300" style={{ fontSize: '18px' }}>×</span>
+                  <img src="/ktu-logo2.png" alt="Koforidua Technical University" className="h-7 sm:h-8 w-auto object-contain" />
+                </div>
+                <span className="text-gray-500 uppercase" style={{ fontSize: '11px', letterSpacing: '0.08em' }}>
+                  Official Partnership
+                </span>
+              </div>
+              <div className="inline-block bg-pink-100 text-pink-600 px-4 py-2 rounded-full mb-6" style={{ fontSize: '13px' }}>
+                March 2026 Cohort • Now Open
+              </div>
+              <h1 className="text-[#1a1a1a] mb-4 text-[32px] sm:text-[40px] md:text-[48px] font-bold leading-tight">
+                Earn Your Official KTU University Certificate
+              </h1>
+              <p className="text-gray-600 mb-8 text-base sm:text-lg leading-relaxed">
+                In partnership with Koforidua Technical University — a respected public university in Ghana — earn a hardcopy, accredited certificate recognized for jobs, study abroad funding, and professional credibility.
+              </p>
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6">
+                <button onClick={() => scrollTo('reserve')} className="bg-pink-600 text-white px-6 sm:px-7 py-3 rounded-lg shadow-md hover:bg-pink-700 transition-colors text-[15px] sm:text-base">
+                  Reserve My KTU Certificate Now →
+                </button>
+                <button onClick={() => scrollTo('certificate-titles')} className="bg-white text-pink-600 border-2 border-pink-600 px-6 sm:px-7 py-3 rounded-lg hover:bg-pink-50 transition-colors text-[15px] sm:text-base">
+                  See Certificate Titles ↓
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-6 text-gray-500" style={{ fontSize: '13px' }}>
+                <div className="flex items-center gap-2">
+                  <span className="text-pink-500">✓</span>
+                  <span>Accredited University</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-pink-500">✓</span>
+                  <span>Hardcopy Certificate</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-pink-500">✓</span>
+                  <span>Study Abroad Eligible</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <div className="bg-white border-4 border-pink-200 rounded-xl p-3 shadow-xl transform -rotate-2 relative">
+                <div className="absolute -top-3 -right-3 w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center text-white z-10" style={{ fontSize: '20px' }}>
+                  🏆
+                </div>
+                <img
+                  src="/cert.jpg"
+                  alt="KTU Certificate Sample"
+                  className="w-full h-auto rounded-md block"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 2 - PRICING BANNER */}
+      <section className="bg-slate-900 text-white py-16 md:py-32">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+          <div className="grid md:grid-cols-3 gap-8 divide-y divide-white/20 md:divide-y-0 md:divide-x">
+            <div className="text-center px-4 pt-8 md:pt-0 first:pt-0">
+              <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.05em' }}>
+                FOUNDER'S REWARD
+              </p>
+              <p className="mb-2" style={{ fontSize: '32px', fontWeight: 700 }}>₵240</p>
+              <p className="text-pink-100 mb-3" style={{ fontSize: '13px' }}>
+                Save ₵60 — Pay ₵100 deposit by 1st May 2026
+              </p>
+              <span className="inline-block bg-pink-500 text-white px-3 py-1 rounded-md" style={{ fontSize: '11px' }}>
+                First come, first served
+              </span>
+            </div>
+            <div className="text-center px-4 pt-8 md:pt-0 first:pt-0">
+              <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.05em' }}>
+                STANDARD PRICE
+              </p>
+              <p className="mb-2" style={{ fontSize: '32px', fontWeight: 700 }}>₵300</p>
+              <p className="text-pink-100 mb-3" style={{ fontSize: '13px' }}>
+                ₵100 deposit by 14th May 2026
+              </p>
+              <span className="inline-block bg-pink-500 text-white px-3 py-1 rounded-md" style={{ fontSize: '11px' }}>
+                No discount
+              </span>
+            </div>
+            <div className="text-center px-4 pt-8 md:pt-0 first:pt-0">
+              <p className="text-pink-500 uppercase mb-2 flex items-center justify-center gap-1" style={{ fontSize: '12px', letterSpacing: '0.05em' }}>
+                <span>⚠</span> AFTER 14TH MAY
+              </p>
+              <p className="mb-2" style={{ fontSize: '32px', fontWeight: 700 }}>₵400</p>
+              <p className="text-pink-100 mb-3" style={{ fontSize: '13px' }}>
+                ₵100 late penalty applies
+              </p>
+              <span className="inline-block bg-pink-500 text-white px-3 py-1 rounded-md" style={{ fontSize: '11px' }}>
+                Late fee warning
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3 - WHY GET KTU CERTIFICATE */}
+      <section className="relative overflow-hidden">
+        <img
+          src="https://images.pexels.com/photos/19501079/pexels-photo-19501079.jpeg"
+          alt="University graduates celebrating"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(157,23,77,0.78) 100%)' }}></div>
+        <div className="relative max-w-[1200px] mx-auto px-5 sm:px-6 py-16 md:py-24">
+          <div className="text-center mb-10 md:mb-14 max-w-2xl mx-auto">
+            <p className="text-pink-300 uppercase mb-3" style={{ fontSize: '12px', letterSpacing: '0.12em' }}>
+              BENEFITS
+            </p>
+            <h2 className="text-white mb-4 text-[28px] sm:text-[32px] md:text-[36px] font-bold leading-tight">
+              Why the KTU Certificate Matters
+            </h2>
+            <p className="text-pink-50/80 text-[15px] sm:text-base">
+              More than just a document — it's your competitive edge.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-5 lg:gap-6">
+            {[
+              {
+                icon: (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                  </svg>
+                ),
+                title: "Boost Employability",
+                body: "Stand out to employers and institutions with a hardcopy, university-backed credential."
+              },
+              {
+                icon: (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                ),
+                title: "Unlock Study Abroad",
+                body: "Use your KTU certificate to access free funding, support, and visa opportunities for studying abroad."
+              },
+              {
+                icon: (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="8" r="7"/>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                  </svg>
+                ),
+                title: "Official University Recognition",
+                body: "Issued directly by an accredited Ghanaian public university with full academic authority."
+              },
+              {
+                icon: (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
+                ),
+                title: "Recognize Prior Learning",
+                body: "Your skills and experience formally recognized and certified at the university level."
+              }
+            ].map((item, idx) => (
+              <div key={idx} className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:bg-white/15 transition-colors">
+                <div className="w-10 h-10 bg-white/15 border border-white/20 rounded-full flex items-center justify-center text-pink-200 mb-4">
+                  {item.icon}
+                </div>
+                <h3 className="text-white mb-2" style={{ fontSize: '18px', fontWeight: 600 }}>
+                  {item.title}
+                </h3>
+                <p className="text-pink-50/75" style={{ fontSize: '14px', lineHeight: '1.6' }}>
+                  {item.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4 - CERTIFICATE TITLES */}
+      <section id="certificate-titles" className="bg-gray-50 py-16 md:py-24 scroll-mt-8">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+          <div className="text-center mb-10 md:mb-12">
+            <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.1em' }}>
+              WHAT YOU'LL RECEIVE
+            </p>
+            <h2 className="text-[#1a1a1a] mb-4 text-[28px] sm:text-[32px] md:text-[36px] font-bold leading-tight">
+              Certificate Titles Available
+            </h2>
+            <p className="text-gray-500" style={{ fontSize: '15px' }}>
+              Your certificate title reflects the course(s) you completed.
+            </p>
+          </div>
+          <Tabs tabs={certificateTabs} />
+        </div>
+      </section>
+
+      {/* SECTION 5 - CERTIFICATE PREVIEW */}
+      <section className="py-16 md:py-24" style={{ background: 'linear-gradient(to bottom, #fdf2f8, #ffffff)' }}>
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+          <div className="text-center mb-10 md:mb-12">
+            <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.1em' }}>
+              SAMPLE
+            </p>
+            <h2 className="text-[#1a1a1a] text-[28px] sm:text-[32px] md:text-[36px] font-bold leading-tight">
+              What Your Certificate Will Look Like
+            </h2>
+          </div>
+          <div className="max-w-[900px] mx-auto bg-white rounded-xl p-3 sm:p-4 shadow-lg relative" style={{ border: '2px solid #fbcfe8', outline: '1px solid #fce7f3', outlineOffset: '4px' }}>
+            <img
+              src="/cert.jpg"
+              alt="KTU Certificate Sample"
+              className="w-full h-auto rounded-md block"
+            />
+          </div>
+          <p className="text-center text-gray-400 mt-6" style={{ fontSize: '13px' }}>
+            Sample for illustration only. Actual certificate issued by Koforidua Technical University.
+          </p>
+        </div>
+      </section>
+
+      {/* SECTION 6 - PAYMENT TIMELINE */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+          <div className="text-center mb-10 md:mb-16">
+            <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.1em' }}>
+              SIMPLE PROCESS
+            </p>
+            <h2 className="text-[#1a1a1a] text-[28px] sm:text-[32px] md:text-[36px] font-bold leading-tight">
+              How to Secure Your Certificate
+            </h2>
+          </div>
+          <div className="relative">
+            <div className="absolute top-5 left-0 right-0 h-0.5 border-t-2 border-dashed border-pink-300 hidden md:block"></div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 relative">
+              {[
+                { title: "Choose Your Certificate", desc: "Select from individual, bundle, or AI-powered titles." },
+                { title: "Pay ₵100 Deposit", desc: "By 1st May for ₵60 discount. By 14th May for standard rate." },
+                { title: "Complete Your Course", desc: "Continue your studies. Certificate is being prepared." },
+                { title: "Receive Your Certificate", desc: "Hardcopy issued within 1 month of program completion." }
+              ].map((step, idx) => (
+                <div key={idx} className="text-center">
+                  <div className="w-10 h-10 bg-pink-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 relative z-10" style={{ fontSize: '18px', fontWeight: 700 }}>
+                    {idx + 1}
+                  </div>
+                  <h3 className="text-[#1a1a1a] mb-2" style={{ fontSize: '15px', fontWeight: 700 }}>
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-500" style={{ fontSize: '13px', lineHeight: '1.5' }}>
+                    {step.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 7 - COMPARISON TABLE */}
+      <section className="relative overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1600&q=80&auto=format&fit=crop"
+          alt="Students comparing study paths"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(157,23,77,0.78) 100%)' }}></div>
+        <div className="relative max-w-[1200px] mx-auto px-5 sm:px-6 py-16 md:py-24">
+          <div className="text-center mb-10 md:mb-14 max-w-2xl mx-auto">
+            <p className="text-pink-300 uppercase mb-3" style={{ fontSize: '12px', letterSpacing: '0.12em' }}>
+              COMPARE
+            </p>
+            <h2 className="text-white text-[24px] sm:text-[28px] md:text-[32px] font-bold leading-tight">
+              KTU Certificate vs. Free Thrive Africa Certificate
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            <div className="bg-white/20 backdrop-blur-sm border border-white/15 rounded-xl p-6 sm:p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-white" style={{ fontSize: '18px', fontWeight: 700 }}>
+                  Thrive Africa Certificate
+                </h3>
+                <span className="bg-green-500/20 text-green-200 border border-green-300/30 px-3 py-1 rounded-full" style={{ fontSize: '12px', fontWeight: 600 }}>
+                  FREE
+                </span>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { text: "Digital certificate", check: true },
+                  { text: "Includes transcript", check: true },
+                  { text: "Recognizes skills gained", check: true },
+                  { text: "Not accredited", check: false },
+                  { text: "No hardcopy", check: false },
+                  { text: "No study abroad access", check: false }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <span className={item.check ? "text-green-300" : "text-red-300/80"} style={{ fontSize: '18px' }}>
+                      {item.check ? "✓" : "✗"}
+                    </span>
+                    <span className={item.check ? "text-pink-50/90" : "text-pink-50/50"} style={{ fontSize: '14px' }}>
+                      {item.text}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white/30 backdrop-blur-sm border border-pink-300/50 rounded-xl p-6 sm:p-8 shadow-xl relative">
+              <span className="absolute -top-3 right-6 bg-pink-500 text-white px-3 py-1 rounded-full" style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.04em' }}>
+                RECOMMENDED
+              </span>
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-white" style={{ fontSize: '18px', fontWeight: 700 }}>
+                  KTU University Certificate
+                </h3>
+                <span className="bg-pink-500/30 text-pink-100 border border-pink-300/40 px-3 py-1 rounded-full" style={{ fontSize: '12px', fontWeight: 600 }}>
+                  ₵300 (₵240 early)
+                </span>
+              </div>
+              <div className="space-y-3 mb-6">
+                {[
+                  "Hardcopy certificate",
+                  "Accredited by KTU (public university)",
+                  "Boosts employment prospects",
+                  "Unlocks study abroad funding",
+                  "Professional recognition",
+                  "Includes transcript"
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <span className="text-pink-300" style={{ fontSize: '18px' }}>✓</span>
+                    <span className="text-pink-50/90" style={{ fontSize: '14px' }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+              <button onClick={() => scrollTo('reserve')} className="w-full bg-pink-600 text-white py-3 rounded-lg hover:bg-pink-700 transition-colors" style={{ fontSize: '15px', fontWeight: 600 }}>
+                Apply for KTU Certificate →
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 8 - CERTIFICATE REQUEST FORM */}
+      <section id="reserve" className="bg-slate-900 py-16 md:py-24 scroll-mt-8">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-white mb-3 text-[26px] sm:text-[30px] md:text-[32px] font-bold leading-tight">
+              Reserve My KTU Certificate
+            </h2>
+            <p className="text-pink-100" style={{ fontSize: '15px' }}>
+              Fill in your details below to secure your spot. Limited slots available.
+            </p>
+          </div>
+          <CertificateForm />
+        </div>
+      </section>
+
+      {/* SECTION 9 - FAQ */}
+      <section id="faq" className="bg-white py-16 md:py-24 scroll-mt-8">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+          <div className="text-center mb-10 md:mb-12">
+            <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.1em' }}>
+              QUICK ANSWERS
+            </p>
+            <h2 className="text-[#1a1a1a] text-[24px] sm:text-[28px] md:text-[30px] font-bold leading-tight">
+              Frequently Asked Questions
+            </h2>
+          </div>
+          <Accordion items={faqItems} />
+        </div>
+      </section>
+
+      {/* SECTION 9b - COMMUNITY BAND */}
+      <section className="relative overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=1600&q=80&auto=format&fit=crop"
+          alt="African students in a learning environment"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(157,23,77,0.78) 100%)' }}></div>
+        <div className="relative max-w-[1200px] mx-auto px-5 sm:px-6 py-16 md:py-20">
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-10 items-center">
+            <div>
+              <p className="text-pink-300 uppercase mb-3" style={{ fontSize: '12px', letterSpacing: '0.12em' }}>
+                JOIN THE COMMUNITY
+              </p>
+              <h2 className="text-white mb-4 text-[26px] sm:text-[30px] md:text-[34px] font-bold leading-tight">
+                Be part of Africa's next generation of certified professionals
+              </h2>
+              <p className="text-pink-50/80 text-[15px] sm:text-base max-w-xl">
+                Earn recognition that travels with you — from Accra to Abuja, from Nairobi to New York. Your KTU certificate opens doors at home and abroad.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
+              {[
+                { stat: '70k+', label: 'Africans Trained' },
+                { stat: '8+', label: 'In-demand Courses' },
+              ].map((s, idx) => (
+                <div key={idx} className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl px-4 py-5 text-center">
+                  <div className="text-white mb-1" style={{ fontSize: '26px', fontWeight: 700 }}>{s.stat}</div>
+                  <div className="text-pink-100/80" style={{ fontSize: '11px', letterSpacing: '0.04em' }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 10 - FINAL CTA */}
+      <section className="bg-[#1a1a1a] py-16 md:py-20" style={{ background: 'linear-gradient(135deg, #1a1a1a 0%, #2d1b2e 100%)' }}>
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6 text-center">
+          <h2 className="text-white mb-4 text-[26px] sm:text-[30px] md:text-[36px] font-bold leading-tight">
+            Secure Your Official KTU Certificate Today
+          </h2>
+          <p className="text-gray-400 mb-8 text-[15px] sm:text-base">
+            Deadline: 1st May 2026 for the Founder's Discount. Don't miss out.
+          </p>
+          <button onClick={() => scrollTo('reserve')} className="bg-pink-600 text-white px-8 sm:px-10 py-4 rounded-lg hover:bg-pink-700 transition-colors mb-4 w-full sm:w-auto text-[15px] sm:text-base" style={{ fontWeight: 600 }}>
+            Reserve My Certificate Now →
+          </button>
+          <p className="text-gray-500" style={{ fontSize: '13px' }}>
+            Questions? Call 0552133389 or 0264861897
+          </p>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-[#111111] text-gray-400 py-10 md:py-12">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <div className="text-white mb-3" style={{ fontSize: '20px', fontWeight: 700 }}>KTU Certificate Program</div>
+              <p style={{ fontSize: '13px' }}>Powered by Thrive Africa in partnership with KTU.</p>
+            </div>
+            <div>
+              <h4 className="text-white mb-3" style={{ fontSize: '14px', fontWeight: 600 }}>Quick Links</h4>
+              <ul className="space-y-2" style={{ fontSize: '13px' }}>
+                <li><a href="#top" className="hover:text-pink-400">Home</a></li>
+                <li><a href="#certificate-titles" className="hover:text-pink-400">Certificate Titles</a></li>
+                <li><a href="#faq" className="hover:text-pink-400">FAQs</a></li>
+                <li><a href="#reserve" className="hover:text-pink-400">Apply Now</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white mb-3" style={{ fontSize: '14px', fontWeight: 600 }}>Contact</h4>
+              <ul className="space-y-2" style={{ fontSize: '13px' }}>
+                <li>0552133389</li>
+                <li>0594606051</li>
+                <li>0538415157</li>
+                <li>0264861897</li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 pt-6 text-center text-gray-600" style={{ fontSize: '12px' }}>
+            © 2026 Thrive Africa. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
