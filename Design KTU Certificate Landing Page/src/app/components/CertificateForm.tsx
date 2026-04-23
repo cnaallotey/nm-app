@@ -10,14 +10,20 @@ const courses = [
 
 const certificateTitles = [
   { value: 'data-science', label: 'Certificate in Advanced Data Science & Analytics' },
-  { value: 'ml-ai', label: 'Certificate in Advanced Machine Learning and AI' },
+  { value: 'ml-ai', label: 'Certificate in Advanced Machine Learning & AI' },
   { value: 'cloud', label: 'Certificate in Advanced Cloud Computing' },
   { value: 'cybersecurity', label: 'Certificate in Advanced Cybersecurity' },
   { value: 'gen-ai', label: 'Certificate in Generative AI & Advanced Prompt Engineering' },
-  { value: 'bundle-data-science', label: 'Certificate in Advanced Data Science (Data Science + ML/AI)' },
+  { value: 'bundle-data-science', label: 'Certificate in Advanced Data Science' },
   { value: 'bundle-cyber-cloud', label: 'Certificate in Advanced Cybersecurity with Advanced Cloud Computing' },
-  { value: 'bundle-data-eng', label: 'Certificate in Advanced Data Engineering (Data Science + Cloud)' },
-  { value: 'bundle-ai-eng', label: 'Certificate in Advanced AI-Engineering (ML/AI + Cloud)' },
+  { value: 'bundle-data-eng', label: 'Certificate in Advanced Data Engineering' },
+  { value: 'bundle-ai-eng', label: 'Certificate in Advanced AI-Engineering' },
+  { value: 'ai-data-analytics', label: 'Certificate in Advanced AI-Powered Data Analytics' },
+  { value: 'ai-cyber', label: 'Certificate in Advanced AI-Powered Cybersecurity' },
+  { value: 'ai-cloud', label: 'Certificate in Advanced AI-Powered Cloud Computing' },
+  { value: 'ai-data-science', label: 'Certificate in Advanced AI-Powered Data Science' },
+  { value: 'ai-cyber-cloud', label: 'Certificate in Advanced AI-Powered Cybersecurity with Cloud Computing' },
+  { value: 'ai-data-eng', label: 'Certificate in Advanced AI-Powered Data Engineering' },
 ];
 
 const FORM_ENDPOINT = 'https://forminit.com/f/bvrmgxpb';
@@ -26,6 +32,7 @@ const CONTACTS = ['0552133389', '0538415157', '0594606051', '0264861897'];
 
 export function CertificateForm() {
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
+  const [selectedCertificates, setSelectedCertificates] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -33,6 +40,12 @@ export function CertificateForm() {
   const handleCourseToggle = (course: string) => {
     setSelectedCourses(prev =>
       prev.includes(course) ? prev.filter(c => c !== course) : [...prev, course]
+    );
+  };
+
+  const handleCertificateToggle = (cert: string) => {
+    setSelectedCertificates(prev =>
+      prev.includes(cert) ? prev.filter(c => c !== cert) : [...prev, cert]
     );
   };
 
@@ -45,12 +58,17 @@ export function CertificateForm() {
       setSubmitError('Please select at least one course.');
       return;
     }
+    if (selectedCertificates.length === 0) {
+      setSubmitError('Please select at least one certificate title.');
+      return;
+    }
 
     setSubmitError(null);
     setSubmitting(true);
     try {
       const data = new FormData(form);
       selectedCourses.forEach(c => data.append('courses[]', c));
+      selectedCertificates.forEach(c => data.append('certificateTitles[]', c));
 
       await fetch(FORM_ENDPOINT, {
         method: 'POST',
@@ -60,6 +78,7 @@ export function CertificateForm() {
 
       form.reset();
       setSelectedCourses([]);
+      setSelectedCertificates([]);
       setShowSuccess(true);
     } catch {
       setSubmitError('Something went wrong. Please try again or contact us directly.');
@@ -128,19 +147,21 @@ export function CertificateForm() {
         </div>
 
         <div>
-          <label className="block text-gray-700 mb-2" style={{ fontSize: '14px' }}>Certificate Title Selected</label>
-          <select
-            name="certificateTitle"
-            required
-            defaultValue=""
-            className="w-full h-12 px-4 border border-gray-200 rounded-lg focus:border-pink-500 focus:bg-pink-50 focus:outline-none transition-colors"
-            style={{ fontSize: '14px' }}
-          >
-            <option value="" disabled>Select your certificate title</option>
+          <label className="block text-gray-700 mb-2" style={{ fontSize: '14px' }}>Certificate Title(s) Selected</label>
+          <div className="border border-gray-200 rounded-lg p-3 space-y-2 max-h-[200px] overflow-y-auto">
             {certificateTitles.map((cert) => (
-              <option key={cert.value} value={cert.label}>{cert.label}</option>
+              <label key={cert.value} className="flex items-start gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={selectedCertificates.includes(cert.label)}
+                  onChange={() => handleCertificateToggle(cert.label)}
+                  className="w-4 h-4 mt-0.5 accent-pink-600 flex-shrink-0"
+                />
+                <span className="text-gray-700" style={{ fontSize: '14px' }}>{cert.label}</span>
+              </label>
             ))}
-          </select>
+          </div>
+          <p className="text-gray-500 mt-2" style={{ fontSize: '12px' }}>Select all certificates you are requesting.</p>
         </div>
 
         <p className="bg-pink-50 border border-pink-100 text-pink-700 rounded-lg px-4 py-3" style={{ fontSize: '13px', lineHeight: '1.5' }}>

@@ -46,7 +46,7 @@ export default function App() {
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-6 h-6 text-pink-600">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
                 <div>
@@ -68,10 +68,10 @@ export default function App() {
       content: (
         <div className="grid md:grid-cols-2 gap-5">
           {[
-            { title: "Certificate in Advanced Data Science", combo: "Data Science & Analytics + Machine Learning & AI" },
-            { title: "Certificate in Advanced Cybersecurity with Advanced Cloud Computing", combo: "Cybersecurity + Cloud Computing" },
-            { title: "Certificate in Advanced Data Engineering", combo: "Data Science & Analytics + Cloud Computing" },
-            { title: "Certificate in Advanced AI-Engineering", combo: "Machine Learning & AI + Cloud Computing" }
+            { title: "Certificate in Advanced Data Science", combo: "if you enrolled in both Advanced Data Science & Analytics and Advanced Machine Learning & AI Course" },
+            { title: "Certificate in Advanced Cybersecurity with Advanced Cloud Computing", combo: "if you enrolled in both Advanced Cybersecurity & Advanced Cloud Computing Course" },
+            { title: "Certificate in Advanced Data Engineering", combo: "if you enrolled in both Advanced Data Science & Analytics and Advanced Cloud Computing Course" },
+            { title: "Certificate in Advanced AI-Engineering", combo: "if you enrolled in both Advanced Machine Learning & AI and Advanced Cloud Computing Course" }
           ].map((item, idx) => (
             <div key={idx} className="bg-white border border-gray-200 rounded-xl p-5 hover:bg-pink-50 transition-colors relative">
               <span className="absolute top-3 right-3 bg-pink-100 text-pink-600 px-2 py-1 rounded-full" style={{ fontSize: '11px' }}>
@@ -80,7 +80,7 @@ export default function App() {
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-6 h-6 text-pink-600">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
                 <div>
@@ -102,19 +102,19 @@ export default function App() {
       content: (
         <div className="grid md:grid-cols-3 gap-5">
           {[
-            "Certificate in Advanced AI-Powered Data Analytics",
-            "Certificate in Advanced AI-Powered Cybersecurity",
-            "Certificate in Advanced AI-Powered Cloud Computing",
-            "Certificate in Advanced AI-Powered Data Science",
-            "Certificate in Advanced AI-Powered Cybersecurity with Cloud Computing",
-            "Certificate in Advanced AI-Powered Data Engineering"
-          ].map((title, idx) => (
+            { title: "Certificate in Advanced AI-Powered Data Analytics", combo: "if you enrolled in both Generative AI & Advanced Prompt Engineering & Advanced Data Science & Analytics Course" },
+            { title: "Certificate in Advanced AI-Powered Cybersecurity", combo: "if you enrolled in both Generative AI & Advanced Prompt Engineering & Advanced Cybersecurity Course" },
+            { title: "Certificate in Advanced AI-Powered Cloud Computing", combo: "if you enrolled in both Advanced Cloud Computing & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in Advanced AI-Powered Data Science", combo: "if you enrolled in both Advanced Data Science & Analytics, Advanced Machine Learning & AI & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in Advanced AI-Powered Cybersecurity with Cloud Computing", combo: "if you enrolled in both Advanced cybersecurity, Advanced cloud computing & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in Advanced AI-Powered Data Engineering", combo: "if you enrolled in both Advanced Data Science & Analytics, Advanced Cloud Computing & Generative AI & Advanced Prompt Engineering" }
+          ].map(({ title, combo }, idx) => (
             <div key={idx} className="bg-white border border-gray-200 rounded-xl p-5 hover:bg-pink-50 transition-colors relative">
               <span className="absolute top-3 right-3 text-pink-500" style={{ fontSize: '16px' }}>✦</span>
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-6 h-6 text-pink-600">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
                 <div>
@@ -122,7 +122,7 @@ export default function App() {
                     {title}
                   </div>
                   <div className="text-gray-400" style={{ fontSize: '12px' }}>
-                    AI-Powered certificate
+                    {combo}
                   </div>
                 </div>
               </div>
@@ -268,8 +268,8 @@ export default function App() {
               {
                 icon: (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                   </svg>
                 ),
                 title: "Boost Employability",
@@ -278,8 +278,8 @@ export default function App() {
               {
                 icon: (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                   </svg>
                 ),
                 title: "Unlock Study Abroad",
@@ -288,8 +288,8 @@ export default function App() {
               {
                 icon: (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="8" r="7"/>
-                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                    <circle cx="12" cy="8" r="7" />
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
                   </svg>
                 ),
                 title: "Official University Recognition",
@@ -298,8 +298,8 @@ export default function App() {
               {
                 icon: (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
                   </svg>
                 ),
                 title: "Recognize Prior Learning",
