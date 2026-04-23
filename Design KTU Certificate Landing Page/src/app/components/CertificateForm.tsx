@@ -16,7 +16,6 @@ const certificateTitles = [
 
 export function CertificateForm() {
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
-  const [paymentOption, setPaymentOption] = useState<'founder' | 'standard' | 'late'>('founder');
   const [courseGroups, setCourseGroups] = useState<CourseGroup[]>([]);
   const [loadingCourses, setLoadingCourses] = useState(true);
 
@@ -56,19 +55,6 @@ export function CertificateForm() {
       prev.includes(course) ? prev.filter(c => c !== course) : [...prev, course]
     );
   };
-
-  const getPricing = () => {
-    switch (paymentOption) {
-      case 'founder':
-        return { base: 300, discount: 60, total: 240 };
-      case 'standard':
-        return { base: 300, discount: 0, total: 300 };
-      case 'late':
-        return { base: 300, discount: -100, total: 400 };
-    }
-  };
-
-  const pricing = getPricing();
 
   return (
     <div className="bg-white p-6 sm:p-8 md:p-10 rounded-lg shadow-lg max-w-[680px] mx-auto">
@@ -153,71 +139,9 @@ export function CertificateForm() {
           </select>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-gray-700 mb-3" style={{ fontSize: '14px' }}>Payment Option</label>
-            <div className="space-y-3">
-              <label className="flex items-start gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="payment"
-                  checked={paymentOption === 'founder'}
-                  onChange={() => setPaymentOption('founder')}
-                  className="mt-1 accent-pink-600"
-                />
-                <span className="text-gray-700" style={{ fontSize: '13px' }}>
-                  Founder's Reward (₵100 by 1st May — save ₵60)
-                </span>
-              </label>
-              <label className="flex items-start gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="payment"
-                  checked={paymentOption === 'standard'}
-                  onChange={() => setPaymentOption('standard')}
-                  className="mt-1 accent-pink-600"
-                />
-                <span className="text-gray-700" style={{ fontSize: '13px' }}>
-                  Standard (₵100 by 14th May)
-                </span>
-              </label>
-              <label className="flex items-start gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="payment"
-                  checked={paymentOption === 'late'}
-                  onChange={() => setPaymentOption('late')}
-                  className="mt-1 accent-pink-600"
-                />
-                <span className="text-gray-700" style={{ fontSize: '13px' }}>
-                  Late Payment (₵100 + ₵100 penalty)
-                </span>
-              </label>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-gray-700 mb-3" style={{ fontSize: '14px' }}>Payment Summary</label>
-            <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-              <div className="flex justify-between text-gray-600" style={{ fontSize: '13px' }}>
-                <span>Certificate fee:</span>
-                <span>₵{pricing.base}</span>
-              </div>
-              {pricing.discount !== 0 && (
-                <div className="flex justify-between text-gray-600" style={{ fontSize: '13px' }}>
-                  <span>Discount:</span>
-                  <span className={pricing.discount > 0 ? 'text-green-600' : 'text-red-600'}>
-                    {pricing.discount > 0 ? '-' : '+'}₵{Math.abs(pricing.discount)}
-                  </span>
-                </div>
-              )}
-              <div className="flex justify-between pt-2 border-t border-gray-200" style={{ fontSize: '15px' }}>
-                <span className="text-gray-700">Total:</span>
-                <span className="text-pink-600">₵{pricing.total}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <p className="bg-pink-50 border border-pink-100 text-pink-700 rounded-lg px-4 py-3" style={{ fontSize: '13px', lineHeight: '1.5' }}>
+          Pay an initial GHS100 deposit per certificate to enjoy the <b>GHS60 Founder's Reward discount</b> per certificate.
+        </p>
 
         <button
           type="submit"

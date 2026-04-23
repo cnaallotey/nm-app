@@ -1,19 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#db2777" />
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Design KTU Certificate Landing Page</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-      <style>html, body { height: 100%; margin: 0; font-family: 'Outfit', system-ui, -apple-system, sans-serif; } #root { height: 100%; }</style>
-    </head>
+    <title>KTU University Certificate Program — Thrive Africa</title>
+    <meta name="description" content="Earn an officially accredited, hardcopy KTU (Koforidua Technical University) certificate through Thrive Africa. Boost employability, unlock study-abroad funding, and gain professional credibility. March 2026 cohort now open." />
+    <meta name="keywords" content="KTU certificate, Koforidua Technical University, Thrive Africa, accredited certificate Ghana, online learning Africa, data science certificate, machine learning certificate, cybersecurity certificate, cloud computing certificate, AI certificate, study abroad Ghana" />
+    <meta name="author" content="Thrive Africa" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://ktu-cert.thriveafrica.co/" />
 
-    <body>
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-    </body>
-  </html>
-  
+    <link rel="icon" type="image/png" href="/thrive-logo2.png" />
+    <link rel="apple-touch-icon" href="/thrive-logo2.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Thrive Africa" />
+    <meta property="og:title" content="Earn Your Official KTU University Certificate — Thrive Africa" />
+    <meta property="og:description" content="In partnership with Koforidua Technical University, earn a hardcopy, accredited certificate recognized for jobs, study-abroad funding and professional credibility." />
+    <meta property="og:url" content="https://ktu-cert.thriveafrica.co/" />
+    <meta property="og:image" content="https://ktu-cert.thriveafrica.co/cert.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_GH" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thriveafrica" />
+    <meta name="twitter:title" content="Earn Your Official KTU University Certificate" />
+    <meta name="twitter:description" content="Hardcopy, accredited certificate from Koforidua Technical University. Powered by Thrive Africa." />
+    <meta name="twitter:image" content="https://ktu-cert.thriveafrica.co/cert.jpg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationalOccupationalProgram",
+        "name": "KTU University Certificate Program",
+        "description": "Officially accredited, hardcopy university certificate issued by Koforidua Technical University, delivered in partnership with Thrive Africa.",
+        "url": "https://ktu-cert.thriveafrica.co/",
+        "provider": {
+          "@type": "Organization",
+          "name": "Thrive Africa",
+          "url": "https://thrive-cert.thriveafrica.co",
+          "logo": "https://ktu-cert.thriveafrica.co/thrive-logo2.png",
+          "sameAs": ["https://thriveafrica.co"]
+        },
+        "educationalCredentialAwarded": {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "Certificate",
+          "recognizedBy": {
+            "@type": "CollegeOrUniversity",
+            "name": "Koforidua Technical University",
+            "url": "https://www.ktu.edu.gh/"
+          }
+        },
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "GHS",
+          "price": "300",
+          "url": "https://ktu-cert.thriveafrica.co/#reserve",
+          "availability": "https://schema.org/InStock"
+        },
+        "inLanguage": "en"
+      }
+    </script>
+
+    <style>html, body { height: 100%; margin: 0; font-family: 'Outfit', system-ui, -apple-system, sans-serif; } #root { height: 100%; }</style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

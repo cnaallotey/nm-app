@@ -202,7 +202,7 @@ export default function App() {
       <section className="bg-slate-900 text-white py-16 md:py-32">
         <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
           <div className="grid md:grid-cols-3 gap-8 divide-y divide-white/20 md:divide-y-0 md:divide-x">
-            <div className="text-center px-4 pt-8 md:pt-0 first:pt-0">
+            <div className="text-center px-4 py-8 md:pt-0 first:pt-0">
               <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.05em' }}>
                 FOUNDER'S REWARD
               </p>
@@ -214,7 +214,7 @@ export default function App() {
                 First come, first served
               </span>
             </div>
-            <div className="text-center px-4 pt-8 md:pt-0 first:pt-0">
+            <div className="text-center px-4 py-8 md:pt-0 first:pt-0">
               <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.05em' }}>
                 STANDARD PRICE
               </p>
@@ -226,7 +226,7 @@ export default function App() {
                 No discount
               </span>
             </div>
-            <div className="text-center px-4 pt-8 md:pt-0 first:pt-0">
+            <div className="text-center px-4 py-8 md:pt-0 first:pt-0">
               <p className="text-pink-500 uppercase mb-2 flex items-center justify-center gap-1" style={{ fontSize: '12px', letterSpacing: '0.05em' }}>
                 <span>⚠</span> AFTER 14TH MAY
               </p>
