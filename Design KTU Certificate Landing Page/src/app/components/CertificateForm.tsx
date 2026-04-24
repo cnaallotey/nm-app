@@ -93,7 +93,7 @@ export function CertificateForm() {
 
       <form className="space-y-5" onSubmit={handleSubmit}>
         <div>
-          <label className="block text-gray-700 mb-2" style={{ fontSize: '14px' }}>Full Name</label>
+          <label className="block text-gray-700 mb-2" style={{ fontSize: '14px' }}>Full Name as you want to appear on your certificate</label>
           <input
             type="text"
             name="fullName"
