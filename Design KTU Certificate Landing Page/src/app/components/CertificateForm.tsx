@@ -317,7 +317,7 @@ export function CertificateForm() {
             </h3>
 
             <p className="text-gray-600 mb-5 text-center" style={{ fontSize: '15px', lineHeight: '1.6' }}>
-              To complete your application, please pay a <b>GHS100 deposit</b> using the link below to secure your certificate and unlock your <b>GHS60 Founder's Reward</b>.
+              To complete your application, please pay a <b>GHS100 deposit per each Certificate Title</b> using the link below to secure your certificate and unlock your <b>GHS60 Founder's Reward</b>.
             </p>
 
             <a
