@@ -1,0 +1,167 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Student, Mentor, or Admin user profile",
+      "type": "object",
+      "properties": {
+        "full_name": { "type": "string", "description": "User's full name" },
+        "email": { "type": "string", "format": "email", "description": "User's email address" },
+        "avatar_url": { "type": "string", "description": "URL to profile picture" },
+        "role": { "type": "string", "enum": ["student", "mentor", "admin"], "description": "User role" },
+        "programme": { "type": "string", "description": "Enrolled programme (e.g., Thrive Essentials)" },
+        "cohort": { "type": "string", "description": "Cohort name/ID" },
+        "country": { "type": "string", "description": "User's country" },
+        "created_at": { "type": "string", "format": "date-time", "description": "Account creation date" }
+      },
+      "required": ["full_name", "email", "role"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "A learning track or course",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "programme_type": { "type": "string", "enum": ["beginners", "campus", "professionals", "diploma"] },
+        "description": { "type": "string" },
+        "duration_weeks": { "type": "number" }
+      },
+      "required": ["title", "programme_type"]
+    },
+    "Module": {
+      "title": "Module",
+      "description": "A week or unit within a course",
+      "type": "object",
+      "properties": {
+        "course_id": { "type": "string" },
+        "title": { "type": "string" },
+        "week_number": { "type": "number" },
+        "order": { "type": "number" }
+      },
+      "required": ["course_id", "title", "week_number"]
+    },
+    "Class": {
+      "title": "Class",
+      "description": "A live Zoom session",
+      "type": "object",
+      "properties": {
+        "module_id": { "type": "string" },
+        "title": { "type": "string" },
+        "scheduled_at": { "type": "string", "format": "date-time" },
+        "zoom_link": { "type": "string" },
+        "zoom_meeting_id": { "type": "string" },
+        "recording_url": { "type": "string" },
+        "instructor_name": { "type": "string" },
+        "is_catchup": { "type": "boolean" }
+      },
+      "required": ["module_id", "title", "scheduled_at"]
+    },
+    "Enrollment": {
+      "title": "Enrollment",
+      "description": "Student enrollment in a course",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "course_id": { "type": "string" },
+        "started_at": { "type": "string", "format": "date-time" },
+        "progress_pct": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "completed", "dropped"] }
+      },
+      "required": ["user_id", "course_id"]
+    },
+    "Assignment": {
+      "title": "Assignment",
+      "description": "A task or project for students",
+      "type": "object",
+      "properties": {
+        "module_id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "due_date": { "type": "string", "format": "date-time" },
+        "max_score": { "type": "number" },
+        "type": { "type": "string", "enum": ["assignment", "capstone"] }
+      },
+      "required": ["module_id", "title", "due_date"]
+    },
+    "Submission": {
+      "title": "Submission",
+      "description": "Student's work for an assignment",
+      "type": "object",
+      "properties": {
+        "assignment_id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "file_url": { "type": "string" },
+        "submitted_at": { "type": "string", "format": "date-time" },
+        "score": { "type": "number" },
+        "feedback": { "type": "string" }
+      },
+      "required": ["assignment_id", "user_id", "file_url"]
+    },
+    "Material": {
+      "title": "Material",
+      "description": "Course materials (PDFs, videos, etc.)",
+      "type": "object",
+      "properties": {
+        "module_id": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["pdf", "video", "notebook", "link"] },
+        "file_url": { "type": "string" },
+        "uploaded_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["module_id", "title", "type", "file_url"]
+    },
+    "Announcement": {
+      "title": "Announcement",
+      "description": "Announcements for a course",
+      "type": "object",
+      "properties": {
+        "course_id": { "type": "string" },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "author_id": { "type": "string" }
+      },
+      "required": ["course_id", "title", "body"]
+    },
+    "Certificate": {
+      "title": "Certificate",
+      "description": "Earned certificate for a course",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "course_id": { "type": "string" },
+        "issued_at": { "type": "string", "format": "date-time" },
+        "score": { "type": "number" },
+        "verification_code": { "type": "string" },
+        "university_partner": { "type": "string" }
+      },
+      "required": ["user_id", "course_id", "verification_code"]
+    },
+    "CareerApplication": {
+      "title": "CareerApplication",
+      "description": "Application for career services",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "type": { "type": "string", "enum": ["cv_review", "linkedin", "internship", "mock_interview", "study_abroad"] },
+        "status": { "type": "string", "enum": ["submitted", "under_review", "feedback_ready", "completed"] },
+        "submitted_at": { "type": "string", "format": "date-time" },
+        "feedback": { "type": "string" }
+      },
+      "required": ["user_id", "type", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles" },
+    "/courses/{courseId}": { "schema": "Course", "description": "Course definitions" },
+    "/courses/{courseId}/modules/{moduleId}": { "schema": "Module", "description": "Modules within a course" },
+    "/classes/{classId}": { "schema": "Class", "description": "Live class sessions" },
+    "/enrollments/{enrollmentId}": { "schema": "Enrollment", "description": "Student enrollments" },
+    "/assignments/{assignmentId}": { "schema": "Assignment", "description": "Course assignments" },
+    "/submissions/{submissionId}": { "schema": "Submission", "description": "Assignment submissions" },
+    "/materials/{materialId}": { "schema": "Material", "description": "Course materials" },
+    "/announcements/{announcementId}": { "schema": "Announcement", "description": "Course announcements" },
+    "/certificates/{certificateId}": { "schema": "Certificate", "description": "Earned certificates" },
+    "/career_applications/{applicationId}": { "schema": "CareerApplication", "description": "Career service applications" }
+  }
+}

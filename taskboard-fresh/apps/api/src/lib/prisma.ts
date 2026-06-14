@@ -1,0 +1,15 @@
+import { PrismaClient } from "@prisma/client";
+
+// Reuse a single client across hot reloads in dev (nodemon re-execs the
+// process, but ts-node module caching can still leak connections otherwise).
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
+  });
+
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
+}

@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ───────────────────────────────────────────────
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum TaskType {
+  PAID
+  COMMUNITY
+}
+
+enum TaskStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ApplicationType {
+  SELF
+  NOMINATION
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum NotificationType {
+  NEW_APPLICATION
+  NEW_NOMINATION
+  APPLICATION_ACCEPTED
+  APPLICATION_REJECTED
+  TASK_ASSIGNED
+  TASK_COMPLETED
+  NEW_REVIEW
+}
+
+// ─── Models ──────────────────────────────────────────────
+
+model Profile {
+  id            String   @id @default(cuid())
+  auth0UserId   String   @unique
+  username      String   @unique
+  email         String   @unique
+  fullName      String
+  avatarUrl     String?
+  bio           String?
+  location      String?
+  skills        String[]
+  averageRating Float    @default(0)
+  reviewCount   Int      @default(0)
+  role          Role     @default(USER)
+  banned        Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  tasksPosted      Task[]         @relation("TaskPoster")
+  tasksAssigned    Task[]         @relation("TaskAssignee")
+  applicationsMade Application[]  @relation("Applicant")
+  nominations      Application[]  @relation("NominatedUser")
+  reviewsGiven     Review[]       @relation("Reviewer")
+  reviewsReceived  Review[]       @relation("Reviewee")
+  notifications    Notification[]
+}
+
+model Task {
+  id             String     @id @default(cuid())
+  posterId       String
+  title          String
+  description    String
+  taskType       TaskType
+  budget         Float?
+  currency       String?
+  skillsRequired String[]
+  location       String?
+  isRemote       Boolean    @default(true)
+  status         TaskStatus @default(OPEN)
+  assignedToId   String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  poster       Profile       @relation("TaskPoster", fields: [posterId], references: [id])
+  assignedTo   Profile?      @relation("TaskAssignee", fields: [assignedToId], references: [id])
+  applications Application[]
+  reviews      Review[]
+
+  @@index([status])
+  @@index([posterId])
+}
+
+model Application {
+  id              String            @id @default(cuid())
+  taskId          String
+  applicantId     String
+  type            ApplicationType
+  nominatedUserId String?
+  coverNote       String
+  status          ApplicationStatus @default(PENDING)
+  createdAt       DateTime          @default(now())
+
+  task          Task     @relation(fields: [taskId], references: [id])
+  applicant     Profile  @relation("Applicant", fields: [applicantId], references: [id])
+  nominatedUser Profile? @relation("NominatedUser", fields: [nominatedUserId], references: [id])
+
+  @@unique([taskId, applicantId])
+  @@index([taskId])
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  taskId     String
+  reviewerId String
+  revieweeId String
+  rating     Int
+  comment    String
+  createdAt  DateTime @default(now())
+
+  task     Task    @relation(fields: [taskId], references: [id])
+  reviewer Profile @relation("Reviewer", fields: [reviewerId], references: [id])
+  reviewee Profile @relation("Reviewee", fields: [revieweeId], references: [id])
+
+  @@unique([taskId, reviewerId])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  payload   Json
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user Profile @relation(fields: [userId], references: [id])
+
+  @@index([userId, read])
+}

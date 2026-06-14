@@ -11,19 +11,20 @@ const nextConfig: NextConfig = {
     root: path.join(__dirname, "..", ".."),
   },
   async rewrites() {
+    // `fallback` runs AFTER both static and dynamic filesystem routes, so
+    // every Next-owned `/api/*` route handler wins first — including the
+    // *dynamic* `app/api/auth/[...auth0]` catch-all (which `afterFiles`
+    // would wrongly shadow, since afterFiles is evaluated before dynamic
+    // routes). Anything with no Next route falls through to Express.
     return {
-      // `beforeFiles` would shadow our own route handlers. Using `afterFiles`
-      // means Next's filesystem routes win first — so the Auth0 shims at
-      // `app/api/auth/[...auth0]` and `app/api/token` are served by Next,
-      // and every *other* `/api/*` request falls through to the Express API.
       beforeFiles: [],
-      afterFiles: [
+      afterFiles: [],
+      fallback: [
         {
           source: "/api/:path*",
           destination: `${API_URL}/api/:path*`,
         },
       ],
-      fallback: [],
     };
   },
 };

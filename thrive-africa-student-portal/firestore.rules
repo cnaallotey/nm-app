@@ -1,0 +1,125 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: users
+    // Fields: full_name, email, avatar_url, role, programme, cohort, country, created_at
+    
+    // Collection: courses
+    // Fields: title, programme_type, description, duration_weeks
+    
+    // Collection: classes
+    // Fields: module_id, title, scheduled_at, zoom_link, zoom_meeting_id, recording_url, instructor_name, is_catchup
+    
+    // Collection: enrollments
+    // Fields: user_id, course_id, started_at, progress_pct, status
+    
+    // Collection: assignments
+    // Fields: module_id, title, description, due_date, max_score, type
+    
+    // Collection: submissions
+    // Fields: assignment_id, user_id, file_url, submitted_at, score, feedback
+    
+    // Collection: materials
+    // Fields: module_id, title, type, file_url, uploaded_at
+    
+    // Collection: announcements
+    // Fields: course_id, title, body, created_at, author_id
+    
+    // Collection: certificates
+    // Fields: user_id, course_id, issued_at, score, verification_code, university_partner
+    
+    // Collection: career_applications
+    // Fields: user_id, type, status, submitted_at, feedback
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+         (request.auth.token.email == "charlesallotey1995@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isMentor() {
+      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'mentor';
+    }
+
+    function hasRole(role) {
+      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      allow update: if isAuthenticated() && (isOwner(userId) || isAdmin());
+    }
+
+    match /courses/{courseId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+      
+      match /modules/{moduleId} {
+        allow read: if isAuthenticated();
+        allow write: if isAdmin() || isMentor();
+      }
+    }
+
+    match /classes/{classId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() || isMentor();
+    }
+
+    match /enrollments/{enrollmentId} {
+      allow read: if isAuthenticated() && (isOwner(resource.data.user_id) || isAdmin() || isMentor());
+      allow create: if isAuthenticated() && (isOwner(request.resource.data.user_id) || isAdmin());
+      allow update: if isAdmin() || isMentor();
+    }
+
+    match /assignments/{assignmentId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() || isMentor();
+    }
+
+    match /submissions/{submissionId} {
+      allow read: if isAuthenticated() && (isOwner(resource.data.user_id) || isAdmin() || isMentor());
+      allow create: if isAuthenticated() && isOwner(request.resource.data.user_id);
+      allow update: if isAdmin() || isMentor();
+    }
+
+    match /materials/{materialId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() || isMentor();
+    }
+
+    match /announcements/{announcementId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() || isMentor();
+    }
+
+    match /certificates/{certificateId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    match /career_applications/{applicationId} {
+      allow read: if isAuthenticated() && (isOwner(resource.data.user_id) || isAdmin() || isMentor());
+      allow create: if isAuthenticated() && isOwner(request.resource.data.user_id);
+      allow update: if isAdmin() || isMentor();
+    }
+  }
+}
