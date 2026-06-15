@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { motion } from "motion/react";
 import {
@@ -7,9 +8,13 @@ import {
   Clock,
   Send,
   CheckCircle,
+  Loader2,
 } from "lucide-react";
 import { Navigation } from "../components/Navigation";
 import { Footer } from "../components/Footer";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { toast } from "sonner";
 
 const offices = [
   {
@@ -34,11 +39,36 @@ const inquiryTypes = [
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [selectedInquiry, setSelectedInquiry] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    const form = e.currentTarget;
+    
+    setSubmitting(true);
+    try {
+      await addDoc(collection(db, "submissions"), {
+        type: "inquiry",
+        firstName: (form.querySelector("#contact-firstName") as HTMLInputElement)?.value || "",
+        lastName: (form.querySelector("#contact-lastName") as HTMLInputElement)?.value || "",
+        email: (form.querySelector("#contact-email") as HTMLInputElement)?.value || "",
+        phone: (form.querySelector("#contact-phone") as HTMLInputElement)?.value || "",
+        inquiryType: selectedInquiry || "General Inquiry",
+        message: (form.querySelector("#contact-message") as HTMLTextAreaElement)?.value || "",
+        consent: true,
+        status: "new",
+        source: "ContactPage",
+        createdAt: serverTimestamp(),
+      });
+      setSubmitted(true);
+      toast.success("Message sent successfully!");
+    } catch (err) {
+      console.error("Error submitting contact inquiry:", err);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -55,7 +85,7 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C9A96E] mb-4">
+            <p className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#fbbf24] mb-4">
               Get in Touch
             </p>
             <h1 className="font-['Cormorant_Garamond'] text-5xl lg:text-7xl font-light text-white mb-6">
@@ -89,8 +119,8 @@ export default function ContactPage() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <div className="w-16 h-16 bg-[#C9A96E]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                      <CheckCircle className="w-8 h-8 text-[#C9A96E]" />
+                    <div className="w-16 h-16 bg-[#fbbf24]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <CheckCircle className="w-8 h-8 text-[#fbbf24]" />
                     </div>
                     <h3 className="font-['Cormorant_Garamond'] text-3xl lg:text-4xl font-light text-white mb-4">
                       Message Sent
@@ -101,7 +131,7 @@ export default function ContactPage() {
                     </p>
                     <button
                       onClick={() => setSubmitted(false)}
-                      className="px-8 py-3 bg-transparent border border-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#C9A96E] hover:bg-[#C9A96E]/10 transition-all"
+                      className="px-8 py-3 bg-transparent border border-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#fbbf24] hover:bg-[#fbbf24]/10 transition-all"
                     >
                       Send Another Message
                     </button>
@@ -129,8 +159,8 @@ export default function ContactPage() {
                               onClick={() => setSelectedInquiry(type)}
                               className={`px-4 py-2 rounded-lg font-['Montserrat'] text-xs transition-all ${
                                 selectedInquiry === type
-                                  ? "bg-[#C9A96E] text-[#1A1A1A] font-semibold"
-                                  : "bg-[#1A1A1A] border border-white/10 text-white/60 hover:border-[#C9A96E]/40"
+                                  ? "bg-[#fbbf24] text-[#1A1A1A] font-semibold"
+                                  : "bg-[#1A1A1A] border border-white/10 text-white/60 hover:border-[#fbbf24]/40"
                               }`}
                             >
                               {type}
@@ -152,7 +182,7 @@ export default function ContactPage() {
                             type="text"
                             id="contact-firstName"
                             required
-                            className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#C9A96E] focus:outline-none transition-colors"
+                            className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#fbbf24] focus:outline-none transition-colors"
                             placeholder="John"
                           />
                         </div>
@@ -167,7 +197,7 @@ export default function ContactPage() {
                             type="text"
                             id="contact-lastName"
                             required
-                            className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#C9A96E] focus:outline-none transition-colors"
+                            className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#fbbf24] focus:outline-none transition-colors"
                             placeholder="Doe"
                           />
                         </div>
@@ -186,7 +216,7 @@ export default function ContactPage() {
                             type="email"
                             id="contact-email"
                             required
-                            className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#C9A96E] focus:outline-none transition-colors"
+                            className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#fbbf24] focus:outline-none transition-colors"
                             placeholder="john.doe@example.com"
                           />
                         </div>
@@ -200,7 +230,7 @@ export default function ContactPage() {
                           <input
                             type="tel"
                             id="contact-phone"
-                            className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#C9A96E] focus:outline-none transition-colors"
+                            className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#fbbf24] focus:outline-none transition-colors"
                             placeholder="+1 (555) 000-0000"
                           />
                         </div>
@@ -218,7 +248,7 @@ export default function ContactPage() {
                           id="contact-message"
                           rows={5}
                           required
-                          className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#C9A96E] focus:outline-none transition-colors resize-none"
+                          className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#fbbf24] focus:outline-none transition-colors resize-none"
                           placeholder="Tell us about what you're looking for..."
                         />
                       </div>
@@ -229,7 +259,7 @@ export default function ContactPage() {
                           type="checkbox"
                           id="contact-consent"
                           required
-                          className="mt-1 w-4 h-4 rounded border-white/20 bg-[#1A1A1A] text-[#C9A96E] focus:ring-[#C9A96E]"
+                          className="mt-1 w-4 h-4 rounded border-white/20 bg-[#1A1A1A] text-[#fbbf24] focus:ring-[#fbbf24]"
                         />
                         <label
                           htmlFor="contact-consent"
@@ -239,7 +269,7 @@ export default function ContactPage() {
                           understand I can opt out at any time. View our{" "}
                           <a
                             href="#"
-                            className="text-[#C9A96E] hover:underline"
+                            className="text-[#fbbf24] hover:underline"
                           >
                             Privacy Policy
                           </a>
@@ -250,12 +280,23 @@ export default function ContactPage() {
                       {/* Submit */}
                       <button
                         type="submit"
-                        className="w-full md:w-auto px-12 py-4 bg-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all hover:shadow-lg hover:shadow-[#C9A96E]/20 inline-flex items-center justify-center gap-2"
+                        disabled={submitting}
+                        className="w-full md:w-auto px-12 py-4 bg-[#fbbf24] disabled:bg-[#fbbf24]/50 disabled:cursor-not-allowed rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all hover:shadow-lg hover:shadow-[#fbbf24]/20 inline-flex items-center justify-center gap-2 cursor-pointer"
                       >
-                        <Send className="w-4 h-4" />
-                        <span>Send Message</span>
+                        {submitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <span>Sending...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-4 h-4" />
+                            <span>Send Message</span>
+                          </>
+                        )}
                       </button>
                     </form>
+
                   </>
                 )}
               </div>
@@ -278,14 +319,14 @@ export default function ContactPage() {
                     href="tel:+233302523984"
                     className="flex items-center gap-4 group"
                   >
-                    <div className="w-10 h-10 bg-[#C9A96E]/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#C9A96E]/20 transition-colors">
-                      <Phone className="w-4 h-4 text-[#C9A96E]" />
+                    <div className="w-10 h-10 bg-[#fbbf24]/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#fbbf24]/20 transition-colors">
+                      <Phone className="w-4 h-4 text-[#fbbf24]" />
                     </div>
                     <div>
                       <p className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.1em] text-white/40 mb-0.5">
                         Call Us
                       </p>
-                      <p className="font-['Montserrat'] text-sm text-white/80 group-hover:text-[#C9A96E] transition-colors">
+                      <p className="font-['Montserrat'] text-sm text-white/80 group-hover:text-[#fbbf24] transition-colors">
                         +233 (0) 302 523 984
                       </p>
                     </div>
@@ -294,21 +335,21 @@ export default function ContactPage() {
                     href="mailto:info@nouvellemaisonlimited.com"
                     className="flex items-center gap-4 group"
                   >
-                    <div className="w-10 h-10 bg-[#C9A96E]/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#C9A96E]/20 transition-colors">
-                      <Mail className="w-4 h-4 text-[#C9A96E]" />
+                    <div className="w-10 h-10 bg-[#fbbf24]/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#fbbf24]/20 transition-colors">
+                      <Mail className="w-4 h-4 text-[#fbbf24]" />
                     </div>
                     <div>
                       <p className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.1em] text-white/40 mb-0.5">
                         Email
                       </p>
-                      <p className="font-['Montserrat'] text-sm text-white/80 group-hover:text-[#C9A96E] transition-colors">
+                      <p className="font-['Montserrat'] text-sm text-white/80 group-hover:text-[#fbbf24] transition-colors">
                         info@nouvellemaisonlimited.com
                       </p>
                     </div>
                   </a>
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[#C9A96E]/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Clock className="w-4 h-4 text-[#C9A96E]" />
+                    <div className="w-10 h-10 bg-[#fbbf24]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-4 h-4 text-[#fbbf24]" />
                     </div>
                     <div>
                       <p className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.1em] text-white/40 mb-0.5">
@@ -326,7 +367,7 @@ export default function ContactPage() {
               </div>
 
               {/* Priority Notice */}
-              <div className="bg-gradient-to-br from-[#C9A96E]/10 to-[#C9A96E]/5 border border-[#C9A96E]/20 rounded-2xl p-8">
+              <div className="bg-gradient-to-br from-[#fbbf24]/10 to-[#fbbf24]/5 border border-[#fbbf24]/20 rounded-2xl p-8">
                 <h3 className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-3">
                   Priority Access
                 </h3>
@@ -385,7 +426,7 @@ export default function ContactPage() {
                 </div>
                 <div className="space-y-3 px-1">
                   <div className="flex items-start gap-3">
-                    <MapPin className="w-4 h-4 text-[#C9A96E] mt-0.5 flex-shrink-0" />
+                    <MapPin className="w-4 h-4 text-[#fbbf24] mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="font-['Montserrat'] text-sm text-white/70">
                         {office.address}
@@ -396,19 +437,19 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Phone className="w-4 h-4 text-[#C9A96E] flex-shrink-0" />
+                    <Phone className="w-4 h-4 text-[#fbbf24] flex-shrink-0" />
                     <a
                       href={`tel:${office.phone.replace(/\s/g, "")}`}
-                      className="font-['Montserrat'] text-sm text-white/70 hover:text-[#C9A96E] transition-colors"
+                      className="font-['Montserrat'] text-sm text-white/70 hover:text-[#fbbf24] transition-colors"
                     >
                       {office.phone}
                     </a>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Mail className="w-4 h-4 text-[#C9A96E] flex-shrink-0" />
+                    <Mail className="w-4 h-4 text-[#fbbf24] flex-shrink-0" />
                     <a
                       href={`mailto:${office.email}`}
-                      className="font-['Montserrat'] text-sm text-white/70 hover:text-[#C9A96E] transition-colors"
+                      className="font-['Montserrat'] text-sm text-white/70 hover:text-[#fbbf24] transition-colors"
                     >
                       {office.email}
                     </a>

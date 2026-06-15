@@ -1,6 +1,53 @@
+"use client";
+import { useState } from "react";
 import { motion } from "motion/react";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { toast } from "sonner";
 
-export function ContactForm() {
+interface ContactFormProps {
+  propertyId?: string;
+  propertyTitle?: string;
+}
+
+export function ContactForm({ propertyId, propertyTitle = "Villa Serena" }: ContactFormProps) {
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    
+    if (!fd.get("consent")) {
+      return toast.error("Please accept the consent notice to proceed.");
+    }
+
+    setSubmitting(true);
+    try {
+      await addDoc(collection(db, "submissions"), {
+        type: "inquiry",
+        firstName: String(fd.get("firstName") ?? ""),
+        lastName: String(fd.get("lastName") ?? ""),
+        email: String(fd.get("email") ?? ""),
+        phone: String(fd.get("phone") ?? ""),
+        message: String(fd.get("message") ?? ""),
+        propertyId: propertyId || "",
+        propertyTitle,
+        consent: true,
+        status: "new",
+        source: "ContactForm",
+        createdAt: serverTimestamp(),
+      });
+      toast.success("Inquiry sent. We'll be in touch within 24 hours.");
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to submit inquiry. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <div className="bg-[#1A1A1A] py-16 px-6 lg:px-12">
       <motion.div
@@ -10,15 +57,15 @@ export function ContactForm() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="bg-[#0F0F0F] border-l-4 border-[#C9A96E] rounded-2xl p-8 lg:p-12">
+        <div className="bg-[#0F0F0F] border-l-4 border-[#fbbf24] rounded-2xl p-8 lg:p-12">
           <h2 className="font-['Cormorant_Garamond'] text-4xl lg:text-5xl font-light text-white mb-4">
-            Interested in Villa Serena?
+            Interested in {propertyTitle}?
           </h2>
           <p className="font-['Montserrat'] text-sm text-white/60 mb-10">
             Fill out the form below and one of our property specialists will be in touch within 24 hours.
           </p>
 
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="firstName" className="block font-['Montserrat'] text-xs font-medium uppercase tracking-[0.1em] text-white/70 mb-2">
@@ -27,8 +74,10 @@ export function ContactForm() {
                 <input
                   type="text"
                   id="firstName"
-                  className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#C9A96E] focus:outline-none transition-colors"
+                  name="firstName"
+                  className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#fbbf24] focus:outline-none transition-colors"
                   placeholder="John"
+                  required
                 />
               </div>
               <div>
@@ -38,8 +87,10 @@ export function ContactForm() {
                 <input
                   type="text"
                   id="lastName"
-                  className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#C9A96E] focus:outline-none transition-colors"
+                  name="lastName"
+                  className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#fbbf24] focus:outline-none transition-colors"
                   placeholder="Doe"
+                  required
                 />
               </div>
               <div>
@@ -49,8 +100,10 @@ export function ContactForm() {
                 <input
                   type="tel"
                   id="phone"
-                  className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#C9A96E] focus:outline-none transition-colors"
-                  placeholder="+1 (555) 000-0000"
+                  name="phone"
+                  className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#fbbf24] focus:outline-none transition-colors"
+                  placeholder="+233 (0) 555-000-000"
+                  required
                 />
               </div>
               <div>
@@ -60,8 +113,10 @@ export function ContactForm() {
                 <input
                   type="email"
                   id="email"
-                  className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#C9A96E] focus:outline-none transition-colors"
+                  name="email"
+                  className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#fbbf24] focus:outline-none transition-colors"
                   placeholder="john.doe@example.com"
+                  required
                 />
               </div>
             </div>
@@ -72,8 +127,9 @@ export function ContactForm() {
               </label>
               <textarea
                 id="message"
+                name="message"
                 rows={5}
-                className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#C9A96E] focus:outline-none transition-colors resize-none"
+                className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#fbbf24] focus:outline-none transition-colors resize-none"
                 placeholder="I'm interested in learning more about this property..."
               />
             </div>
@@ -82,7 +138,10 @@ export function ContactForm() {
               <input
                 type="checkbox"
                 id="consent"
-                className="mt-1 w-4 h-4 rounded border-white/20 bg-[#1A1A1A] text-[#C9A96E] focus:ring-[#C9A96E]"
+                name="consent"
+                value="true"
+                defaultChecked
+                className="mt-1 w-4 h-4 rounded border-white/20 bg-[#1A1A1A] text-[#fbbf24] focus:ring-[#fbbf24]"
               />
               <label htmlFor="consent" className="font-['Montserrat'] text-xs text-white/50 leading-relaxed">
                 By submitting this form, I agree to be contacted by Nouvelle Maison Ltd. regarding this property and other listings. I understand I can opt out at any time.
@@ -91,9 +150,10 @@ export function ContactForm() {
 
             <button
               type="submit"
-              className="w-full lg:w-auto px-12 py-4 bg-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all hover:shadow-lg hover:shadow-[#C9A96E]/20"
+              disabled={submitting}
+              className="w-full lg:w-auto px-12 py-4 bg-[#fbbf24] hover:bg-[#D4B87E] disabled:opacity-50 disabled:cursor-not-allowed text-[#1A1A1A] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] transition-all hover:shadow-lg hover:shadow-[#fbbf24]/20 cursor-pointer"
             >
-              Submit Inquiry
+              {submitting ? "Submitting Inquiry..." : "Submit Inquiry"}
             </button>
           </form>
         </div>

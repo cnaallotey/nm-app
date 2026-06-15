@@ -1,6 +1,11 @@
+"use client";
+import { useState } from "react";
 import { motion } from "motion/react";
-import { Mail, Phone, MapPin } from "lucide-react";
-import { Link } from "react-router";
+import { Mail, Phone, MapPin, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { toast } from "sonner";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -19,6 +24,38 @@ const propertyTypes = [
 ];
 
 export function Footer() {
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const emailInput = form.querySelector("input[type='email']") as HTMLInputElement;
+    const email = emailInput?.value || "";
+
+    if (!email) return;
+
+    setSubmitting(true);
+    try {
+      await addDoc(collection(db, "submissions"), {
+        type: "newsletter",
+        email: email,
+        firstName: "Newsletter",
+        lastName: "Subscriber",
+        consent: true,
+        status: "new",
+        source: "FooterNewsletter",
+        createdAt: serverTimestamp(),
+      });
+      toast.success("Thank you for subscribing to our newsletter!");
+      form.reset();
+    } catch (err) {
+      console.error("Error subscribing to newsletter:", err);
+      toast.error("Failed to subscribe. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <footer className="bg-[#0F0F0F] border-t border-white/5">
       {/* Newsletter Section */}
@@ -33,35 +70,38 @@ export function Footer() {
           <h3 className="font-['Cormorant_Garamond'] text-3xl lg:text-4xl font-light text-white mb-4">
             Join Our Network
           </h3>
-          <p className="font-['Montserrat'] text-sm text-white/60 mb-8 max-w-2xl mx-auto">
-            Stay informed about exclusive luxury properties and market insights. Subscribe to receive curated listings directly to your inbox.
+          <p className="font-['Montserrat'] text-sm text-white/55 mb-8 max-w-md mx-auto">
+            Subscribe to our newsletter for exclusive off-market listings, market reports, and luxury real estate insights.
           </p>
-          <form className="flex flex-col lg:flex-row gap-4 max-w-xl mx-auto">
+          <form onSubmit={handleSubscribe} className="max-w-md mx-auto flex gap-3">
             <input
               type="email"
-              placeholder="Your email address"
-              className="flex-1 px-6 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:border-[#C9A96E] focus:outline-none transition-colors"
+              placeholder="Your Email Address"
+              required
+              className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-3 font-['Montserrat'] text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#fbbf24] transition-colors"
             />
             <button
               type="submit"
-              className="px-8 py-3 bg-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all"
+              disabled={submitting}
+              className="px-6 py-3 bg-[#fbbf24] text-[#1A1A1A] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.05em] hover:bg-[#D4B87E] disabled:bg-[#fbbf24]/50 disabled:cursor-not-allowed transition-colors inline-flex items-center gap-2 cursor-pointer"
             >
-              Subscribe
+              {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
+              <span>Subscribe</span>
             </button>
           </form>
         </motion.div>
       </div>
 
-      {/* Main Footer Content */}
-      <div className="py-12 px-6 lg:px-12">
+      {/* Main Footer Links */}
+      <div className="py-20 px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12">
-            {/* Logo & Description */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+            {/* Branding */}
             <div className="lg:col-span-1">
-              <Link to="/" className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-4 block">
+              <Link href="/" className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-4 block">
                  NOUVELLE MAISON
               </Link>
-              <p className="font-['Montserrat'] text-sm text-white/50 leading-relaxed">
+              <p className="font-['Montserrat'] text-sm text-white/55 leading-relaxed">
                 Digital-driven realty solutions provider since 2022.
               </p>
             </div>
@@ -75,8 +115,8 @@ export function Footer() {
                 {quickLinks.map((link) => (
                   <li key={link.label}>
                     <Link
-                      to={link.href}
-                      className="font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors"
+                      href={link.href}
+                      className="font-['Montserrat'] text-sm text-white/65 hover:text-[#fbbf24] transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -94,8 +134,8 @@ export function Footer() {
                 {propertyTypes.map((link) => (
                   <li key={link.label}>
                     <Link
-                      to={link.href}
-                      className="font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors"
+                      href={link.href}
+                      className="font-['Montserrat'] text-sm text-white/65 hover:text-[#fbbf24] transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -111,39 +151,39 @@ export function Footer() {
               </h4>
               <ul className="space-y-4">
                 <li className="flex items-start space-x-3">
-                  <MapPin className="w-4 h-4 text-[#C9A96E] mt-1 flex-shrink-0" />
+                  <MapPin className="w-4 h-4 text-[#fbbf24] mt-1 flex-shrink-0" />
                   <span className="font-['Montserrat'] text-sm text-white/60 leading-relaxed">
                     No. 36 Lagos Avenue<br />East Legon, Ghana
                   </span>
                 </li>
                 <li className="flex items-start space-x-3">
-                  <Phone className="w-4 h-4 text-[#C9A96E] mt-1 flex-shrink-0" />
+                  <Phone className="w-4 h-4 text-[#fbbf24] mt-1 flex-shrink-0" />
                   <div className="space-y-1">
                     <a
                       href="tel:+233302523984"
-                      className="block font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors"
+                      className="block font-['Montserrat'] text-sm text-white/60 hover:text-[#fbbf24] transition-colors"
                     >
                       +233 (0) 302 523 984
                     </a>
                     <a
                       href="tel:+233303983219"
-                      className="block font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors"
+                      className="block font-['Montserrat'] text-sm text-white/60 hover:text-[#fbbf24] transition-colors"
                     >
                       +233 (0) 303 983 219
                     </a>
                     <a
                       href="tel:+233257728848"
-                      className="block font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors"
+                      className="block font-['Montserrat'] text-sm text-white/60 hover:text-[#fbbf24] transition-colors"
                     >
                       +233 (0) 257 728 848
                     </a>
                   </div>
                 </li>
                 <li className="flex items-start space-x-3">
-                  <Mail className="w-4 h-4 text-[#C9A96E] mt-1 flex-shrink-0" />
+                  <Mail className="w-4 h-4 text-[#fbbf24] mt-1 flex-shrink-0" />
                   <a
                     href="mailto:info@nouvellemaisonlimited.com"
-                    className="font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors"
+                    className="font-['Montserrat'] text-sm text-white/60 hover:text-[#fbbf24] transition-colors"
                   >
                     info@nouvellemaisonlimited.com
                   </a>
@@ -161,19 +201,19 @@ export function Footer() {
               <div className="flex items-center space-x-6">
                 <a
                   href="#"
-                  className="font-['Montserrat'] text-xs text-white/40 hover:text-[#C9A96E] transition-colors"
+                  className="font-['Montserrat'] text-xs text-white/40 hover:text-[#fbbf24] transition-colors"
                 >
                   Privacy Policy
                 </a>
                 <a
                   href="#"
-                  className="font-['Montserrat'] text-xs text-white/40 hover:text-[#C9A96E] transition-colors"
+                  className="font-['Montserrat'] text-xs text-white/40 hover:text-[#fbbf24] transition-colors"
                 >
                   Terms of Service
                 </a>
                 <a
                   href="#"
-                  className="font-['Montserrat'] text-xs text-white/40 hover:text-[#C9A96E] transition-colors"
+                  className="font-['Montserrat'] text-xs text-white/40 hover:text-[#fbbf24] transition-colors"
                 >
                   Accessibility
                 </a>

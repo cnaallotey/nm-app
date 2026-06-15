@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Link } from "react-router";
+import Link from "next/link";
 import {
   TrendingUp,
   Home,
@@ -127,7 +127,7 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C9A96E] mb-4">
+            <p className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#fbbf24] mb-4">
               Our Story
             </p>
             <h1 className="font-['Cormorant_Garamond'] text-5xl lg:text-7xl font-light text-white mb-6">
@@ -210,7 +210,7 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="inline-flex items-center justify-center w-14 h-14 bg-[#C9A96E]/10 rounded-full text-[#C9A96E] mb-4">
+                <div className="inline-flex items-center justify-center w-14 h-14 bg-[#fbbf24]/10 rounded-full text-[#fbbf24] mb-4">
                   {stat.icon}
                 </div>
                 <div className="font-['Cormorant_Garamond'] text-4xl lg:text-5xl font-light text-white mb-1">
@@ -247,13 +247,13 @@ export default function AboutPage() {
             {values.map((value, index) => (
               <motion.div
                 key={index}
-                className="p-8 bg-[#0F0F0F] border border-white/5 rounded-2xl hover:border-[#C9A96E]/30 transition-all"
+                className="p-8 bg-[#0F0F0F] border border-white/5 rounded-2xl hover:border-[#fbbf24]/30 transition-all"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="w-12 h-12 bg-[#C9A96E]/10 rounded-full flex items-center justify-center text-[#C9A96E] mb-5">
+                <div className="w-12 h-12 bg-[#fbbf24]/10 rounded-full flex items-center justify-center text-[#fbbf24] mb-5">
                   {value.icon}
                 </div>
                 <h3 className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-3">
@@ -297,13 +297,13 @@ export default function AboutPage() {
                 transition={{ duration: 0.5, delay: index * 0.08 }}
               >
                 <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 bg-[#C9A96E] rounded-full flex-shrink-0" />
+                  <div className="w-3 h-3 bg-[#fbbf24] rounded-full flex-shrink-0" />
                   {index < milestones.length - 1 && (
                     <div className="w-px flex-1 bg-white/10 mt-2" />
                   )}
                 </div>
                 <div className="pb-10 last:pb-0">
-                  <span className="font-['Cormorant_Garamond'] text-3xl font-light text-[#C9A96E]">
+                  <span className="font-['Cormorant_Garamond'] text-3xl font-light text-[#fbbf24]">
                     {milestone.year}
                   </span>
                   <p className="font-['Montserrat'] text-sm text-white/60 mt-1">
@@ -355,7 +355,7 @@ export default function AboutPage() {
                 <h3 className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-1">
                   {member.name}
                 </h3>
-                <p className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.1em] text-[#C9A96E] mb-3">
+                <p className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.1em] text-[#fbbf24] mb-3">
                   {member.role}
                 </p>
                 <p className="font-['Montserrat'] text-sm text-white/50 leading-relaxed">
@@ -389,15 +389,15 @@ export default function AboutPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                to="/listings"
-                className="px-10 py-4 bg-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all inline-flex items-center gap-2 group"
+                href="/listings"
+                className="px-10 py-4 bg-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all inline-flex items-center gap-2 group"
               >
                 <span>Browse Properties</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                to="/contact"
-                className="px-10 py-4 bg-transparent border border-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#C9A96E] hover:bg-[#C9A96E]/10 transition-all"
+                href="/contact"
+                className="px-10 py-4 bg-transparent border border-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#fbbf24] hover:bg-[#fbbf24]/10 transition-all"
               >
                 Contact Us
               </Link>

@@ -57,7 +57,7 @@ export function StatsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-[#C9A96E]/10 rounded-full text-[#C9A96E] mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-[#fbbf24]/10 rounded-full text-[#fbbf24] mb-6">
                 {stat.icon}
               </div>
               <div className="font-['Cormorant_Garamond'] text-5xl font-light text-white mb-2">

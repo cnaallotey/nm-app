@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
-import { Link } from "react-router";
+import Link from "next/link";
 
 interface CTAButtonsProps {
   onRequestDetails: () => void;
@@ -18,19 +18,19 @@ export function CTAButtons({ onRequestDetails, onScheduleShowing }: CTAButtonsPr
       >
         <button
           onClick={onRequestDetails}
-          className="px-8 py-4 bg-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all hover:shadow-lg hover:shadow-[#C9A96E]/20"
+          className="px-8 py-4 bg-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all hover:shadow-lg hover:shadow-[#fbbf24]/20"
         >
           Request Details
         </button>
         <button
           onClick={onScheduleShowing}
-          className="px-8 py-4 bg-transparent border border-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#C9A96E] hover:bg-[#C9A96E]/10 transition-all"
+          className="px-8 py-4 bg-transparent border border-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#fbbf24] hover:bg-[#fbbf24]/10 transition-all"
         >
           Schedule A Showing
         </button>
         <Link
-          to="/listings"
-          className="px-8 py-4 flex items-center justify-center lg:justify-start space-x-2 font-['Montserrat'] text-sm font-medium uppercase tracking-[0.1em] text-white/70 hover:text-[#C9A96E] transition-colors group"
+          href="/listings"
+          className="px-8 py-4 flex items-center justify-center lg:justify-start space-x-2 font-['Montserrat'] text-sm font-medium uppercase tracking-[0.1em] text-white/70 hover:text-[#fbbf24] transition-colors group"
         >
           <span>View More Listings</span>
           <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

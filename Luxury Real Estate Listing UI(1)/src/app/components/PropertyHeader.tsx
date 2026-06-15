@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
-import { Link } from "react-router";
+import Link from "next/link";
 
 interface PropertyStat {
   value: string;
@@ -27,15 +27,15 @@ export function PropertyHeader({ title, subtitle, price, priceSubtext, stats }: 
           transition={{ duration: 0.6 }}
         >
           <Link
-            to="/"
-            className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.15em] text-white/40 hover:text-[#C9A96E] transition-colors"
+            href="/"
+            className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.15em] text-white/40 hover:text-[#fbbf24] transition-colors"
           >
             Home
           </Link>
           <ChevronRight className="w-3 h-3 text-white/30" />
           <Link
-            to="/listings"
-            className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.15em] text-white/40 hover:text-[#C9A96E] transition-colors"
+            href="/listings"
+            className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.15em] text-white/40 hover:text-[#fbbf24] transition-colors"
           >
             Listings
           </Link>
@@ -65,7 +65,7 @@ export function PropertyHeader({ title, subtitle, price, priceSubtext, stats }: 
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="text-5xl lg:text-6xl font-['Cormorant_Garamond'] font-light text-[#C9A96E] mb-2">
+          <div className="text-5xl lg:text-6xl font-['Cormorant_Garamond'] font-light text-[#fbbf24] mb-2">
             {price}
           </div>
           {priceSubtext && (

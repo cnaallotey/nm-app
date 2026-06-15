@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { Link } from "react-router";
+import Link from "next/link";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,19 +28,17 @@ export function Navigation() {
     <>
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-[#1A1A1A]/90 backdrop-blur-md border-b border-white/10"
-            : "bg-transparent"
+          isScrolled ? "bg-[#0F0F0F]/90 backdrop-blur-md border-b border-white/5 py-4" : "bg-transparent py-6"
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.5 }}
       >
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link to="/" className="font-['Cormorant_Garamond'] md:text-2xl font-light text-white tracking-wider">
+              <Link href="/" className="font-['Cormorant_Garamond'] md:text-2xl font-light text-white tracking-wider">
                  NOUVELLE MAISON
               </Link>
             </div>
@@ -51,20 +49,20 @@ export function Navigation() {
                 link.href.startsWith("/") ? (
                   <Link
                     key={link.label}
-                    to={link.href}
-                    className="font-['Montserrat'] text-[11px] font-medium uppercase tracking-[0.15em] text-white/80 hover:text-[#C9A96E] transition-colors relative group"
+                    href={link.href}
+                    className="font-['Montserrat'] text-[11px] font-medium uppercase tracking-[0.15em] text-white/80 hover:text-[#fbbf24] transition-colors relative group"
                   >
                     {link.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#C9A96E] transition-all group-hover:w-full" />
+                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#fbbf24] transition-all group-hover:w-full" />
                   </Link>
                 ) : (
                   <a
                     key={link.label}
                     href={link.href}
-                    className="font-['Montserrat'] text-[11px] font-medium uppercase tracking-[0.15em] text-white/80 hover:text-[#C9A96E] transition-colors relative group"
+                    className="font-['Montserrat'] text-[11px] font-medium uppercase tracking-[0.15em] text-white/80 hover:text-[#fbbf24] transition-colors relative group"
                   >
                     {link.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#C9A96E] transition-all group-hover:w-full" />
+                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#fbbf24] transition-all group-hover:w-full" />
                   </a>
                 )
               )}
@@ -77,13 +75,13 @@ export function Navigation() {
                   EN
                 </span>
                 <span className="text-white/30">|</span>
-                <span className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.15em] text-white/60 hover:text-[#C9A96E] transition-colors cursor-pointer">
+                <span className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.15em] text-white/60 hover:text-[#fbbf24] transition-colors cursor-pointer">
                   ES
                 </span>
               </div>
               <a
                 href="tel:+233302523984"
-                className="flex items-center space-x-2 font-['Montserrat'] text-sm text-white/90 hover:text-[#C9A96E] transition-colors"
+                className="flex items-center space-x-2 font-['Montserrat'] text-sm text-white/90 hover:text-[#fbbf24] transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 <span>+233 (0) 302 523 984</span>
@@ -93,7 +91,7 @@ export function Navigation() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden text-white/90 hover:text-[#C9A96E] transition-colors"
+              className="lg:hidden text-white/90 hover:text-[#fbbf24] transition-colors"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -121,9 +119,9 @@ export function Navigation() {
                     transition={{ delay: index * 0.1 }}
                   >
                     <Link
-                      to={link.href}
+                      href={link.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="font-['Montserrat'] text-xl font-medium uppercase tracking-[0.15em] text-white hover:text-[#C9A96E] transition-colors"
+                      className="font-['Montserrat'] text-xl font-medium uppercase tracking-[0.15em] text-white hover:text-[#fbbf24] transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -133,7 +131,7 @@ export function Navigation() {
                     key={link.label}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-['Montserrat'] text-xl font-medium uppercase tracking-[0.15em] text-white hover:text-[#C9A96E] transition-colors"
+                    className="font-['Montserrat'] text-xl font-medium uppercase tracking-[0.15em] text-white hover:text-[#fbbf24] transition-colors"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
@@ -144,7 +142,7 @@ export function Navigation() {
               )}
               <motion.a
                 href="tel:+233302523984"
-                className="flex items-center space-x-2 font-['Montserrat'] text-lg text-white/90 hover:text-[#C9A96E] transition-colors mt-8"
+                className="flex items-center space-x-2 font-['Montserrat'] text-lg text-white/90 hover:text-[#fbbf24] transition-colors mt-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}

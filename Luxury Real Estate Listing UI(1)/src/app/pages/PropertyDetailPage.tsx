@@ -1,4 +1,9 @@
-import { useState } from "react";
+"use client";
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { Listing } from "@/lib/types";
 import { Navigation } from "../components/Navigation";
 import { HeroGallery } from "../components/HeroGallery";
 import { PropertyHeader } from "../components/PropertyHeader";
@@ -10,36 +15,73 @@ import { RequestDetailsModal } from "../components/RequestDetailsModal";
 import { ScheduleShowingModal } from "../components/ScheduleShowingModal";
 import { SocialShare } from "../components/SocialShare";
 import { Footer } from "../components/Footer";
-import { Link } from "react-router";
+import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 export default function PropertyDetailPage() {
+  const params = useParams();
+  const id = params?.id as string;
+  const [listing, setListing] = useState<Listing | null>(null);
+  const [loading, setLoading] = useState(true);
   const [requestModalOpen, setRequestModalOpen] = useState(false);
   const [showingModalOpen, setShowingModalOpen] = useState(false);
 
-  const propertyImages = [
-    "https://images.unsplash.com/photo-1758192838598-a1de4da5dcaf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB2aWxsYSUyMGV4dGVyaW9yJTIwcG9vbCUyMHN1bnNldHxlbnwxfHx8fDE3NzUyOTkwNjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    "https://images.unsplash.com/photo-1629787302738-2c6e9f3dada1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsdXh1cnklMjBtYW5zaW9uJTIwYXJjaGl0ZWN0dXJlfGVufDF8fHx8MTc3NTI5OTA2M3ww&ixlib=rb-4.1.0&q=80&w=1080",
-    "https://images.unsplash.com/photo-1613545325268-9265e1609167?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob21lJTIwaW50ZXJpb3IlMjBsaXZpbmclMjByb29tfGVufDF8fHx8MTc3NTIwMjExM3ww&ixlib=rb-4.1.0&q=80&w=1080",
-    "https://images.unsplash.com/photo-1768039049614-f3c2bae3f1db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaWdoJTIwZW5kJTIwa2l0Y2hlbiUyMG1hcmJsZSUyMGNvdW50ZXJ0b3B8ZW58MXx8fHwxNzc1Mjk5MDY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-  ];
+  useEffect(() => {
+    if (!id) return;
+    async function fetchProperty() {
+      try {
+        const docRef = doc(db, "listings", id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setListing({ id: docSnap.id, ...docSnap.data() } as Listing);
+        } else {
+          setListing(null);
+        }
+      } catch (err) {
+        console.error("Error fetching property detail:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProperty();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#1A1A1A] flex items-center justify-center text-white/50 font-['Montserrat']">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 border-2 border-[#fbbf24] border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-sm tracking-wider uppercase">Loading Estate Details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!listing) {
+    return (
+      <div className="min-h-screen bg-[#1A1A1A] flex items-center justify-center text-white/50 font-['Montserrat']">
+        <div className="text-center space-y-6">
+          <h2 className="font-['Cormorant_Garamond'] text-4xl text-white font-light">Property Not Found</h2>
+          <p className="text-sm text-white/50">The property you are looking for does not exist or has been removed.</p>
+          <Link
+            href="/listings"
+            className="px-8 py-3 bg-[#fbbf24] text-[#1A1A1A] font-semibold rounded-lg text-sm tracking-wide uppercase transition-all inline-block hover:bg-[#D4B87E]"
+          >
+            Back to Listings
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const propertyStats = [
-    { value: "7", label: "Beds" },
-    { value: "9", label: "Baths" },
-    { value: "1.2 AC", label: "Lot Size" },
-    { value: "27,000", label: "AC SqFt" },
-    { value: "32,500", label: "Total SqFt" },
-    { value: "#A11527482", label: "MLS" },
+    { value: String(listing.beds || 0), label: "Beds" },
+    { value: String(listing.baths || 0), label: "Baths" },
+    { value: listing.sqft || "N/A", label: "SqFt" },
+    { value: listing.yearBuilt ? String(listing.yearBuilt) : "2024", label: "Year Built" },
+    { value: listing.status === "sold" ? "Sold" : "For Sale", label: "Availability" },
+    { value: `#NM${listing.id.substring(0, 5).toUpperCase()}`, label: "MLS ID" },
   ];
-
-  const description = `Villa Serena represents the pinnacle of luxury living in one of East Legon's most coveted neighbourhoods. This architectural masterpiece seamlessly blends contemporary design with timeless elegance, offering an unparalleled lifestyle for the most discerning buyers.
-
-Situated on over an acre of meticulously landscaped grounds, the estate features 27,000 square feet of living space across three thoughtfully designed levels. Floor-to-ceiling windows throughout the residence frame breathtaking views of the Accra skyline, while bringing an abundance of natural light into every room.
-
-The main level showcases an impressive great room with soaring 24-foot ceilings, a formal dining room that seats 20, and a gourmet chef's kitchen equipped with top-of-the-line Miele and Sub-Zero appliances. The master suite occupies the entire east wing, featuring dual bathrooms finished in Italian marble, custom walk-in closets, and a private terrace overlooking the gardens.
-
-Beyond the main residence, Villa Serena offers an extraordinary array of amenities including a private cinema, professional putting green, wine cellar for 2,000 bottles, home theater, spa with sauna and steam room, and a climate-controlled 10-car garage. The resort-style grounds feature two saltwater pools, outdoor summer kitchen, boys' quarters, and lush tropical gardens designed by a leading Ghanaian landscape architect.`;
 
   return (
     <div className="min-h-screen bg-[#1A1A1A]">
@@ -50,8 +92,8 @@ Beyond the main residence, Villa Serena offers an extraordinary array of ameniti
         <div className="bg-[#1A1A1A] py-4 px-6 lg:px-12">
           <div className="max-w-[1440px] mx-auto">
             <Link
-              to="/listings"
-              className="inline-flex items-center space-x-2 font-['Montserrat'] text-sm text-white/60 hover:text-[#C9A96E] transition-colors group"
+              href="/listings"
+              className="inline-flex items-center space-x-2 font-['Montserrat'] text-sm text-white/60 hover:text-[#fbbf24] transition-colors group"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               <span>Back to Properties</span>
@@ -59,13 +101,13 @@ Beyond the main residence, Villa Serena offers an extraordinary array of ameniti
           </div>
         </div>
         
-        <HeroGallery images={propertyImages} />
+        <HeroGallery images={listing.images} address={listing.location} />
         
         <PropertyHeader
-          title="Villa Serena"
-          subtitle="Luxury Estate • East Legon, Accra"
-          price="GH₵ 12,500,000"
-          priceSubtext="Approx. $980,000 | £780,000"
+          title={listing.title}
+          subtitle={`Luxury Estate • ${listing.location}`}
+          price={listing.price}
+          priceSubtext={listing.priceSubtext}
           stats={propertyStats}
         />
         
@@ -74,11 +116,11 @@ Beyond the main residence, Villa Serena offers an extraordinary array of ameniti
           onScheduleShowing={() => setShowingModalOpen(true)}
         />
         
-        <PropertyDescription description={description} />
+        <PropertyDescription description={listing.description} sqft={listing.sqft} />
         
-        <AmenitiesGrid />
+        <AmenitiesGrid amenities={listing.amenities} />
         
-        <ContactForm />
+        <ContactForm propertyId={listing.id} propertyTitle={listing.title} />
         
         <SocialShare />
       </main>
@@ -88,11 +130,15 @@ Beyond the main residence, Villa Serena offers an extraordinary array of ameniti
       <RequestDetailsModal
         isOpen={requestModalOpen}
         onClose={() => setRequestModalOpen(false)}
+        propertyId={listing.id}
+        propertyTitle={listing.title}
       />
       
       <ScheduleShowingModal
         isOpen={showingModalOpen}
         onClose={() => setShowingModalOpen(false)}
+        propertyId={listing.id}
+        propertyTitle={listing.title}
       />
     </div>
   );

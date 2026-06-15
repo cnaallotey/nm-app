@@ -1,6 +1,8 @@
-import { useState, useMemo } from "react";
+"use client";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Link, useSearchParams } from "react-router";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   Search,
   SlidersHorizontal,
@@ -16,6 +18,8 @@ import {
 } from "lucide-react";
 import { Navigation } from "../components/Navigation";
 import { Footer } from "../components/Footer";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 interface Property {
   id: string;
@@ -30,169 +34,6 @@ interface Property {
   category: string;
   featured?: boolean;
 }
-
-const allProperties: Property[] = [
-  {
-    id: "villa-serena",
-    title: "Villa Serena",
-    location: "East Legon, Accra",
-    price: "GH₵ 12,500,000",
-    priceValue: 12500000,
-    beds: 7,
-    baths: 9,
-    sqft: "27,000",
-    image:
-      "https://images.unsplash.com/photo-1758192838598-a1de4da5dcaf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB2aWxsYSUyMGV4dGVyaW9yJTIwcG9vbCUyMHN1bnNldHxlbnwxfHx8fDE3NzUyOTkwNjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Gated Communities",
-    featured: true,
-  },
-  {
-    id: "modern-estate",
-    title: "Modern Architectural Estate",
-    location: "Airport Residential, Accra",
-    price: "GH₵ 18,750,000",
-    priceValue: 18750000,
-    beds: 8,
-    baths: 12,
-    sqft: "32,000",
-    image:
-      "https://images.unsplash.com/photo-1629787302738-2c6e9f3dada1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsdXh1cnklMjBtYW5zaW9uJTIwYXJjaGl0ZWN0dXJlfGVufDF8fHx8MTc3NTI5OTA2M3ww&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Executive Mansions",
-    featured: true,
-  },
-  {
-    id: "waterfront-penthouse",
-    title: "Waterfront Penthouse",
-    location: "Cantonments, Accra",
-    price: "GH₵ 15,900,000",
-    priceValue: 15900000,
-    beds: 5,
-    baths: 7,
-    sqft: "18,500",
-    image:
-      "https://images.unsplash.com/photo-1613545325268-9265e1609167?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob21lJTIwaW50ZXJpb3IlMjBsaXZpbmclMjByb29tfGVufDF8fHx8MTc3NTIwMjExM3ww&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Urban Penthouses",
-    featured: true,
-  },
-  {
-    id: "contemporary-villa",
-    title: "Contemporary Villa",
-    location: "Trasacco Valley, Accra",
-    price: "GH₵ 9,800,000",
-    priceValue: 9800000,
-    beds: 6,
-    baths: 8,
-    sqft: "22,400",
-    image:
-      "https://images.unsplash.com/photo-1768039049614-f3c2bae3f1db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaWdoJTIwZW5kJTIwa2l0Y2hlbiUyMG1hcmJsZSUyMGNvdW50ZXJ0b3B8ZW58MXx8fHwxNzc1Mjk5MDY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Gated Communities",
-    featured: true,
-  },
-  {
-    id: "aburi-retreat",
-    title: "Aburi Hills Retreat",
-    location: "Aburi, Eastern Region",
-    price: "GH₵ 5,200,000",
-    priceValue: 5200000,
-    beds: 6,
-    baths: 7,
-    sqft: "14,200",
-    image:
-      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Executive Mansions",
-  },
-  {
-    id: "ridge-penthouse",
-    title: "Ridge Triplex Penthouse",
-    location: "Ridge, Accra",
-    price: "GH₵ 22,000,000",
-    priceValue: 22000000,
-    beds: 6,
-    baths: 8,
-    sqft: "12,500",
-    image:
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Urban Penthouses",
-  },
-  {
-    id: "kumasi-estate",
-    title: "Kumasi Royal Estate",
-    location: "Nhyiaeso, Kumasi",
-    price: "GH₵ 7,500,000",
-    priceValue: 7500000,
-    beds: 5,
-    baths: 6,
-    sqft: "19,800",
-    image:
-      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Executive Mansions",
-  },
-  {
-    id: "ada-beach-estate",
-    title: "Ada Beachfront Estate",
-    location: "Ada Foah, Greater Accra",
-    price: "GH₵ 14,000,000",
-    priceValue: 14000000,
-    beds: 9,
-    baths: 11,
-    sqft: "28,000",
-    image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Waterfront Estates",
-  },
-  {
-    id: "labone-residence",
-    title: "Labone Executive Residence",
-    location: "Labone, Accra",
-    price: "GH₵ 8,200,000",
-    priceValue: 8200000,
-    beds: 7,
-    baths: 9,
-    sqft: "24,500",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Gated Communities",
-  },
-  {
-    id: "tema-waterfront",
-    title: "Tema Harbour View Villa",
-    location: "Community 25, Tema",
-    price: "GH₵ 10,500,000",
-    priceValue: 10500000,
-    beds: 8,
-    baths: 10,
-    sqft: "26,000",
-    image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Waterfront Estates",
-  },
-  {
-    id: "osu-sky-residence",
-    title: "Osu Oxford Sky Residence",
-    location: "Osu, Accra",
-    price: "GH₵ 6,900,000",
-    priceValue: 6900000,
-    beds: 4,
-    baths: 5,
-    sqft: "9,800",
-    image:
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Urban Penthouses",
-  },
-  {
-    id: "takoradi-villa",
-    title: "Takoradi Coastal Villa",
-    location: "Beach Road, Takoradi",
-    price: "GH₵ 4,800,000",
-    priceValue: 4800000,
-    beds: 5,
-    baths: 6,
-    sqft: "11,000",
-    image:
-      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
-    category: "Waterfront Estates",
-  },
-];
 
 const categories = [
   "All",
@@ -225,10 +66,12 @@ const priceParamToIndex: Record<string, number> = {
 };
 
 export default function ListingsPage() {
-  const [searchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
   const initialPrice = priceParamToIndex[searchParams.get("price") || ""] || 0;
 
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [activeCategory, setActiveCategory] = useState("All");
   const [activePriceRange, setActivePriceRange] = useState(initialPrice);
@@ -236,8 +79,47 @@ export default function ListingsPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filtersOpen, setFiltersOpen] = useState(false);
 
+  useEffect(() => {
+    async function fetchProperties() {
+      try {
+        const q = query(
+          collection(db, "listings"),
+          where("status", "==", "published")
+        );
+        const snapshot = await getDocs(q);
+        const list = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          const priceStr = data.price || "";
+          // Extract digits
+          const priceCleaned = priceStr.replace(/[^0-9]/g, "");
+          const priceVal = parseInt(priceCleaned, 10) || 0;
+          
+          return {
+            id: doc.id,
+            title: data.title || "",
+            location: data.location || "",
+            price: priceStr,
+            priceValue: priceVal,
+            beds: Number(data.beds || 0),
+            baths: Number(data.baths || 0),
+            sqft: data.sqft || "",
+            image: data.images?.[0] || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1080",
+            category: data.category || "",
+            featured: !!data.featured,
+          };
+        });
+        setProperties(list);
+      } catch (err) {
+        console.error("Error fetching listings from Firestore:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProperties();
+  }, []);
+
   const filteredProperties = useMemo(() => {
-    let result = [...allProperties];
+    let result = [...properties];
 
     // Search
     if (searchQuery) {
@@ -280,7 +162,7 @@ export default function ListingsPage() {
     }
 
     return result;
-  }, [searchQuery, activeCategory, activePriceRange, sortBy]);
+  }, [properties, searchQuery, activeCategory, activePriceRange, sortBy]);
 
   const activeFilterCount =
     (activeCategory !== "All" ? 1 : 0) + (activePriceRange !== 0 ? 1 : 0);
@@ -305,7 +187,7 @@ export default function ListingsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C9A96E] mb-4">
+            <p className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#fbbf24] mb-4">
               Our Collection
             </p>
             <h1 className="font-['Cormorant_Garamond'] text-5xl lg:text-7xl font-light text-white mb-6">
@@ -331,7 +213,7 @@ export default function ListingsPage() {
                 placeholder="Search by name or location..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-[#0F0F0F] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#C9A96E] focus:outline-none transition-colors"
+                className="w-full pl-11 pr-4 py-3 bg-[#0F0F0F] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white placeholder:text-white/30 focus:border-[#fbbf24] focus:outline-none transition-colors"
               />
               {searchQuery && (
                 <button
@@ -351,7 +233,7 @@ export default function ListingsPage() {
               <SlidersHorizontal className="w-4 h-4" />
               <span>Filters</span>
               {activeFilterCount > 0 && (
-                <span className="w-5 h-5 rounded-full bg-[#C9A96E] text-[#1A1A1A] text-[10px] font-bold flex items-center justify-center">
+                <span className="w-5 h-5 rounded-full bg-[#fbbf24] text-[#1A1A1A] text-[10px] font-bold flex items-center justify-center">
                   {activeFilterCount}
                 </span>
               )}
@@ -361,7 +243,7 @@ export default function ListingsPage() {
             <div className="hidden lg:flex items-center gap-3 flex-1 justify-end">
               {/* Category Dropdown */}
               <div className="relative group">
-                <button className="flex items-center gap-2 px-4 py-3 bg-[#0F0F0F] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white/70 hover:border-[#C9A96E]/40 transition-colors">
+                <button className="flex items-center gap-2 px-4 py-3 bg-[#0F0F0F] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white/70 hover:border-[#fbbf24]/40 transition-colors">
                   <span>{activeCategory}</span>
                   <ChevronDown className="w-3.5 h-3.5" />
                 </button>
@@ -372,7 +254,7 @@ export default function ListingsPage() {
                       onClick={() => setActiveCategory(cat)}
                       className={`w-full text-left px-4 py-2.5 font-['Montserrat'] text-sm transition-colors ${
                         activeCategory === cat
-                          ? "bg-[#C9A96E]/10 text-[#C9A96E]"
+                          ? "bg-[#fbbf24]/10 text-[#fbbf24]"
                           : "text-white/60 hover:bg-white/5 hover:text-white"
                       }`}
                     >
@@ -384,7 +266,7 @@ export default function ListingsPage() {
 
               {/* Price Range Dropdown */}
               <div className="relative group">
-                <button className="flex items-center gap-2 px-4 py-3 bg-[#0F0F0F] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white/70 hover:border-[#C9A96E]/40 transition-colors">
+                <button className="flex items-center gap-2 px-4 py-3 bg-[#0F0F0F] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white/70 hover:border-[#fbbf24]/40 transition-colors">
                   <span>{priceRanges[activePriceRange].label}</span>
                   <ChevronDown className="w-3.5 h-3.5" />
                 </button>
@@ -395,7 +277,7 @@ export default function ListingsPage() {
                       onClick={() => setActivePriceRange(i)}
                       className={`w-full text-left px-4 py-2.5 font-['Montserrat'] text-sm transition-colors ${
                         activePriceRange === i
-                          ? "bg-[#C9A96E]/10 text-[#C9A96E]"
+                          ? "bg-[#fbbf24]/10 text-[#fbbf24]"
                           : "text-white/60 hover:bg-white/5 hover:text-white"
                       }`}
                     >
@@ -407,7 +289,7 @@ export default function ListingsPage() {
 
               {/* Sort Dropdown */}
               <div className="relative group">
-                <button className="flex items-center gap-2 px-4 py-3 bg-[#0F0F0F] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white/70 hover:border-[#C9A96E]/40 transition-colors">
+                <button className="flex items-center gap-2 px-4 py-3 bg-[#0F0F0F] border border-white/10 rounded-lg font-['Montserrat'] text-sm text-white/70 hover:border-[#fbbf24]/40 transition-colors">
                   <span>
                     {sortOptions.find((o) => o.value === sortBy)?.label}
                   </span>
@@ -420,7 +302,7 @@ export default function ListingsPage() {
                       onClick={() => setSortBy(opt.value)}
                       className={`w-full text-left px-4 py-2.5 font-['Montserrat'] text-sm transition-colors ${
                         sortBy === opt.value
-                          ? "bg-[#C9A96E]/10 text-[#C9A96E]"
+                          ? "bg-[#fbbf24]/10 text-[#fbbf24]"
                           : "text-white/60 hover:bg-white/5 hover:text-white"
                       }`}
                     >
@@ -436,7 +318,7 @@ export default function ListingsPage() {
                   onClick={() => setViewMode("grid")}
                   className={`p-3 transition-colors ${
                     viewMode === "grid"
-                      ? "bg-[#C9A96E]/10 text-[#C9A96E]"
+                      ? "bg-[#fbbf24]/10 text-[#fbbf24]"
                       : "text-white/40 hover:text-white/70"
                   }`}
                 >
@@ -446,7 +328,7 @@ export default function ListingsPage() {
                   onClick={() => setViewMode("list")}
                   className={`p-3 transition-colors ${
                     viewMode === "list"
-                      ? "bg-[#C9A96E]/10 text-[#C9A96E]"
+                      ? "bg-[#fbbf24]/10 text-[#fbbf24]"
                       : "text-white/40 hover:text-white/70"
                   }`}
                 >
@@ -458,7 +340,7 @@ export default function ListingsPage() {
               {activeFilterCount > 0 && (
                 <button
                   onClick={clearFilters}
-                  className="flex items-center gap-1.5 px-3 py-3 font-['Montserrat'] text-xs text-[#C9A96E] hover:text-[#D4B87E] transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-3 font-['Montserrat'] text-xs text-[#fbbf24] hover:text-[#D4B87E] transition-colors"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Clear</span>
@@ -489,7 +371,7 @@ export default function ListingsPage() {
                         onClick={() => setActiveCategory(cat)}
                         className={`px-3 py-1.5 rounded-full font-['Montserrat'] text-xs transition-colors ${
                           activeCategory === cat
-                            ? "bg-[#C9A96E] text-[#1A1A1A]"
+                            ? "bg-[#fbbf24] text-[#1A1A1A]"
                             : "bg-white/5 text-white/60 hover:bg-white/10"
                         }`}
                       >
@@ -511,7 +393,7 @@ export default function ListingsPage() {
                         onClick={() => setActivePriceRange(i)}
                         className={`px-3 py-1.5 rounded-full font-['Montserrat'] text-xs transition-colors ${
                           activePriceRange === i
-                            ? "bg-[#C9A96E] text-[#1A1A1A]"
+                            ? "bg-[#fbbf24] text-[#1A1A1A]"
                             : "bg-white/5 text-white/60 hover:bg-white/10"
                         }`}
                       >
@@ -533,7 +415,7 @@ export default function ListingsPage() {
                         onClick={() => setSortBy(opt.value)}
                         className={`px-3 py-1.5 rounded-full font-['Montserrat'] text-xs transition-colors ${
                           sortBy === opt.value
-                            ? "bg-[#C9A96E] text-[#1A1A1A]"
+                            ? "bg-[#fbbf24] text-[#1A1A1A]"
                             : "bg-white/5 text-white/60 hover:bg-white/10"
                         }`}
                       >
@@ -546,7 +428,7 @@ export default function ListingsPage() {
                 {activeFilterCount > 0 && (
                   <button
                     onClick={clearFilters}
-                    className="font-['Montserrat'] text-xs text-[#C9A96E] underline"
+                    className="font-['Montserrat'] text-xs text-[#fbbf24] underline"
                   >
                     Clear all filters
                   </button>
@@ -568,7 +450,7 @@ export default function ListingsPage() {
               <span>
                 {" "}
                 in{" "}
-                <span className="text-[#C9A96E]">{activeCategory}</span>
+                <span className="text-[#fbbf24]">{activeCategory}</span>
               </span>
             )}
           </p>
@@ -578,9 +460,15 @@ export default function ListingsPage() {
       {/* Property Grid */}
       <section className="px-6 lg:px-12 py-8 pb-20">
         <div className="max-w-[1440px] mx-auto">
-          {filteredProperties.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-32 font-['Montserrat'] text-white/40">
+              <div className="w-12 h-12 border-2 border-[#fbbf24] border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+              <p className="text-sm tracking-wider uppercase">Loading Luxury Collection...</p>
+            </div>
+          ) : filteredProperties.length === 0 ? (
             <motion.div
               className="text-center py-24"
+
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -592,7 +480,7 @@ export default function ListingsPage() {
               </p>
               <button
                 onClick={clearFilters}
-                className="px-8 py-3 bg-transparent border border-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#C9A96E] hover:bg-[#C9A96E]/10 transition-all"
+                className="px-8 py-3 bg-transparent border border-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#fbbf24] hover:bg-[#fbbf24]/10 transition-all"
               >
                 Clear Filters
               </button>
@@ -607,7 +495,7 @@ export default function ListingsPage() {
                   transition={{ duration: 0.5, delay: index * 0.05 }}
                   layout
                 >
-                  <Link to={`/property/${property.id}`} className="group block">
+                  <Link href={`/property/${property.id}`} className="group block">
                     <div className="relative h-[320px] overflow-hidden rounded-2xl mb-5">
                       <img
                         src={property.image}
@@ -626,14 +514,14 @@ export default function ListingsPage() {
                       {/* Featured Badge */}
                       {property.featured && (
                         <div className="absolute top-4 right-4">
-                          <span className="px-3 py-1 bg-[#C9A96E] rounded-full font-['Montserrat'] text-[10px] font-bold uppercase tracking-[0.1em] text-[#1A1A1A]">
+                          <span className="px-3 py-1 bg-[#fbbf24] rounded-full font-['Montserrat'] text-[10px] font-bold uppercase tracking-[0.1em] text-[#1A1A1A]">
                             Featured
                           </span>
                         </div>
                       )}
 
                       {/* Hover Arrow */}
-                      <div className="absolute bottom-4 right-4 w-10 h-10 bg-[#C9A96E] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute bottom-4 right-4 w-10 h-10 bg-[#fbbf24] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <ArrowRight className="w-4 h-4 text-[#1A1A1A]" />
                       </div>
 
@@ -648,11 +536,11 @@ export default function ListingsPage() {
 
                     {/* Card Info */}
                     <div className="px-1">
-                      <h3 className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-2 group-hover:text-[#C9A96E] transition-colors">
+                      <h3 className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-2 group-hover:text-[#fbbf24] transition-colors">
                         {property.title}
                       </h3>
                       <div className="flex flex-col md:flex-row gap-y-2 md:items-center justify-between">
-                        <span className="font-['Cormorant_Garamond'] text-2xl font-light text-[#C9A96E]">
+                        <span className="font-['Cormorant_Garamond'] text-2xl font-light text-[#fbbf24]">
                           {property.price}
                         </span>
                         <div className="flex items-center gap-4">
@@ -693,8 +581,8 @@ export default function ListingsPage() {
                   layout
                 >
                   <Link
-                    to={`/property/${property.id}`}
-                    className="group flex flex-col md:flex-row gap-6 p-4 rounded-2xl border border-white/5 hover:border-[#C9A96E]/20 transition-all hover:bg-white/[0.02]"
+                    href={`/property/${property.id}`}
+                    className="group flex flex-col md:flex-row gap-6 p-4 rounded-2xl border border-white/5 hover:border-[#fbbf24]/20 transition-all hover:bg-white/[0.02]"
                   >
                     {/* Image */}
                     <div className="relative w-full md:w-72 h-52 md:h-44 flex-shrink-0 overflow-hidden rounded-xl">
@@ -705,7 +593,7 @@ export default function ListingsPage() {
                       />
                       {property.featured && (
                         <div className="absolute top-3 left-3">
-                          <span className="px-2.5 py-1 bg-[#C9A96E] rounded-full font-['Montserrat'] text-[10px] font-bold uppercase tracking-[0.1em] text-[#1A1A1A]">
+                          <span className="px-2.5 py-1 bg-[#fbbf24] rounded-full font-['Montserrat'] text-[10px] font-bold uppercase tracking-[0.1em] text-[#1A1A1A]">
                             Featured
                           </span>
                         </div>
@@ -717,14 +605,14 @@ export default function ListingsPage() {
                       <div>
                         <div className="flex items-start justify-between mb-2">
                           <div>
-                            <span className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.1em] text-[#C9A96E] mb-1 block">
+                            <span className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.1em] text-[#fbbf24] mb-1 block">
                               {property.category}
                             </span>
-                            <h3 className="font-['Cormorant_Garamond'] text-2xl lg:text-3xl font-light text-white group-hover:text-[#C9A96E] transition-colors">
+                            <h3 className="font-['Cormorant_Garamond'] text-2xl lg:text-3xl font-light text-white group-hover:text-[#fbbf24] transition-colors">
                               {property.title}
                             </h3>
                           </div>
-                          <div className="w-10 h-10 bg-white/5 group-hover:bg-[#C9A96E] rounded-full flex items-center justify-center transition-colors flex-shrink-0 ml-4">
+                          <div className="w-10 h-10 bg-white/5 group-hover:bg-[#fbbf24] rounded-full flex items-center justify-center transition-colors flex-shrink-0 ml-4">
                             <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-[#1A1A1A] transition-colors" />
                           </div>
                         </div>
@@ -737,7 +625,7 @@ export default function ListingsPage() {
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <span className="font-['Cormorant_Garamond'] text-2xl font-light text-[#C9A96E]">
+                        <span className="font-['Cormorant_Garamond'] text-2xl font-light text-[#fbbf24]">
                           {property.price}
                         </span>
                         <div className="flex items-center gap-5">

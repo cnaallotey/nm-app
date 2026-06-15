@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Listings: world-readable, admin-writable
+    match /listings/{id} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Submissions: anyone can create (public forms), only admins can read/manage
+    match /submissions/{id} {
+      allow create: if
+        request.resource.data.consent == true &&
+        request.resource.data.email is string &&
+        request.resource.data.firstName is string &&
+        request.resource.data.status == "new";
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

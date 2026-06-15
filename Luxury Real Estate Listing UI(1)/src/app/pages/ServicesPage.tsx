@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Link } from "react-router";
+import Link from "next/link";
 import {
   Building2,
   Users,
@@ -164,7 +164,7 @@ export default function ServicesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C9A96E] mb-4">
+            <p className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#fbbf24] mb-4">
               What We Do
             </p>
             <h1 className="font-['Cormorant_Garamond'] text-5xl lg:text-7xl font-light text-white mb-6">
@@ -201,14 +201,14 @@ export default function ServicesPage() {
             {coreServices.map((service, index) => (
               <motion.div
                 key={index}
-                className="bg-[#0F0F0F] border border-white/5 rounded-2xl p-8 lg:p-10 hover:border-[#C9A96E]/20 transition-all"
+                className="bg-[#0F0F0F] border border-white/5 rounded-2xl p-8 lg:p-10 hover:border-[#fbbf24]/20 transition-all"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <div className="flex items-start gap-5 mb-6">
-                  <div className="w-14 h-14 bg-[#C9A96E]/10 rounded-full flex items-center justify-center text-[#C9A96E] flex-shrink-0">
+                  <div className="w-14 h-14 bg-[#fbbf24]/10 rounded-full flex items-center justify-center text-[#fbbf24] flex-shrink-0">
                     {service.icon}
                   </div>
                   <div>
@@ -223,7 +223,7 @@ export default function ServicesPage() {
                 <div className="ml-0 lg:ml-[4.75rem] space-y-3">
                   {service.features.map((feature, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <CheckCircle className="w-4 h-4 text-[#C9A96E] mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="w-4 h-4 text-[#fbbf24] mt-0.5 flex-shrink-0" />
                       <span className="font-['Montserrat'] text-sm text-white/60">
                         {feature}
                       </span>
@@ -264,7 +264,7 @@ export default function ServicesPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <span className="font-['Cormorant_Garamond'] text-7xl font-light text-[#C9A96E]/15 block mb-2">
+                <span className="font-['Cormorant_Garamond'] text-7xl font-light text-[#fbbf24]/15 block mb-2">
                   {step.step}
                 </span>
                 <h3 className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-3">
@@ -307,13 +307,13 @@ export default function ServicesPage() {
             {additionalServices.map((service, index) => (
               <motion.div
                 key={index}
-                className="p-6 bg-[#0F0F0F] border border-white/5 rounded-2xl hover:border-[#C9A96E]/20 transition-all"
+                className="p-6 bg-[#0F0F0F] border border-white/5 rounded-2xl hover:border-[#fbbf24]/20 transition-all"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
               >
-                <div className="w-10 h-10 bg-[#C9A96E]/10 rounded-full flex items-center justify-center text-[#C9A96E] mb-4">
+                <div className="w-10 h-10 bg-[#fbbf24]/10 rounded-full flex items-center justify-center text-[#fbbf24] mb-4">
                   {service.icon}
                 </div>
                 <h3 className="font-['Cormorant_Garamond'] text-xl font-light text-white mb-2">
@@ -350,15 +350,15 @@ export default function ServicesPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                to="/contact"
-                className="px-10 py-4 bg-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all inline-flex items-center gap-2 group"
+                href="/contact"
+                className="px-10 py-4 bg-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all inline-flex items-center gap-2 group"
               >
                 <span>Get in Touch</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                to="/listings"
-                className="px-10 py-4 bg-transparent border border-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#C9A96E] hover:bg-[#C9A96E]/10 transition-all"
+                href="/listings"
+                className="px-10 py-4 bg-transparent border border-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#fbbf24] hover:bg-[#fbbf24]/10 transition-all"
               >
                 Browse Properties
               </Link>

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { Search, MapPin, Home, DollarSign } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useRouter } from "next/navigation";
 
 export function LandingHero() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [location, setLocation] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [priceRange, setPriceRange] = useState("");
@@ -14,7 +14,7 @@ export function LandingHero() {
     if (location) params.set("q", location);
     if (propertyType) params.set("type", propertyType);
     if (priceRange) params.set("price", priceRange);
-    navigate(`/listings${params.toString() ? `?${params.toString()}` : ""}`);
+    router.push(`/listings${params.toString() ? `?${params.toString()}` : ""}`);
   };
 
   return (
@@ -49,7 +49,7 @@ export function LandingHero() {
           <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-3">
             <div className="flex flex-col lg:flex-row gap-2 sm:gap-3">
               <div className="flex-1 flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 rounded-lg">
-                <MapPin className="w-5 h-5 text-[#C9A96E]" />
+                <MapPin className="w-5 h-5 text-[#fbbf24]" />
                 <input
                   type="text"
                   placeholder="Location"
@@ -60,7 +60,7 @@ export function LandingHero() {
                 />
               </div>
               <div className="flex-1 flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 rounded-lg">
-                <Home className="w-5 h-5 text-[#C9A96E]" />
+                <Home className="w-5 h-5 text-[#fbbf24]" />
                 <select
                   value={propertyType}
                   onChange={(e) => setPropertyType(e.target.value)}
@@ -74,7 +74,7 @@ export function LandingHero() {
                 </select>
               </div>
               <div className="flex-1 flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 rounded-lg">
-                <DollarSign className="w-5 h-5 text-[#C9A96E]" />
+                <DollarSign className="w-5 h-5 text-[#fbbf24]" />
                 <select
                   value={priceRange}
                   onChange={(e) => setPriceRange(e.target.value)}
@@ -89,7 +89,7 @@ export function LandingHero() {
               </div>
               <button
                 onClick={handleSearch}
-                className="px-8 py-3 bg-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all flex items-center justify-center space-x-2"
+                className="px-8 py-3 bg-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all flex items-center justify-center space-x-2"
               >
                 <Search className="w-5 h-5" />
                 <span>Search</span>
@@ -105,7 +105,7 @@ export function LandingHero() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <div>
-              <div className="font-['Cormorant_Garamond'] text-2xl sm:text-4xl lg:text-5xl font-light text-[#C9A96E] mb-1 sm:mb-2">
+              <div className="font-['Cormorant_Garamond'] text-2xl sm:text-4xl lg:text-5xl font-light text-[#fbbf24] mb-1 sm:mb-2">
                 GH₵ 2B+
               </div>
               <div className="font-['Montserrat'] text-[10px] sm:text-xs font-medium uppercase tracking-[0.1em] sm:tracking-[0.15em] text-white/60">
@@ -113,7 +113,7 @@ export function LandingHero() {
               </div>
             </div>
             <div>
-              <div className="font-['Cormorant_Garamond'] text-2xl sm:text-4xl lg:text-5xl font-light text-[#C9A96E] mb-1 sm:mb-2">
+              <div className="font-['Cormorant_Garamond'] text-2xl sm:text-4xl lg:text-5xl font-light text-[#fbbf24] mb-1 sm:mb-2">
                 1,200+
               </div>
               <div className="font-['Montserrat'] text-[10px] sm:text-xs font-medium uppercase tracking-[0.1em] sm:tracking-[0.15em] text-white/60">
@@ -121,7 +121,7 @@ export function LandingHero() {
               </div>
             </div>
             <div className="col-span-2 sm:col-span-1">
-              <div className="font-['Cormorant_Garamond']  text-2xl sm:text-4xl lg:text-5xl font-light text-[#C9A96E] mb-1 sm:mb-2">
+              <div className="font-['Cormorant_Garamond']  text-2xl sm:text-4xl lg:text-5xl font-light text-[#fbbf24] mb-1 sm:mb-2">
                 20
               </div>
               <div className="font-['Montserrat'] text-[10px] sm:text-xs font-medium uppercase tracking-[0.1em] sm:tracking-[0.15em] text-white/60">

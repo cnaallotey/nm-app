@@ -51,7 +51,7 @@ export function TestimonialsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <Quote className="w-10 h-10 text-[#C9A96E] mb-6" />
+              <Quote className="w-10 h-10 text-[#fbbf24] mb-6" />
               <p className="font-['Montserrat'] text-base font-light text-white/80 leading-relaxed mb-6">
                 "{testimonial.quote}"
               </p>
@@ -62,7 +62,7 @@ export function TestimonialsSection() {
                 <div className="font-['Montserrat'] text-xs text-white/50">
                   {testimonial.title}
                 </div>
-                <div className="font-['Montserrat'] text-xs text-[#C9A96E] mt-1">
+                <div className="font-['Montserrat'] text-xs text-[#fbbf24] mt-1">
                   {testimonial.location}
                 </div>
               </div>

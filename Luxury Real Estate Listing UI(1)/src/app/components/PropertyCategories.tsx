@@ -71,7 +71,7 @@ export function PropertyCategories() {
 
               {/* Content */}
               <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                <div className="text-[#C9A96E] mb-4 transform group-hover:scale-110 transition-transform">
+                <div className="text-[#fbbf24] mb-4 transform group-hover:scale-110 transition-transform">
                   {category.icon}
                 </div>
                 <h3 className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-2">
@@ -80,13 +80,13 @@ export function PropertyCategories() {
                 <p className="font-['Montserrat'] text-sm text-white/70 mb-4">
                   {category.description}
                 </p>
-                <div className="font-['Montserrat'] text-xs uppercase tracking-[0.15em] text-[#C9A96E]">
+                <div className="font-['Montserrat'] text-xs uppercase tracking-[0.15em] text-[#fbbf24]">
                   {category.properties} Properties
                 </div>
               </div>
 
               {/* Hover Border */}
-              <div className="absolute inset-0 border-2 border-[#C9A96E] opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+              <div className="absolute inset-0 border-2 border-[#fbbf24] opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
             </motion.div>
           ))}
         </div>

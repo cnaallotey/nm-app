@@ -27,11 +27,11 @@ export function CTASection() {
           Whether you're buying, renting, or investing, our digital-driven solutions make property acquisition seamless and professional.
         </p>
         <div className="flex flex-col lg:flex-row items-center justify-center gap-4">
-          <button className="px-10 py-4 bg-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all inline-flex items-center space-x-2 group">
+          <button className="px-10 py-4 bg-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] hover:bg-[#D4B87E] transition-all inline-flex items-center space-x-2 group">
             <span>Give Us a Call</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
-          <button className="px-10 py-4 bg-transparent border border-[#C9A96E] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#C9A96E] hover:bg-[#C9A96E]/10 transition-all">
+          <button className="px-10 py-4 bg-transparent border border-[#fbbf24] rounded-lg font-['Montserrat'] text-sm font-semibold uppercase tracking-[0.1em] text-[#fbbf24] hover:bg-[#fbbf24]/10 transition-all">
             Browse Properties
           </button>
         </div>
@@ -44,7 +44,7 @@ export function CTASection() {
             </div>
             <a
               href="tel:+233302523984"
-              className="font-['Montserrat'] text-lg text-white hover:text-[#C9A96E] transition-colors"
+              className="font-['Montserrat'] text-lg text-white hover:text-[#fbbf24] transition-colors"
             >
               +233 (0) 302 523 984
             </a>
@@ -55,7 +55,7 @@ export function CTASection() {
             </div>
             <a
               href="mailto:info@nouvellemaisonlimited.com"
-              className="font-['Montserrat'] text-lg text-white hover:text-[#C9A96E] transition-colors"
+              className="font-['Montserrat'] text-lg text-white hover:text-[#fbbf24] transition-colors"
             >
               info@nouvellemaisonlimited.com
             </a>

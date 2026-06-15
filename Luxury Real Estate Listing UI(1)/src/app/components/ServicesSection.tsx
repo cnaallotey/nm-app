@@ -61,13 +61,13 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <motion.div
               key={index}
-              className="p-8 bg-[#1A1A1A] border border-white/5 rounded-2xl hover:border-[#C9A96E]/30 transition-all"
+              className="p-8 bg-[#1A1A1A] border border-white/5 rounded-2xl hover:border-[#fbbf24]/30 transition-all"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <div className="text-[#C9A96E] mb-4">{service.icon}</div>
+              <div className="text-[#fbbf24] mb-4">{service.icon}</div>
               <h3 className="font-['Cormorant_Garamond'] text-2xl font-light text-white mb-3">
                 {service.title}
               </h3>

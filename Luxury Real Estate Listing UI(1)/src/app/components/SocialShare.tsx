@@ -15,16 +15,16 @@ export function SocialShare() {
           Share This Listing
         </span>
         <div className="flex items-center space-x-4">
-          <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-[#C9A96E] hover:border-[#C9A96E] transition-all group">
+          <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-[#fbbf24] hover:border-[#fbbf24] transition-all group">
             <Facebook className="w-4 h-4" />
           </button>
-          <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-[#C9A96E] hover:border-[#C9A96E] transition-all group">
+          <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-[#fbbf24] hover:border-[#fbbf24] transition-all group">
             <Twitter className="w-4 h-4" />
           </button>
-          <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-[#C9A96E] hover:border-[#C9A96E] transition-all group">
+          <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-[#fbbf24] hover:border-[#fbbf24] transition-all group">
             <Mail className="w-4 h-4" />
           </button>
-          <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-[#C9A96E] hover:border-[#C9A96E] transition-all group">
+          <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-[#fbbf24] hover:border-[#fbbf24] transition-all group">
             <Share2 className="w-4 h-4" />
           </button>
         </div>

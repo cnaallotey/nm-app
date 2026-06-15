@@ -4,9 +4,10 @@ import { motion, AnimatePresence } from "motion/react";
 
 interface HeroGalleryProps {
   images: string[];
+  address?: string;
 }
 
-export function HeroGallery({ images }: HeroGalleryProps) {
+export function HeroGallery({ images, address }: HeroGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
@@ -37,15 +38,17 @@ export function HeroGallery({ images }: HeroGalleryProps) {
           </AnimatePresence>
 
           {/* Address Overlay */}
-          <div className="absolute bottom-8 left-6 lg:left-12">
-            <p className="font-['Montserrat'] text-[10px] font-medium uppercase tracking-[0.2em] text-white/90">
-              125 OCEAN DRIVE, MIAMI BEACH, FL 33139
-            </p>
-          </div>
+          {address && (
+            <div className="absolute bottom-8 left-6 lg:left-12">
+              <p className="font-['Montserrat'] text-[10px] font-semibold uppercase tracking-[0.2em] text-white/90">
+                {address}
+              </p>
+            </div>
+          )}
 
           {/* Watch Video Button */}
           <button className="absolute top-8 right-6 lg:right-12 flex items-center space-x-2 px-6 py-3 bg-transparent border border-white/40 rounded-full backdrop-blur-sm hover:bg-white/10 hover:border-white/60 transition-all group">
-            <Play className="w-4 h-4 text-white group-hover:text-[#C9A96E] transition-colors" />
+            <Play className="w-4 h-4 text-white group-hover:text-[#fbbf24] transition-colors" />
             <span className="font-['Montserrat'] text-[11px] font-medium uppercase tracking-[0.15em] text-white">
               Watch Video
             </span>
@@ -88,7 +91,7 @@ export function HeroGallery({ images }: HeroGalleryProps) {
                 onClick={() => setActiveIndex(index)}
                 className={`relative h-24 overflow-hidden rounded-sm transition-all ${
                   index === activeIndex
-                    ? "ring-2 ring-[#C9A96E] opacity-100"
+                    ? "ring-2 ring-[#fbbf24] opacity-100"
                     : "opacity-60 hover:opacity-100"
                 }`}
               >
@@ -110,7 +113,7 @@ export function HeroGallery({ images }: HeroGalleryProps) {
           >
             <button
               onClick={() => setLightboxOpen(false)}
-              className="absolute top-8 right-8 text-white hover:text-[#C9A96E] transition-colors"
+              className="absolute top-8 right-8 text-white hover:text-[#fbbf24] transition-colors"
             >
               <X className="w-8 h-8" />
             </button>

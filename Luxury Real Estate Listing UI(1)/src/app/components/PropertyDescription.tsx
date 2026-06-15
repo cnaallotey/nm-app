@@ -2,9 +2,10 @@ import { motion } from "motion/react";
 
 interface PropertyDescriptionProps {
   description: string;
+  sqft?: string;
 }
 
-export function PropertyDescription({ description }: PropertyDescriptionProps) {
+export function PropertyDescription({ description, sqft }: PropertyDescriptionProps) {
   return (
     <div className="bg-[#1A1A1A] py-16 px-6 lg:px-12">
       <motion.div
@@ -30,13 +31,15 @@ export function PropertyDescription({ description }: PropertyDescriptionProps) {
           </div>
           
           {/* Pull Quote */}
-          <div className="mt-10 pt-10 border-t border-[#1A1A1A]/10">
-            <div className="bg-[#C9A96E]/10 border-l-4 border-[#C9A96E] py-6 px-8">
-              <p className="font-['Cormorant_Garamond'] text-2xl lg:text-3xl font-light text-[#1A1A1A] italic">
-                "27,000 sq ft of air-conditioned living space across three meticulously designed levels"
-              </p>
+          {sqft && (
+            <div className="mt-10 pt-10 border-t border-[#1A1A1A]/10">
+              <div className="bg-[#fbbf24]/10 border-l-4 border-[#fbbf24] py-6 px-8">
+                <p className="font-['Cormorant_Garamond'] text-2xl lg:text-3xl font-light text-[#1A1A1A] italic">
+                  "{sqft} sq ft of bespoke living space designed for the extraordinary."
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </motion.div>
     </div>
