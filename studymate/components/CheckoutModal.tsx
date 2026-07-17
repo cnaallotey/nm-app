@@ -126,9 +126,18 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
             }),
           });
 
+          if (!res.ok) {
+            let errMsg = "Payment verification failed.";
+            try {
+              const errData = await res.json();
+              errMsg = errData.error || errMsg;
+            } catch {}
+            throw new Error(errMsg);
+          }
+
           const data = await res.json();
 
-          if (!res.ok || !data.success) {
+          if (!data.success) {
             throw new Error(data.error || "Payment verification failed.");
           }
 

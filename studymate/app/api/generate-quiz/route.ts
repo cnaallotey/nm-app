@@ -4,6 +4,7 @@ import { generateQuiz } from "@/lib/quizGenerator";
 import { Timestamp } from "firebase-admin/firestore";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60; // 60 seconds timeout for serverless execution on Vercel
 
 export async function POST(req: NextRequest) {
   try {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { extractVideoId, fetchTranscript } from "@/lib/youtube";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60; // 60 seconds timeout for serverless execution on Vercel
 
 /**
  * Fetches video metadata (title, thumbnail, channelTitle) using the

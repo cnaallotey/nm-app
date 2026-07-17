@@ -27,12 +27,16 @@ export default function GenerateQuizPage() {
         body: JSON.stringify({ videoUrl }),
       });
 
-      const transcriptData = await transcriptRes.json();
-
       if (!transcriptRes.ok) {
-        throw new Error(transcriptData.error || "Failed to extract transcript from YouTube.");
+        let errMsg = "Failed to extract transcript from YouTube.";
+        try {
+          const errData = await transcriptRes.json();
+          errMsg = errData.error || errMsg;
+        } catch {}
+        throw new Error(errMsg);
       }
 
+      const transcriptData = await transcriptRes.json();
       const { videoId, transcript, title } = transcriptData;
 
       // Step 2: Call API to generate quiz (caches if already generated)
@@ -43,11 +47,16 @@ export default function GenerateQuizPage() {
         body: JSON.stringify({ videoId, transcript, title }),
       });
 
-      const quizData = await quizRes.json();
-
       if (!quizRes.ok) {
-        throw new Error(quizData.error || "Failed to generate the quiz.");
+        let errMsg = "Failed to generate the quiz.";
+        try {
+          const errData = await quizRes.json();
+          errMsg = errData.error || errMsg;
+        } catch {}
+        throw new Error(errMsg);
       }
+
+      const quizData = await quizRes.json();
 
       setLoadingStep("Success! Launching your quiz session...");
       router.push(`/quiz/${videoId}`);

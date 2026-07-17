@@ -99,10 +99,16 @@ export default function ResultsPage({ params }: { params: Promise<{ videoId: str
           body: JSON.stringify({ videoId, answers }),
         });
 
-        const gradeData = await gradeRes.json();
         if (!gradeRes.ok) {
-          throw new Error(gradeData.error || "Failed to grade answers.");
+          let errMsg = "Failed to grade answers.";
+          try {
+            const errData = await gradeRes.json();
+            errMsg = errData.error || errMsg;
+          } catch {}
+          throw new Error(errMsg);
         }
+
+        const gradeData = await gradeRes.json();
 
         setScore(gradeData.score);
         setCorrectAnswersList(gradeData.correctAnswers || []);
