@@ -46,7 +46,7 @@ export async function generateQuiz(transcript: string, numQuestions = 8): Promis
   while (attempt <= maxRetries) {
     try {
       const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.0-flash",
         contents: `Generate exactly ${numQuestions} multiple-choice questions based strictly on the following transcript to test comprehension of its content. Do not include questions that require external knowledge not stated in the text.\n\nTranscript:\n${transcript}`,
         config: {
           responseMimeType: "application/json",

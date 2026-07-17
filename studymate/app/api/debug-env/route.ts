@@ -81,7 +81,7 @@ export async function GET(req: NextRequest) {
   if (geminiModule) {
     try {
       const response = await geminiModule.ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.0-flash",
         contents: "Hello",
       });
       results.geminiQuery.status = "success";
