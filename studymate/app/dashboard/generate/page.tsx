@@ -30,8 +30,13 @@ export default function GenerateQuizPage() {
       if (!transcriptRes.ok) {
         let errMsg = "Failed to extract transcript from YouTube.";
         try {
-          const errData = await transcriptRes.json();
-          errMsg = errData.error || errMsg;
+          const rawText = await transcriptRes.text();
+          try {
+            const errData = JSON.parse(rawText);
+            errMsg = errData.error || errMsg;
+          } catch {
+            errMsg = rawText.substring(0, 300) || errMsg;
+          }
         } catch {}
         throw new Error(errMsg);
       }
@@ -50,8 +55,14 @@ export default function GenerateQuizPage() {
       if (!quizRes.ok) {
         let errMsg = "Failed to generate the quiz.";
         try {
-          const errData = await quizRes.json();
-          errMsg = errData.error || errMsg;
+          const rawText = await quizRes.text();
+          try {
+            const errData = JSON.parse(rawText);
+            errMsg = errData.error || errMsg;
+          } catch {
+            // Not JSON (e.g. Vercel HTML error page), slice the text to avoid flooding the UI
+            errMsg = rawText.substring(0, 300) || errMsg;
+          }
         } catch {}
         throw new Error(errMsg);
       }
