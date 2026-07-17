@@ -1,5 +1,5 @@
 import { getApps, initializeApp, cert, getApp } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
+import { getFirestore, Timestamp, FieldValue } from "firebase-admin/firestore";
 import { getAuth } from "firebase-admin/auth";
 
 let app: any = null;
@@ -100,3 +100,5 @@ export const adminAuth = new Proxy({} as any, {
     return val;
   },
 });
+
+export { Timestamp, FieldValue };

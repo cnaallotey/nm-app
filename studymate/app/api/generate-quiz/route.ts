@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { adminDb } from "@/lib/firebaseAdmin";
+import { adminDb, Timestamp } from "@/lib/firebaseAdmin";
 import { generateQuiz } from "@/lib/quizGenerator";
-import { Timestamp } from "firebase-admin/firestore";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60; // 60 seconds timeout for serverless execution on Vercel
