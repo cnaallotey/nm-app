@@ -1,0 +1,59 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Admin email — the single source of truth for admin privilege in security rules.
+    // This mirrors the ADMIN_EMAIL constant in lib/authContext.tsx.
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'charlesallotey1995@gmail.com';
+    }
+
+    // 1. Videos: Publicly readable, server-write only
+    match /videos/{videoId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // 2. Quizzes: Publicly readable, server-write only
+    match /quizzes/{videoId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // 3. Attempts: User owns their own records; admin can read/delete any
+    match /attempts/{attemptId} {
+      allow read:   if request.auth != null && (request.auth.uid == resource.data.userId || isAdmin());
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      allow update: if request.auth != null
+                    && (request.auth.uid == resource.data.userId || isAdmin())
+                    && (request.auth.uid == request.resource.data.userId || isAdmin());
+      allow delete: if request.auth != null && (request.auth.uid == resource.data.userId || isAdmin());
+    }
+
+    // 4. Users: Users can read/update their own profile; admin has full access.
+    //    NOTE: Plan upgrades are written by the server-side Admin SDK (bypasses these rules).
+    match /users/{userId} {
+      allow read:   if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // 5. Feedback: Authenticated users can submit; admin can manage all tickets
+    match /feedback/{feedbackId} {
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // 6. Payments: Server-side Admin SDK creates records (bypasses client rules).
+    //    Users can read their own payments; admin can read/manage all.
+    match /payments/{paymentId} {
+      allow read:          if request.auth != null && (resource.data.userId == request.auth.uid || isAdmin());
+      allow update, delete: if isAdmin();
+      // create is intentionally blocked for clients — all payment records are written
+      // server-side through /api/verify-payment using the Firebase Admin SDK.
+      allow create: if false;
+    }
+  }
+}

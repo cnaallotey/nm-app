@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,ROND@8..144,-10..0,25..150,400..500,0..100&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Google Sans Flex', var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-canvas: #ffffff;
+  --color-mist: #f8f9fc;
+  --color-surface: #ffffff;
+
+  --color-ink: #121317;
+  --color-muted: #45474d;
+  --color-line: rgba(33, 34, 38, 0.08);
+
+  --color-primary: #3279f9;
+  --color-primary-strong: #1a73e8;
+  --color-primary-soft: rgba(50, 121, 249, 0.08);
+  --color-accent: #3279f9;
+
+  --color-mint: #12b76a;
+  --color-amber: #f5a524;
+
+  --radius-card: 0.75rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: rgba(50, 121, 249, 0.12);
+  color: var(--color-primary-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom premium design components from antigravity.google */
+
+/* Technical layout grid line pattern */
+.antigravity-grid {
+  background-image:
+    linear-gradient(to right, rgba(33, 34, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(33, 34, 38, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.antigravity-grid-mask {
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 0%, black, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 0%, black, transparent 75%);
+}
+
+.antigravity-dot-grid {
+  background-image: radial-gradient(rgba(33, 34, 38, 0.08) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Developer-style section border connector layout line */
+.antigravity-border-connector {
+  position: relative;
+}
+
+.antigravity-border-connector::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-line);
+}
+
+/* Variable font settings helper for headings */
+.antigravity-heading {
+  font-variation-settings: "wdth" 100, "opsz" 98;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+
+/* Crosshair overlay decoration at layout bounds */
+.crosshair {
+  position: relative;
+}
+.crosshair::after {
+  content: "+";
+  position: absolute;
+  color: rgba(33, 34, 38, 0.25);
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+}
+.crosshair-tr::after { top: -6px; right: -4px; }
+.crosshair-tl::after { top: -6px; left: -4px; }
+.crosshair-br::after { bottom: -6px; right: -4px; }
+.crosshair-bl::after { bottom: -6px; left: -4px; }
