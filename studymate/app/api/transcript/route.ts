@@ -4,27 +4,69 @@ import { extractVideoId, fetchTranscript } from "@/lib/youtube";
 export const dynamic = "force-dynamic";
 
 /**
- * Fetches the video title via oembed endpoint (noembed) without requiring an API key.
- * Falls back to "YouTube Video" if the fetch fails.
+ * Fetches video metadata (title, thumbnail, channelTitle) using the
+ * YouTube Data API v3. Falls back to a minimal default if the key is
+ * missing or the API call fails, so the app degrades gracefully.
  */
-async function fetchVideoTitle(videoId: string): Promise<string> {
+async function fetchVideoMetadata(videoId: string): Promise<{
+  title: string;
+  thumbnail: string | null;
+  channelTitle: string | null;
+}> {
+  const apiKey = process.env.YOUTUBE_API_KEY;
+
+  if (apiKey && !apiKey.includes("PASTE_YOUR")) {
+    try {
+      const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${encodeURIComponent(videoId)}&key=${encodeURIComponent(apiKey)}`;
+      const res = await fetch(url, { next: { revalidate: 3600 } });
+
+      if (res.ok) {
+        const data = await res.json();
+        const item = data?.items?.[0]?.snippet;
+
+        if (item) {
+          return {
+            title: item.title || "YouTube Video",
+            // Prefer maxres → high → medium → default thumbnail
+            thumbnail:
+              item.thumbnails?.maxres?.url ||
+              item.thumbnails?.high?.url ||
+              item.thumbnails?.medium?.url ||
+              item.thumbnails?.default?.url ||
+              null,
+            channelTitle: item.channelTitle || null,
+          };
+        }
+      }
+    } catch (err) {
+      console.error("YouTube Data API metadata fetch failed:", err);
+    }
+  }
+
+  // Graceful fallback — noembed for title, no thumbnail
   try {
-    const response = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
-    if (response.ok) {
-      const data = await response.json();
-      if (data && data.title) {
-        return data.title;
+    const res = await fetch(
+      `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`
+    );
+    if (res.ok) {
+      const data = await res.json();
+      if (data?.title) {
+        return {
+          title: data.title,
+          thumbnail: data.thumbnail_url || null,
+          channelTitle: data.author_name || null,
+        };
       }
     }
-  } catch (error) {
-    console.error("Error fetching video title:", error);
+  } catch {
+    // ignore noembed errors
   }
-  return "YouTube Video";
+
+  return { title: "YouTube Video", thumbnail: null, channelTitle: null };
 }
 
 export async function POST(req: NextRequest) {
   try {
-    // Parse request body
     let body;
     try {
       body = await req.json();
@@ -44,39 +86,49 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Extract video ID
+    // Extract video ID from the URL
     const videoId = extractVideoId(videoUrl);
     if (!videoId) {
       return NextResponse.json(
-        { error: "Invalid YouTube URL format. Please paste a valid YouTube video link." },
+        {
+          error:
+            "Invalid YouTube URL format. Please paste a valid YouTube video link.",
+        },
         { status: 400 }
       );
     }
 
-    // Retrieve transcript and title in parallel
-    const [transcript, title] = await Promise.all([
+    // Fetch transcript and metadata in parallel
+    const [transcript, metadata] = await Promise.all([
       fetchTranscript(videoId),
-      fetchVideoTitle(videoId),
+      fetchVideoMetadata(videoId),
     ]);
 
     return NextResponse.json({
       videoId,
-      title,
+      title: metadata.title,
+      thumbnail: metadata.thumbnail,
+      channelTitle: metadata.channelTitle,
       transcript,
     });
   } catch (error: any) {
     console.error("Transcript retrieval error:", error);
-    
-    // Determine status code based on error message
-    let status = 500;
+
     const msg = error?.message || "Internal server error";
-    if (msg.includes("disabled") || msg.includes("not available")) {
+
+    // Map specific error types to appropriate HTTP status codes
+    let status = 500;
+    if (
+      msg.includes("No captions") ||
+      msg.includes("disabled") ||
+      msg.includes("unavailable") ||
+      msg.includes("unplayable") ||
+      msg.includes("age-restricted") ||
+      msg.includes("Invalid YouTube")
+    ) {
       status = 400;
     }
 
-    return NextResponse.json(
-      { error: msg },
-      { status }
-    );
+    return NextResponse.json({ error: msg }, { status });
   }
 }

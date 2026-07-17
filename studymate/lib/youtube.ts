@@ -1,26 +1,31 @@
 /**
- * YouTube transcript fetcher that directly hits YouTube's InnerTube API.
+ * YouTube transcript fetcher using the InnerTube /player API endpoint.
  *
- * Why: The `youtube-transcript` npm package scrapes the page in a way that
- * YouTube blocks from cloud/datacenter IPs (Vercel, Railway, etc.), producing
- * the misleading "Captions are disabled" error even when captions exist.
+ * Why not the YouTube Data API captions.download?
+ *   That endpoint requires OAuth and only works on videos you own.
  *
- * This implementation fetches the video page with browser-like headers to
- * extract caption track URLs, then fetches and parses the timed-text XML
- * directly. No external package dependencies beyond native Node fetch.
+ * Why not HTML page scraping?
+ *   Vercel/cloud IPs receive a sign-in gate HTML page from YouTube even
+ *   for public videos, making HTML parsing unreliable in production.
+ *
+ * This implementation POSTs directly to YouTube's internal /player endpoint
+ * using an Android client context. The response is a clean JSON object that
+ * includes caption track URLs without any IP-based gating.
  */
 
-const BROWSER_HEADERS = {
-  "User-Agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-  "Accept-Language": "en-US,en;q=0.9",
-  Accept:
-    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-  "Accept-Encoding": "gzip, deflate, br",
-  "Sec-Fetch-Dest": "document",
-  "Sec-Fetch-Mode": "navigate",
-  "Sec-Fetch-Site": "none",
-  "Upgrade-Insecure-Requests": "1",
+// InnerTube Android client context — tells YouTube's backend we're the
+// official Android app, which bypasses the browser-facing sign-in gate.
+const INNERTUBE_ENDPOINT = "https://www.youtube.com/youtubei/v1/player";
+
+const INNERTUBE_CONTEXT = {
+  client: {
+    clientName: "ANDROID",
+    clientVersion: "19.09.37",
+    androidSdkVersion: 30,
+    hl: "en",
+    gl: "US",
+    utcOffsetMinutes: 0,
+  },
 };
 
 /**
@@ -78,59 +83,6 @@ function parseTimedTextXml(xml: string): string {
 }
 
 /**
- * Extracts the captionTracks array from the YouTube page's ytInitialPlayerResponse JSON.
- * Returns an array of { baseUrl, languageCode, name } objects.
- */
-function extractCaptionTracks(
-  pageHtml: string
-): Array<{ baseUrl: string; languageCode: string; name: string }> {
-  // The player response is embedded as a JS variable in the page
-  const playerResponseMatch = pageHtml.match(
-    /ytInitialPlayerResponse\s*=\s*(\{[\s\S]+?\});(?:\s*var\s|\s*<\/script>)/
-  );
-
-  let playerJson: any = null;
-
-  if (playerResponseMatch) {
-    try {
-      playerJson = JSON.parse(playerResponseMatch[1]);
-    } catch {
-      // Try a more permissive extraction
-    }
-  }
-
-  // Fallback: look for captionTracks directly in the raw HTML
-  if (!playerJson) {
-    const captions: Array<{ baseUrl: string; languageCode: string; name: string }> = [];
-    const trackRegex = /"baseUrl":"(https:\/\/www\.youtube\.com\/api\/timedtext[^"]+)"/g;
-    const langRegex = /"languageCode":"([^"]+)"/g;
-
-    let trackMatch;
-    while ((trackMatch = trackRegex.exec(pageHtml)) !== null) {
-      captions.push({
-        baseUrl: trackMatch[1].replace(/\\u0026/g, "&"),
-        languageCode: "en",
-        name: "Unknown",
-      });
-    }
-    return captions;
-  }
-
-  const captionsData =
-    playerJson?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
-
-  if (!captionsData || !Array.isArray(captionsData) || captionsData.length === 0) {
-    return [];
-  }
-
-  return captionsData.map((track: any) => ({
-    baseUrl: track.baseUrl || "",
-    languageCode: track.languageCode || "unknown",
-    name: track.name?.simpleText || track.name?.runs?.[0]?.text || "Unknown",
-  }));
-}
-
-/**
  * Selects the best caption track: prefers English, falls back to first available.
  */
 function selectBestTrack(
@@ -147,95 +99,126 @@ function selectBestTrack(
   if (enVariant) return enVariant;
 
   // Auto-generated English (asr = automatic speech recognition)
-  const asr = tracks.find((t) => t.baseUrl.includes("kind=asr"));
+  const asr = tracks.find(
+    (t) => t.baseUrl.includes("kind=asr") || t.baseUrl.includes("tlang=en")
+  );
   if (asr) return asr;
 
-  // Fall back to whatever is first
+  // Fall back to first available
   return tracks[0];
 }
 
 /**
+ * Calls the InnerTube /player endpoint to get the player JSON for a video.
+ * This returns caption track URLs directly without going through the HTML page.
+ */
+async function fetchPlayerData(videoId: string): Promise<any> {
+  const res = await fetch(INNERTUBE_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // Required by YouTube's backend to accept the request
+      "X-YouTube-Client-Name": "3",
+      "X-YouTube-Client-Version": "19.09.37",
+    },
+    body: JSON.stringify({
+      context: INNERTUBE_CONTEXT,
+      videoId,
+      params: "8AEB", // param to request subtitles/captions
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(
+      `InnerTube player endpoint returned HTTP ${res.status} for video ${videoId}.`
+    );
+  }
+
+  return res.json();
+}
+
+/**
  * Fetches and returns the plain-text transcript for a YouTube video ID.
- * Uses direct InnerTube API access rather than the youtube-transcript package
- * to work reliably in cloud/production environments.
+ *
+ * Uses the InnerTube /player POST endpoint (Android client context) to avoid
+ * the IP-based sign-in gate that YouTube presents to cloud/datacenter IPs
+ * when scraping the HTML page.
  */
 export async function fetchTranscript(videoId: string): Promise<string> {
-  const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
-  // 1. Fetch the video page with browser-like headers
-  let pageHtml: string;
+  // 1. Get player JSON via InnerTube
+  let playerData: any;
   try {
-    const pageRes = await fetch(videoUrl, {
-      headers: BROWSER_HEADERS,
-      redirect: "follow",
-    });
-
-    if (!pageRes.ok) {
-      throw new Error(`YouTube returned HTTP ${pageRes.status} for video ${videoId}.`);
-    }
-    pageHtml = await pageRes.text();
+    playerData = await fetchPlayerData(videoId);
   } catch (err: any) {
     throw new Error(
-      `Unable to reach YouTube. Check your network connection. (${err.message})`
+      `Unable to reach YouTube's player API. Check your network connection. (${err.message})`
     );
   }
 
-  // 2. Check for common page-level blocks before proceeding
-  if (
-    pageHtml.includes('"playabilityStatus":{"status":"LOGIN_REQUIRED"') ||
-    pageHtml.includes('"status":"LOGIN_REQUIRED"')
-  ) {
-    throw new Error(
-      "This video is age-restricted or private and requires sign-in. Please choose a publicly accessible video."
-    );
+  // 2. Check playability
+  const playability = playerData?.playabilityStatus;
+  if (playability) {
+    const status = playability.status as string;
+
+    if (status === "ERROR") {
+      throw new Error(
+        "This video is unavailable. It may have been deleted or made private."
+      );
+    }
+
+    if (status === "UNPLAYABLE") {
+      const reason = playability.reason as string | undefined;
+      throw new Error(
+        reason ||
+          "This video is unplayable (it may be restricted to certain regions or platforms)."
+      );
+    }
+
+    // LOGIN_REQUIRED means genuinely age-gated even at the API level
+    if (status === "LOGIN_REQUIRED") {
+      throw new Error(
+        "This video is age-restricted at the API level and cannot be transcribed without authentication. Please choose a different video."
+      );
+    }
   }
 
-  if (
-    pageHtml.includes('"status":"ERROR"') &&
-    pageHtml.includes('"reason":"Video unavailable"')
-  ) {
-    throw new Error(
-      "This video is unavailable. It may have been deleted or made private."
-    );
-  }
+  // 3. Extract caption tracks from the player JSON
+  const captionTracks: Array<{
+    baseUrl: string;
+    languageCode: string;
+    name: string;
+  }> =
+    playerData?.captions?.playerCaptionsTracklistRenderer?.captionTracks ?? [];
 
-  // 3. Extract caption track list
-  const tracks = extractCaptionTracks(pageHtml);
-
-  if (tracks.length === 0) {
+  if (captionTracks.length === 0) {
     throw new Error(
       "No captions are available for this video. The creator may have disabled captions, or the video may be too new for auto-captions to be generated. Please try a different video."
     );
   }
 
   // 4. Pick the best available track
-  const track = selectBestTrack(tracks);
-  if (!track || !track.baseUrl) {
-    throw new Error(
-      "Could not find a usable caption track for this video."
-    );
+  const track = selectBestTrack(captionTracks);
+  if (!track?.baseUrl) {
+    throw new Error("Could not find a usable caption track for this video.");
   }
 
-  // 5. Fetch the timed-text XML
+  // 5. Fetch the timed-text XML from the caption URL
   let captionXml: string;
   try {
     const captionRes = await fetch(track.baseUrl, {
       headers: {
-        ...BROWSER_HEADERS,
-        Referer: videoUrl,
+        "Accept-Language": "en-US,en;q=0.9",
       },
     });
 
     if (!captionRes.ok) {
-      throw new Error(
-        `Caption endpoint returned HTTP ${captionRes.status}.`
-      );
+      throw new Error(`Caption endpoint returned HTTP ${captionRes.status}.`);
     }
     captionXml = await captionRes.text();
   } catch (err: any) {
     throw new Error(`Failed to download caption track. (${err.message})`);
   }
 
-  // 6. Parse and return
+  // 6. Parse XML and return plain text
   return parseTimedTextXml(captionXml);
 }
