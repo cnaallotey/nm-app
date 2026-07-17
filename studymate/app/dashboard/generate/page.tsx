@@ -35,7 +35,8 @@ export default function GenerateQuizPage() {
             const errData = JSON.parse(rawText);
             errMsg = errData.error || errMsg;
           } catch {
-            errMsg = rawText.substring(0, 300) || errMsg;
+            const cleanText = rawText.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+            errMsg = cleanText.substring(0, 500) || errMsg;
           }
         } catch {}
         throw new Error(errMsg);
@@ -60,8 +61,9 @@ export default function GenerateQuizPage() {
             const errData = JSON.parse(rawText);
             errMsg = errData.error || errMsg;
           } catch {
-            // Not JSON (e.g. Vercel HTML error page), slice the text to avoid flooding the UI
-            errMsg = rawText.substring(0, 300) || errMsg;
+            // Not JSON (e.g. Next.js HTML error page), strip tags to extract plain text error
+            const cleanText = rawText.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+            errMsg = cleanText.substring(0, 500) || errMsg;
           }
         } catch {}
         throw new Error(errMsg);
