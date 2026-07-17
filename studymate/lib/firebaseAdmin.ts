@@ -2,9 +2,16 @@ import { getApps, initializeApp, cert, getApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { getAuth } from "firebase-admin/auth";
 
-let app;
+let app: any = null;
 
-if (getApps().length === 0) {
+function getAdminApp() {
+  if (app) return app;
+
+  if (getApps().length > 0) {
+    app = getApp();
+    return app;
+  }
+
   const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
 
   try {
@@ -49,12 +56,47 @@ if (getApps().length === 0) {
       app = getApp();
     }
   }
-} else {
-  app = getApp();
+
+  return app;
 }
 
-// Pass the app instance explicitly to getFirestore and getAuth to ensure stability
-const adminDb = getFirestore(app);
-const adminAuth = getAuth(app);
+let _db: any = null;
+function getDb() {
+  if (!_db) {
+    _db = getFirestore(getAdminApp());
+  }
+  return _db;
+}
 
-export { adminDb, adminAuth };
+let _auth: any = null;
+function getAuthInstance() {
+  if (!_auth) {
+    _auth = getAuth(getAdminApp());
+  }
+  return _auth;
+}
+
+// Lazy initialization proxies. Deferring authentication and service configuration 
+// to API route request runtime ensures that any setup failures are caught inside 
+// the handler's try/catch block rather than causing module load-time crashes.
+export const adminDb = new Proxy({} as any, {
+  get(target, prop) {
+    const db = getDb();
+    const val = Reflect.get(db, prop);
+    if (typeof val === "function") {
+      return val.bind(db);
+    }
+    return val;
+  },
+});
+
+export const adminAuth = new Proxy({} as any, {
+  get(target, prop) {
+    const auth = getAuthInstance();
+    const val = Reflect.get(auth, prop);
+    if (typeof val === "function") {
+      return val.bind(auth);
+    }
+    return val;
+  },
+});
