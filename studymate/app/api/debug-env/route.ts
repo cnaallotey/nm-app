@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { adminDb } from "@/lib/firebaseAdmin";
-import { ai } from "@/lib/gemini";
 
 export const dynamic = "force-dynamic";
 
@@ -18,48 +16,80 @@ export async function GET(req: NextRequest) {
       NODE_ENV: process.env.NODE_ENV,
       GEMINI_API_KEY_exists: !!process.env.GEMINI_API_KEY,
       GEMINI_API_KEY_length: process.env.GEMINI_API_KEY?.length || 0,
-      GEMINI_API_KEY_prefix: process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.substring(0, 10) : "none",
       
       FIREBASE_SERVICE_ACCOUNT_KEY_exists: !!process.env.FIREBASE_SERVICE_ACCOUNT_KEY,
       FIREBASE_SERVICE_ACCOUNT_KEY_length: process.env.FIREBASE_SERVICE_ACCOUNT_KEY?.length || 0,
-      FIREBASE_SERVICE_ACCOUNT_KEY_prefix: process.env.FIREBASE_SERVICE_ACCOUNT_KEY ? process.env.FIREBASE_SERVICE_ACCOUNT_KEY.substring(0, 20) : "none",
 
       NEXT_PUBLIC_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "none",
     },
-    firebase: {
+    firebaseImport: {
       status: "untested",
       error: null,
       stack: null,
     },
-    gemini: {
+    geminiImport: {
       status: "untested",
       error: null,
       stack: null,
+    },
+    firebaseQuery: {
+      status: "untested",
+      error: null,
+    },
+    geminiQuery: {
+      status: "untested",
+      error: null,
     }
   };
 
-  // Test Firebase Admin Firestore query
+  // 1. Test importing firebaseAdmin dynamically
+  let firebaseAdminModule: any = null;
   try {
-    const snap = await adminDb.collection("quizzes").limit(1).get();
-    results.firebase.status = `success: retrieved ${snap.size} documents`;
+    console.log("Dynamically importing firebaseAdmin...");
+    firebaseAdminModule = await import("@/lib/firebaseAdmin");
+    results.firebaseImport.status = "success";
   } catch (err: any) {
-    results.firebase.status = "failed";
-    results.firebase.error = err.message || String(err);
-    results.firebase.stack = err.stack || null;
+    results.firebaseImport.status = "failed";
+    results.firebaseImport.error = err.message || String(err);
+    results.firebaseImport.stack = err.stack || null;
   }
 
-  // Test Gemini API call
+  // 2. Test importing gemini dynamically
+  let geminiModule: any = null;
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: "Hello",
-    });
-    results.gemini.status = "success";
-    results.gemini.text = response.text || "no text response";
+    console.log("Dynamically importing gemini...");
+    geminiModule = await import("@/lib/gemini");
+    results.geminiImport.status = "success";
   } catch (err: any) {
-    results.gemini.status = "failed";
-    results.gemini.error = err.message || String(err);
-    results.gemini.stack = err.stack || null;
+    results.geminiImport.status = "failed";
+    results.geminiImport.error = err.message || String(err);
+    results.geminiImport.stack = err.stack || null;
+  }
+
+  // 3. Test Firebase query if import succeeded
+  if (firebaseAdminModule) {
+    try {
+      const snap = await firebaseAdminModule.adminDb.collection("quizzes").limit(1).get();
+      results.firebaseQuery.status = `success: retrieved ${snap.size} documents`;
+    } catch (err: any) {
+      results.firebaseQuery.status = "failed";
+      results.firebaseQuery.error = err.message || String(err);
+    }
+  }
+
+  // 4. Test Gemini query if import succeeded
+  if (geminiModule) {
+    try {
+      const response = await geminiModule.ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: "Hello",
+      });
+      results.geminiQuery.status = "success";
+      results.geminiQuery.text = response.text || "no text";
+    } catch (err: any) {
+      results.geminiQuery.status = "failed";
+      results.geminiQuery.error = err.message || String(err);
+    }
   }
 
   return NextResponse.json(results);
