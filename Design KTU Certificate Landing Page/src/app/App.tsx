@@ -9,24 +9,24 @@ export default function App() {
 
   const faqItems = [
     {
-      question: "What's the difference between the Thrive Africa and KTU certificate?",
-      answer: "Thrive Africa is free, digital, and not accredited. The KTU certificate is ₵300, hardcopy, and officially accredited by a public university."
+      question: "What's the difference between the free Thrive Africa certificate and the KTU one?",
+      answer: "Thrive Africa Certificate (Free): Digital, comes with transcript, recognizes skills gained and not accredited. KTU Certificate (₵200): Hardcopy, official university certificate, valuable for jobs, unlocking free funding, support, and visa for study abroad, and professional recognition."
     },
     {
-      question: "Can I pay in installments?",
-      answer: "Yes. Pay ₵100 deposit by 1st May to save ₵60. Pay the remaining balance one month before your course ends."
+      question: "Can I pay in parts?",
+      answer: "Yes. Pay ₵70 by 14th August 2026 and enjoy ₵30 discount on first come, first served, or ₵100 after 14th August 2026 (no discount, no penalty). Then clear the remaining balance one month before class ends."
     },
     {
-      question: "When will I receive my KTU certificate?",
+      question: "When will I get my KTU certificate?",
       answer: "Within 1 month after your program ends."
     },
     {
-      question: "Do I still get the free certificate if I don't apply for KTU?",
-      answer: "Yes. The Thrive Africa Digital Certificate & Transcript is free for all students regardless."
+      question: "Do I still get the Thrive Africa certificate if I don't apply for KTU's?",
+      answer: "Yes, the Thrive Africa Certificate & Transcript are free for all completers. The KTU certificate is optional."
     },
     {
-      question: "Is the KTU certificate accredited?",
-      answer: "Yes. KTU is an accredited public university in Ghana, making all issued certificates officially accredited."
+      question: "Is the KTU Certificate Accredited?",
+      answer: "Yes, the KTU certificate is accredited because KTU is an accredited public university."
     }
   ];
 
@@ -36,11 +36,16 @@ export default function App() {
       content: (
         <div className="grid md:grid-cols-3 gap-5">
           {[
-            "Certificate in Advanced Data Science & Analytics",
-            "Certificate in Advanced Machine Learning & AI",
-            "Certificate in Advanced Cloud Computing",
-            "Certificate in Advanced Cybersecurity",
-            "Certificate in Generative AI & Advanced Prompt Engineering"
+            "Certificate in Data Science & Analytics",
+            "Certificate in Machine Learning & AI",
+            "Certificate in Cloud Computing (AWS)",
+            "Certificate in Cybersecurity (CC-ComPTIA Security+)",
+            "Certificate in Generative AI & Advanced Prompt Engineering",
+            "Certificate in Graphic Design",
+            "Certificate in Social Media Marketing & Advertising",
+            "Certificate in Digital Advertising & Campaign Planning",
+            "Certificate in UX/UI Design",
+            "Certificate in Front-End Software Engineering"
           ].map((title, idx) => (
             <div key={idx} className="bg-white border border-gray-200 rounded-xl p-5 hover:bg-pink-50 transition-colors">
               <div className="flex items-start gap-3">
@@ -68,10 +73,13 @@ export default function App() {
       content: (
         <div className="grid md:grid-cols-2 gap-5">
           {[
-            { title: "Certificate in Advanced Data Science", combo: "if you enrolled in both Advanced Data Science & Analytics and Advanced Machine Learning & AI Course" },
-            { title: "Certificate in Advanced Cybersecurity with Advanced Cloud Computing", combo: "if you enrolled in both Advanced Cybersecurity & Advanced Cloud Computing Course" },
-            { title: "Certificate in Advanced Data Engineering", combo: "if you enrolled in both Advanced Data Science & Analytics and Advanced Cloud Computing Course" },
-            { title: "Certificate in Advanced AI-Engineering", combo: "if you enrolled in both Advanced Machine Learning & AI and Advanced Cloud Computing Course" }
+            { title: "Certificate in Data Science", combo: "if you enrolled in both Data Science & Analytics and Machine Learning & AI Course" },
+            { title: "Certificate in Cybersecurity with Cloud Computing", combo: "if you enrolled in both Cybersecurity & Cloud Computing Course" },
+            { title: "Certificate in Data Engineering", combo: "if you enrolled in both Data Science & Analytics and Cloud Computing Course" },
+            { title: "Certificate in AI Engineering", combo: "if you enrolled in both Machine Learning & AI and Cloud Computing Course" },
+            { title: "Certificate in Digital Marketing", combo: "if you enrolled in both Social Media Marketing & Advertising & Digital Advertising & Campaign Planning or Graphic Design and/or Website Development with Wordpress" },
+            { title: "Certificate in Digital Marketing & Data Analytics", combo: "if you enrolled in both Social Media Marketing & Advertising & Digital Advertising and Campaign Planning & Data Science & Analytics" },
+            { title: "Certificate in Software Product Design & Development", combo: "if you enrolled in both UX/UI Design & Front-End Software Engineering" }
           ].map((item, idx) => (
             <div key={idx} className="bg-white border border-gray-200 rounded-xl p-5 hover:bg-pink-50 transition-colors relative">
               <span className="absolute top-3 right-3 bg-pink-100 text-pink-600 px-2 py-1 rounded-full" style={{ fontSize: '11px' }}>
@@ -102,12 +110,21 @@ export default function App() {
       content: (
         <div className="grid md:grid-cols-3 gap-5">
           {[
-            { title: "Certificate in Advanced AI-Powered Data Analytics", combo: "if you enrolled in both Generative AI & Advanced Prompt Engineering & Advanced Data Science & Analytics Course" },
-            { title: "Certificate in Advanced AI-Powered Cybersecurity", combo: "if you enrolled in both Generative AI & Advanced Prompt Engineering & Advanced Cybersecurity Course" },
-            { title: "Certificate in Advanced AI-Powered Cloud Computing", combo: "if you enrolled in both Advanced Cloud Computing & Generative AI & Advanced Prompt Engineering" },
-            { title: "Certificate in Advanced AI-Powered Data Science", combo: "if you enrolled in both Advanced Data Science & Analytics, Advanced Machine Learning & AI & Generative AI & Advanced Prompt Engineering" },
-            { title: "Certificate in Advanced AI-Powered Cybersecurity with Cloud Computing", combo: "if you enrolled in both Advanced cybersecurity, Advanced cloud computing & Generative AI & Advanced Prompt Engineering" },
-            { title: "Certificate in Advanced AI-Powered Data Engineering", combo: "if you enrolled in both Advanced Data Science & Analytics, Advanced Cloud Computing & Generative AI & Advanced Prompt Engineering" }
+            { title: "Certificate in AI-Powered Data Analytics", combo: "if you enrolled in both Generative AI & Advanced Prompt Engineering & Data Science & Analytics Course" },
+            { title: "Certificate in AI-Powered Cybersecurity", combo: "if you enrolled in both Generative AI & Advanced Prompt Engineering & Cybersecurity Course" },
+            { title: "Certificate in AI-Powered Cloud Computing", combo: "if you enrolled in both Cloud Computing & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in AI-Powered Data Science", combo: "if you enrolled in both Data Science & Analytics, Machine Learning & AI & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in AI-Powered Cybersecurity with Cloud Computing (AWS Certified)", combo: "if you enrolled in both cybersecurity, cloud computing & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in AI-Powered Data Engineering", combo: "if you enrolled in both Data Analytics, Cloud Computing & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in AI-Powered Graphic Design", combo: "if you enrolled in both Graphic Design & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in AI-Powered Website Development with Wordpress", combo: "if you enrolled in both Website Development with Wordpress & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in AI-Powered UX/UI Design", combo: "if you enrolled in both UX/UI Design & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in AI-Powered Front-End Software Engineering", combo: "if you enrolled in both Front-End Software Engineering & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in AI-Powered Social Media Marketing & Advertising", combo: "if you enrolled in both Social Media Marketing & Advertising & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in AI-Powered Digital Advertising & Campaign Planning", combo: "if you enrolled in both Digital Advertising & Campaign Planning & Generative AI & Advanced Prompt Engineering" },
+            { title: "Certificate in AI-Powered Digital Marketing", combo: "if you enrolled in both Generative AI & Advanced Prompt Engineering, Social Media Marketing & Advertising & Digital Advertising & Campaign Planning or Graphic Design and/or Website Development with Wordpress" },
+            { title: "Certificate in AI-Powered Digital Marketing & Data Analytics", combo: "if you enrolled in both Generative AI & Advanced Prompt Engineering, Social Media Marketing & Advertising & Digital Advertising and Campaign Planning & Data Science & Analytics" },
+            { title: "Certificate in AI-Powered Software Product Design & Development", combo: "if you enrolled in both Generative AI, UX/UI Design & Front-End Software Engineering" }
           ].map(({ title, combo }, idx) => (
             <div key={idx} className="bg-white border border-gray-200 rounded-xl p-5 hover:bg-pink-50 transition-colors relative">
               <span className="absolute top-3 right-3 text-pink-500" style={{ fontSize: '16px' }}>✦</span>
@@ -151,13 +168,13 @@ export default function App() {
                 </span>
               </div>
               <div className="inline-block bg-pink-100 text-pink-600 px-4 py-2 rounded-full mb-6" style={{ fontSize: '13px' }}>
-                March 2026 Cohort • Now Open
+                May/June 2026 Cohort • Now Open
               </div>
               <h1 className="text-[#1a1a1a] mb-4 text-[32px] sm:text-[40px] md:text-[48px] font-bold leading-tight">
                 Earn Your Official KTU University Certificate
               </h1>
               <p className="text-gray-600 mb-8 text-base sm:text-lg leading-relaxed">
-                In partnership with Koforidua Technical University — a respected public university in Ghana — earn a hardcopy, accredited certificate recognized for jobs, study abroad funding, and professional credibility.
+                Our university partner, Koforidua Technical University (KTU) — a respected public university in Ghana — is offering official certificates for the May/June 2026 Cohort. Earn a hardcopy, accredited certificate recognized for jobs, study abroad funding, and professional credibility.
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6">
                 <button onClick={() => scrollTo('reserve')} className="bg-pink-600 text-white px-6 sm:px-7 py-3 rounded-lg shadow-md hover:bg-pink-700 transition-colors text-[15px] sm:text-base">
@@ -206,9 +223,9 @@ export default function App() {
               <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.05em' }}>
                 FOUNDER'S REWARD
               </p>
-              <p className="mb-2" style={{ fontSize: '32px', fontWeight: 700 }}>₵240</p>
+              <p className="mb-2" style={{ fontSize: '32px', fontWeight: 700 }}>₵170</p>
               <p className="text-pink-100 mb-3" style={{ fontSize: '13px' }}>
-                Save ₵60 — Pay ₵100 deposit by 1st May 2026
+                Save ₵30 — Pay ₵70 deposit by 14th August 2026
               </p>
               <span className="inline-block bg-pink-500 text-white px-3 py-1 rounded-md" style={{ fontSize: '11px' }}>
                 First come, first served
@@ -218,9 +235,9 @@ export default function App() {
               <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.05em' }}>
                 STANDARD PRICE
               </p>
-              <p className="mb-2" style={{ fontSize: '32px', fontWeight: 700 }}>₵300</p>
+              <p className="mb-2" style={{ fontSize: '32px', fontWeight: 700 }}>₵200</p>
               <p className="text-pink-100 mb-3" style={{ fontSize: '13px' }}>
-                ₵100 deposit by 14th May 2026
+                ₵100 deposit after 14th August 2026 (no discount)
               </p>
               <span className="inline-block bg-pink-500 text-white px-3 py-1 rounded-md" style={{ fontSize: '11px' }}>
                 No discount
@@ -228,11 +245,11 @@ export default function App() {
             </div>
             <div className="text-center px-4 py-8 md:pt-0 first:pt-0">
               <p className="text-pink-500 uppercase mb-2 flex items-center justify-center gap-1" style={{ fontSize: '12px', letterSpacing: '0.05em' }}>
-                <span>⚠</span> AFTER 14TH MAY
+                <span>⚠</span> AFTER 14TH AUGUST
               </p>
-              <p className="mb-2" style={{ fontSize: '32px', fontWeight: 700 }}>₵400</p>
+              <p className="mb-2" style={{ fontSize: '32px', fontWeight: 700 }}>₵300</p>
               <p className="text-pink-100 mb-3" style={{ fontSize: '13px' }}>
-                ₵100 late penalty applies
+                ₵100 late fee applies (total becomes ₵300)
               </p>
               <span className="inline-block bg-pink-500 text-white px-3 py-1 rounded-md" style={{ fontSize: '11px' }}>
                 Late fee warning
@@ -380,7 +397,7 @@ export default function App() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 relative">
               {[
                 { title: "Choose Your Certificate", desc: "Select from individual, bundle, or AI-powered titles." },
-                { title: "Pay ₵100 Deposit", desc: "By 1st May for ₵60 discount. By 14th May for standard rate." },
+                { title: "Pay ₵70 Deposit", desc: "By 14th August 2026 for ₵30 discount. After that, pay ₵100 (no discount)." },
                 { title: "Complete Your Course", desc: "Continue your studies. Certificate is being prepared." },
                 { title: "Receive Your Certificate", desc: "Hardcopy issued within 1 month of program completion." }
               ].map((step, idx) => (
@@ -459,7 +476,7 @@ export default function App() {
                   KTU University Certificate
                 </h3>
                 <span className="bg-pink-500/30 text-pink-100 border border-pink-300/40 px-3 py-1 rounded-full" style={{ fontSize: '12px', fontWeight: 600 }}>
-                  ₵300 (₵240 early)
+                  ₵200 (₵170 early)
                 </span>
               </div>
               <div className="space-y-3 mb-6">
@@ -559,13 +576,13 @@ export default function App() {
             Secure Your Official KTU Certificate Today
           </h2>
           <p className="text-gray-400 mb-8 text-[15px] sm:text-base">
-            Deadline: 1st May 2026 for the Founder's Discount. Don't miss out.
+            Take advantage of the Founder's Reward — pay ₵70 by 14th August 2026 and save ₵30. Don't miss out!
           </p>
           <button onClick={() => scrollTo('reserve')} className="bg-pink-600 text-white px-8 sm:px-10 py-4 rounded-lg hover:bg-pink-700 transition-colors mb-4 w-full sm:w-auto text-[15px] sm:text-base" style={{ fontWeight: 600 }}>
             Reserve My Certificate Now →
           </button>
           <p className="text-gray-500" style={{ fontSize: '13px' }}>
-            Questions? Call 0552133389 or 0264861897
+            Questions? WhatsApp us: 0552133389, 0593106954, 0538415157 or 0264861897
           </p>
         </div>
       </section>
@@ -588,10 +605,10 @@ export default function App() {
               </ul>
             </div>
             <div>
-              <h4 className="text-white mb-3" style={{ fontSize: '14px', fontWeight: 600 }}>Contact</h4>
+              <h4 className="text-white mb-3" style={{ fontSize: '14px', fontWeight: 600 }}>Contact (WhatsApp)</h4>
               <ul className="space-y-2" style={{ fontSize: '13px' }}>
                 <li>0552133389</li>
-                <li>0594606051</li>
+                <li>0593106954</li>
                 <li>0538415157</li>
                 <li>0264861897</li>
               </ul>
