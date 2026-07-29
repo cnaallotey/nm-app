@@ -27,6 +27,14 @@ export default function App() {
     {
       question: "Is the KTU Certificate Accredited?",
       answer: "Yes, the KTU certificate is accredited because KTU is an accredited public university."
+    },
+    {
+      question: "What are the Professional Certificate Bundle Packages?",
+      answer: "Bundle Packages let you save more when you register for multiple KTU certificates. For example: 2 certificates = GHS320 (save GHS80), 3 certificates = GHS450 (save GHS150), and so on — up to 11 certificates for GHS1,320 (save GHS880). The more certificates you register for, the more you save!"
+    },
+    {
+      question: "Can I add an AI-Powered certificate to my bundle?",
+      answer: "Yes! You can boost any bundle by enrolling in the Generative AI & Advanced Prompt Engineering course, which unlocks an AI-Powered version of your certificate — perfect for standing out in today's AI-driven job market."
     }
   ];
 
@@ -177,7 +185,7 @@ export default function App() {
                 Our university partner, Koforidua Technical University (KTU) — a respected public university in Ghana — is offering official certificates for the May/June 2026 Cohort. Earn a hardcopy, accredited certificate recognized for jobs, study abroad funding, and professional credibility.
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6">
-                <button onClick={() => scrollTo('reserve')} className="bg-pink-600 text-white px-6 sm:px-7 py-3 rounded-lg shadow-md hover:bg-pink-700 transition-colors text-[15px] sm:text-base">
+                <button onClick={() => scrollTo('reserve')} className="bg-pink-600 text-white px-6 sm:px-7 py-3 rounded-lg hover:bg-pink-700 transition-colors text-[15px] sm:text-base">
                   Reserve My KTU Certificate Now →
                 </button>
                 <button onClick={() => scrollTo('certificate-titles')} className="bg-white text-pink-600 border-2 border-pink-600 px-6 sm:px-7 py-3 rounded-lg hover:bg-pink-50 transition-colors text-[15px] sm:text-base">
@@ -200,7 +208,7 @@ export default function App() {
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="bg-white border-4 border-pink-200 rounded-xl p-3 shadow-xl transform -rotate-2 relative">
+              <div className="bg-white border-4 border-pink-200 rounded-xl p-3 transform -rotate-2 relative">
                 <div className="absolute -top-3 -right-3 w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center text-white z-10" style={{ fontSize: '20px' }}>
                   🏆
                 </div>
@@ -254,6 +262,85 @@ export default function App() {
               <span className="inline-block bg-pink-500 text-white px-3 py-1 rounded-md" style={{ fontSize: '11px' }}>
                 Late fee warning
               </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 2b - BUNDLE PACKAGES */}
+      <section id="bundle-packages" className="bg-white py-16 md:py-24 scroll-mt-8">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+          <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
+            <p className="text-pink-500 uppercase mb-2" style={{ fontSize: '12px', letterSpacing: '0.1em' }}>
+              BUNDLE &amp; SAVE
+            </p>
+            <h2 className="text-[#1a1a1a] mb-4 text-[28px] sm:text-[32px] md:text-[36px] font-bold leading-tight">
+              Professional Certificate Bundle Packages
+            </h2>
+            <p className="text-gray-500 text-[15px] sm:text-base leading-relaxed">
+              Congratulations on completing your course(s)! Register for multiple certificates and <strong className="text-pink-600">save more with every additional certificate</strong>. You can also add an <strong className="text-pink-600">AI-Powered Professional Certificate</strong> by enrolling in the Generative AI course to strengthen your portfolio.
+            </p>
+          </div>
+
+          {/* Savings Table */}
+          <div className="max-w-2xl mx-auto mb-10">
+            <div className="overflow-hidden rounded-2xl border border-gray-200">
+              <table className="w-full text-left" style={{ borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr className="bg-pink-600 text-white">
+                    <th className="px-5 py-4" style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em' }}>No. of Certificates</th>
+                    <th className="px-5 py-4 text-right" style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em' }}>Bundle Price</th>
+                    <th className="px-5 py-4 text-right" style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em' }}>Total Savings</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { qty: '1 Certificate',   price: 'GHS 170',   savings: 'GHS 30',   highlight: false },
+                    { qty: '2 Certificates',  price: 'GHS 320',   savings: 'GHS 80',   highlight: false },
+                    { qty: '3 Certificates',  price: 'GHS 450',   savings: 'GHS 150',  highlight: false },
+                    { qty: '4 Certificates',  price: 'GHS 560',   savings: 'GHS 240',  highlight: false },
+                    { qty: '5 Certificates',  price: 'GHS 650',   savings: 'GHS 350',  highlight: true  },
+                    { qty: '6 Certificates',  price: 'GHS 720',   savings: 'GHS 480',  highlight: false },
+                    { qty: '7 Certificates',  price: 'GHS 840',   savings: 'GHS 560',  highlight: false },
+                    { qty: '8 Certificates',  price: 'GHS 960',   savings: 'GHS 640',  highlight: false },
+                    { qty: '9 Certificates',  price: 'GHS 1,080', savings: 'GHS 720',  highlight: false },
+                    { qty: '10 Certificates', price: 'GHS 1,200', savings: 'GHS 800',  highlight: false },
+                    { qty: '11 Certificates', price: 'GHS 1,320', savings: 'GHS 880',  highlight: true  },
+                  ].map((row, idx) => (
+                    <tr
+                      key={idx}
+                      className={row.highlight ? 'bg-pink-50' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                    >
+                      <td className="px-5 py-3 font-medium text-[#1a1a1a]" style={{ fontSize: '14px' }}>
+                        {row.qty}
+                        {row.highlight && (
+                          <span className="ml-2 inline-block bg-pink-500 text-white px-2 py-0.5 rounded-full" style={{ fontSize: '10px' }}>Best Value</span>
+                        )}
+                      </td>
+                      <td className="px-5 py-3 text-right font-semibold text-[#1a1a1a]" style={{ fontSize: '14px' }}>{row.price}</td>
+                      <td className="px-5 py-3 text-right font-bold text-pink-600" style={{ fontSize: '14px' }}>{row.savings}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Note + CTA */}
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-pink-50 border border-pink-200 rounded-xl px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <span className="text-2xl flex-shrink-0">💡</span>
+              <div>
+                <p className="text-[#1a1a1a] font-semibold mb-1" style={{ fontSize: '14px' }}>Limited-Time Promotional Offer</p>
+                <p className="text-gray-600" style={{ fontSize: '13px', lineHeight: '1.6' }}>
+                  Register for all the certificates you have earned and maximise the value of your learning experience. Prices shown reflect the Founder's Reward (pay by 14th August 2026).
+                </p>
+              </div>
+            </div>
+            <div className="text-center mt-8">
+              <button onClick={() => scrollTo('reserve')} className="bg-pink-600 text-white px-8 py-3 rounded-lg hover:bg-pink-700 transition-colors" style={{ fontSize: '15px', fontWeight: 600 }}>
+                Reserve My Certificates &amp; Save →
+              </button>
             </div>
           </div>
         </div>
@@ -368,7 +455,7 @@ export default function App() {
               What Your Certificate Will Look Like
             </h2>
           </div>
-          <div className="max-w-[900px] mx-auto bg-white rounded-xl p-3 sm:p-4 shadow-lg relative" style={{ border: '2px solid #fbcfe8', outline: '1px solid #fce7f3', outlineOffset: '4px' }}>
+          <div className="max-w-[900px] mx-auto bg-white rounded-xl p-3 sm:p-4 relative" style={{ border: '2px solid #fbcfe8', outline: '1px solid #fce7f3', outlineOffset: '4px' }}>
             <img
               src="/cert.jpg"
               alt="KTU Certificate Sample"
@@ -467,7 +554,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="bg-white/30 backdrop-blur-sm border border-pink-300/50 rounded-xl p-6 sm:p-8 shadow-xl relative">
+            <div className="bg-white/30 backdrop-blur-sm border border-pink-300/50 rounded-xl p-6 sm:p-8 relative">
               <span className="absolute -top-3 right-6 bg-pink-500 text-white px-3 py-1 rounded-full" style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.04em' }}>
                 RECOMMENDED
               </span>
@@ -599,6 +686,7 @@ export default function App() {
               <h4 className="text-white mb-3" style={{ fontSize: '14px', fontWeight: 600 }}>Quick Links</h4>
               <ul className="space-y-2" style={{ fontSize: '13px' }}>
                 <li><a href="#top" className="hover:text-pink-400">Home</a></li>
+                <li><a href="#bundle-packages" className="hover:text-pink-400">Bundle Packages</a></li>
                 <li><a href="#certificate-titles" className="hover:text-pink-400">Certificate Titles</a></li>
                 <li><a href="#faq" className="hover:text-pink-400">FAQs</a></li>
                 <li><a href="#reserve" className="hover:text-pink-400">Apply Now</a></li>
