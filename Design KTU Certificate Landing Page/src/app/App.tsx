@@ -295,26 +295,26 @@ export default function App() {
                 </thead>
                 <tbody>
                   {[
-                    { qty: '1 Certificate',   price: 'GHS 170',   savings: 'GHS 30',   highlight: false },
-                    { qty: '2 Certificates',  price: 'GHS 320',   savings: 'GHS 80',   highlight: false },
-                    { qty: '3 Certificates',  price: 'GHS 450',   savings: 'GHS 150',  highlight: false },
-                    { qty: '4 Certificates',  price: 'GHS 560',   savings: 'GHS 240',  highlight: false },
-                    { qty: '5 Certificates',  price: 'GHS 650',   savings: 'GHS 350',  highlight: true  },
-                    { qty: '6 Certificates',  price: 'GHS 720',   savings: 'GHS 480',  highlight: false },
-                    { qty: '7 Certificates',  price: 'GHS 840',   savings: 'GHS 560',  highlight: false },
-                    { qty: '8 Certificates',  price: 'GHS 960',   savings: 'GHS 640',  highlight: false },
-                    { qty: '9 Certificates',  price: 'GHS 1,080', savings: 'GHS 720',  highlight: false },
-                    { qty: '10 Certificates', price: 'GHS 1,200', savings: 'GHS 800',  highlight: false },
-                    { qty: '11 Certificates', price: 'GHS 1,320', savings: 'GHS 880',  highlight: true  },
+                    { qty: '1 Certificate',   price: 'GHS 170',   savings: 'GHS 30',   popular: false },
+                    { qty: '2 Certificates',  price: 'GHS 320',   savings: 'GHS 80',   popular: true  },
+                    { qty: '3 Certificates',  price: 'GHS 450',   savings: 'GHS 150',  popular: false },
+                    { qty: '4 Certificates',  price: 'GHS 560',   savings: 'GHS 240',  popular: false },
+                    { qty: '5 Certificates',  price: 'GHS 650',   savings: 'GHS 350'  },
+                    { qty: '6 Certificates',  price: 'GHS 720',   savings: 'GHS 480'  },
+                    { qty: '7 Certificates',  price: 'GHS 840',   savings: 'GHS 560'  },
+                    { qty: '8 Certificates',  price: 'GHS 960',   savings: 'GHS 640'  },
+                    { qty: '9 Certificates',  price: 'GHS 1,080', savings: 'GHS 720'  },
+                    { qty: '10 Certificates', price: 'GHS 1,200', savings: 'GHS 800'  },
+                    { qty: '11 Certificates', price: 'GHS 1,320', savings: 'GHS 880'  },
                   ].map((row, idx) => (
-                    <tr
+                     <tr
                       key={idx}
-                      className={row.highlight ? 'bg-pink-50' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                      className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
                     >
                       <td className="px-5 py-3 font-medium text-[#1a1a1a]" style={{ fontSize: '14px' }}>
                         {row.qty}
-                        {row.highlight && (
-                          <span className="ml-2 inline-block bg-pink-500 text-white px-2 py-0.5 rounded-full" style={{ fontSize: '10px' }}>Best Value</span>
+                        {row.popular && (
+                          <span className="ml-2 inline-block bg-pink-100 text-pink-600 border border-pink-200 px-2 py-0.5 rounded-full" style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.04em' }}>POPULAR</span>
                         )}
                       </td>
                       <td className="px-5 py-3 text-right font-semibold text-[#1a1a1a]" style={{ fontSize: '14px' }}>{row.price}</td>
