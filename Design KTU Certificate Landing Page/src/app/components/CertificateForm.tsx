@@ -1,34 +1,56 @@
 import { useState, FormEvent } from 'react';
 
 const courses = [
+  'Data Science & Analytics',
+  'Machine Learning & AI',
+  'Cloud Computing (AWS)',
+  'Cybersecurity (CC-ComPTIA Security+)',
   'Generative AI & Advanced Prompt Engineering',
-  'Advanced Data Science & Analytics',
-  'Advanced Cloud Computing',
-  'Advanced Machine Learning and AI',
-  'Advanced Cybersecurity',
+  'Graphic Design',
+  'Social Media Marketing & Advertising',
+  'Digital Advertising & Campaign Planning',
+  'UX/UI Design',
+  'Front-End Software Engineering',
 ];
 
 const certificateTitles = [
   // Individual
-  { value: 'data-science', label: 'Certificate in Advanced Data Science & Analytics', criteria: 'Individual course certificate' },
-  { value: 'ml-ai', label: 'Certificate in Advanced Machine Learning & AI', criteria: 'Individual course certificate' },
-  { value: 'cloud', label: 'Certificate in Advanced Cloud Computing', criteria: 'Individual course certificate' },
-  { value: 'cybersecurity', label: 'Certificate in Advanced Cybersecurity', criteria: 'Individual course certificate' },
+  { value: 'data-science', label: 'Certificate in Data Science & Analytics', criteria: 'Individual course certificate' },
+  { value: 'ml-ai', label: 'Certificate in Machine Learning & AI', criteria: 'Individual course certificate' },
+  { value: 'cloud', label: 'Certificate in Cloud Computing (AWS)', criteria: 'Individual course certificate' },
+  { value: 'cybersecurity', label: 'Certificate in Cybersecurity (CC-ComPTIA Security+)', criteria: 'Individual course certificate' },
   { value: 'gen-ai', label: 'Certificate in Generative AI & Advanced Prompt Engineering', criteria: 'Individual course certificate' },
+  { value: 'graphic-design', label: 'Certificate in Graphic Design', criteria: 'Individual course certificate' },
+  { value: 'social-media', label: 'Certificate in Social Media Marketing & Advertising', criteria: 'Individual course certificate' },
+  { value: 'digital-ads', label: 'Certificate in Digital Advertising & Campaign Planning', criteria: 'Individual course certificate' },
+  { value: 'ux-ui', label: 'Certificate in UX/UI Design', criteria: 'Individual course certificate' },
+  { value: 'frontend', label: 'Certificate in Front-End Software Engineering', criteria: 'Individual course certificate' },
 
   // Bundles
-  { value: 'bundle-data-science', label: 'Certificate in Advanced Data Science', criteria: 'if you enrolled in both Advanced Data Science & Analytics and Advanced Machine Learning & AI Course' },
-  { value: 'bundle-cyber-cloud', label: 'Certificate in Advanced Cybersecurity with Advanced Cloud Computing', criteria: 'if you enrolled in both Advanced Cybersecurity & Advanced Cloud Computing Course' },
-  { value: 'bundle-data-eng', label: 'Certificate in Advanced Data Engineering', criteria: 'if you enrolled in both Advanced Data Science & Analytics and Advanced Cloud Computing Course' },
-  { value: 'bundle-ai-eng', label: 'Certificate in Advanced AI-Engineering', criteria: 'if you enrolled in both Advanced Machine Learning & AI and Advanced Cloud Computing Course' },
+  { value: 'bundle-data-science', label: 'Certificate in Data Science', criteria: 'if you enrolled in both Data Science & Analytics and Machine Learning & AI Course' },
+  { value: 'bundle-cyber-cloud', label: 'Certificate in Cybersecurity with Cloud Computing', criteria: 'if you enrolled in both Cybersecurity & Cloud Computing Course' },
+  { value: 'bundle-data-eng', label: 'Certificate in Data Engineering', criteria: 'if you enrolled in both Data Science & Analytics and Cloud Computing Course' },
+  { value: 'bundle-ai-eng', label: 'Certificate in AI Engineering', criteria: 'if you enrolled in both Machine Learning & AI and Cloud Computing Course' },
+  { value: 'bundle-digital-mktg', label: 'Certificate in Digital Marketing', criteria: 'if you enrolled in both Social Media Marketing & Advertising & Digital Advertising & Campaign Planning or Graphic Design and/or Website Development with Wordpress' },
+  { value: 'bundle-digital-mktg-data', label: 'Certificate in Digital Marketing & Data Analytics', criteria: 'if you enrolled in both Social Media Marketing & Advertising & Digital Advertising and Campaign Planning & Data Science & Analytics' },
+  { value: 'bundle-software-product', label: 'Certificate in Software Product Design & Development', criteria: 'if you enrolled in both UX/UI Design & Front-End Software Engineering' },
 
   // AI-Powered
-  { value: 'ai-data-analytics', label: 'Certificate in Advanced AI-Powered Data Analytics', criteria: 'if you enrolled in both Generative AI & Advanced Prompt Engineering & Advanced Data Science & Analytics Course' },
-  { value: 'ai-cyber', label: 'Certificate in Advanced AI-Powered Cybersecurity', criteria: 'if you enrolled in both Generative AI & Advanced Prompt Engineering & Advanced Cybersecurity Course' },
-  { value: 'ai-cloud', label: 'Certificate in Advanced AI-Powered Cloud Computing', criteria: 'if you enrolled in both Advanced Cloud Computing & Generative AI & Advanced Prompt Engineering' },
-  { value: 'ai-data-science', label: 'Certificate in Advanced AI-Powered Data Science', criteria: 'if you enrolled in both Advanced Data Science & Analytics, Advanced Machine Learning & AI & Generative AI & Advanced Prompt Engineering' },
-  { value: 'ai-cyber-cloud', label: 'Certificate in Advanced AI-Powered Cybersecurity with Cloud Computing', criteria: 'if you enrolled in both Advanced cybersecurity, Advanced cloud computing & Generative AI & Advanced Prompt Engineering' },
-  { value: 'ai-data-eng', label: 'Certificate in Advanced AI-Powered Data Engineering', criteria: 'if you enrolled in both Advanced Data Science & Analytics, Advanced Cloud Computing & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-data-analytics', label: 'Certificate in AI-Powered Data Analytics', criteria: 'if you enrolled in both Generative AI & Advanced Prompt Engineering & Data Science & Analytics Course' },
+  { value: 'ai-cyber', label: 'Certificate in AI-Powered Cybersecurity', criteria: 'if you enrolled in both Generative AI & Advanced Prompt Engineering & Cybersecurity Course' },
+  { value: 'ai-cloud', label: 'Certificate in AI-Powered Cloud Computing', criteria: 'if you enrolled in both Cloud Computing & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-data-science', label: 'Certificate in AI-Powered Data Science', criteria: 'if you enrolled in both Data Science & Analytics, Machine Learning & AI & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-cyber-cloud', label: 'Certificate in AI-Powered Cybersecurity with Cloud Computing (AWS Certified)', criteria: 'if you enrolled in both cybersecurity, cloud computing & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-data-eng', label: 'Certificate in AI-Powered Data Engineering', criteria: 'if you enrolled in both Data Analytics, Cloud Computing & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-graphic-design', label: 'Certificate in AI-Powered Graphic Design', criteria: 'if you enrolled in both Graphic Design & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-wordpress', label: 'Certificate in AI-Powered Website Development with Wordpress', criteria: 'if you enrolled in both Website Development with Wordpress & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-ux-ui', label: 'Certificate in AI-Powered UX/UI Design', criteria: 'if you enrolled in both UX/UI Design & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-frontend', label: 'Certificate in AI-Powered Front-End Software Engineering', criteria: 'if you enrolled in both Front-End Software Engineering & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-social-media', label: 'Certificate in AI-Powered Social Media Marketing & Advertising', criteria: 'if you enrolled in both Social Media Marketing & Advertising & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-digital-ads', label: 'Certificate in AI-Powered Digital Advertising & Campaign Planning', criteria: 'if you enrolled in both Digital Advertising & Campaign Planning & Generative AI & Advanced Prompt Engineering' },
+  { value: 'ai-digital-mktg', label: 'Certificate in AI-Powered Digital Marketing', criteria: 'if you enrolled in both Generative AI & Advanced Prompt Engineering, Social Media Marketing & Advertising & Digital Advertising & Campaign Planning or Graphic Design and/or Website Development with Wordpress' },
+  { value: 'ai-digital-mktg-data', label: 'Certificate in AI-Powered Digital Marketing & Data Analytics', criteria: 'if you enrolled in both Generative AI & Advanced Prompt Engineering, Social Media Marketing & Advertising & Digital Advertising and Campaign Planning & Data Science & Analytics' },
+  { value: 'ai-software-product', label: 'Certificate in AI-Powered Software Product Design & Development', criteria: 'if you enrolled in both Generative AI, UX/UI Design & Front-End Software Engineering' },
 ];
 
 const FORM_ENDPOINT = 'https://formdrop.clientra.tech/f/3smopezh';
@@ -187,7 +209,7 @@ export function CertificateForm() {
         {step === 2 && (
           <div className="space-y-5 flex flex-col animate-in fade-in slide-in-from-bottom-3 duration-300">
             <div>
-              <label className="block text-gray-700 mb-2 font-medium" style={{ fontSize: '14px' }}>Course(s) Enrolled In — March Cohort</label>
+              <label className="block text-gray-700 mb-2 font-medium" style={{ fontSize: '14px' }}>Course(s) Enrolled In — May/June 2026 Cohort</label>
               <div className="border border-gray-200 rounded-xl p-3 space-y-2">
                 {courses.map((course) => {
                   const isSelected = selectedCourses.includes(course);
@@ -247,7 +269,7 @@ export function CertificateForm() {
             </div>
 
             <p className="bg-pink-50 border border-pink-100 text-pink-700 rounded-lg px-4 py-3" style={{ fontSize: '13px', lineHeight: '1.5' }}>
-              Pay an initial GHS100 deposit per certificate to enjoy the <b>GHS60 Founder's Reward discount</b> per certificate.
+              🌟 <b>Founder's Reward:</b> Pay <b>₵70 per certificate</b> by <b>14th August, 2026</b> and enjoy a <b>₵30 discount</b> — first come, first served. After 14th August, the standard price of ₵100 applies (no discount).
             </p>
           </div>
         )}
@@ -317,7 +339,7 @@ export function CertificateForm() {
             </h3>
 
             <p className="text-gray-600 mb-5 text-center" style={{ fontSize: '15px', lineHeight: '1.6' }}>
-              To complete your application, please pay a <b>GHS100 deposit per each Certificate Title</b> using the link below to secure your certificate and unlock your <b>GHS60 Founder's Reward</b>.
+              To complete your application, pay a <b>₵70 deposit per certificate</b> using the link below by <b>14th August 2026</b> to lock in your <b>₵30 Founder's Reward discount</b> (first come, first served). The remaining balance is due one month before your course ends.
             </p>
 
             <a
@@ -327,7 +349,7 @@ export function CertificateForm() {
               className="block w-full text-center bg-pink-600 text-white py-3.5 rounded-lg hover:bg-pink-700 transition-colors mb-6 shadow-sm"
               style={{ fontSize: '15px', fontWeight: 600 }}
             >
-              Pay GHS100 Deposit on Paystack →
+              Pay ₵70 Deposit on Paystack →
             </a>
 
             <div className="bg-gray-50 rounded-xl p-5 border border-gray-100 mb-6">
