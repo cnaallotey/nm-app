@@ -31,7 +31,7 @@ const certificateTitles = [
   { value: 'ai-data-eng', label: 'Certificate in Advanced AI-Powered Data Engineering', criteria: 'if you enrolled in both Advanced Data Science & Analytics, Advanced Cloud Computing & Generative AI & Advanced Prompt Engineering' },
 ];
 
-const FORM_ENDPOINT = 'https://forminit.com/f/bvrmgxpb';
+const FORM_ENDPOINT = 'https://formdrop.clientra.tech/f/3smopezh';
 const PAYSTACK_URL = 'https://paystack.shop/pay/m26cert';
 const CONTACTS = ['0552133389', '0538415157', '0594606051', '0264861897'];
 
