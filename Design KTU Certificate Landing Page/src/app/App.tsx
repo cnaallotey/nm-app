@@ -52,6 +52,7 @@ export default function App() {
             "Certificate in Graphic Design",
             "Certificate in Social Media Marketing & Advertising",
             "Certificate in Digital Advertising & Campaign Planning",
+            "Certificate in Website Development with Wordpress and SEO",
             "Certificate in UX/UI Design",
             "Certificate in Front-End Software Engineering"
           ].map((title, idx) => (

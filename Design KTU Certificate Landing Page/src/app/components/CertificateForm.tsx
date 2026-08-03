@@ -9,6 +9,7 @@ const courses = [
   'Graphic Design',
   'Social Media Marketing & Advertising',
   'Digital Advertising & Campaign Planning',
+  'Website Development with Wordpress and SEO',
   'UX/UI Design',
   'Front-End Software Engineering',
 ];
@@ -23,6 +24,7 @@ const certificateTitles = [
   { value: 'graphic-design', label: 'Certificate in Graphic Design', criteria: 'Individual course certificate' },
   { value: 'social-media', label: 'Certificate in Social Media Marketing & Advertising', criteria: 'Individual course certificate' },
   { value: 'digital-ads', label: 'Certificate in Digital Advertising & Campaign Planning', criteria: 'Individual course certificate' },
+  { value: 'wordpress-seo', label: 'Certificate in Website Development with Wordpress and SEO', criteria: 'Individual course certificate' },
   { value: 'ux-ui', label: 'Certificate in UX/UI Design', criteria: 'Individual course certificate' },
   { value: 'frontend', label: 'Certificate in Front-End Software Engineering', criteria: 'Individual course certificate' },
 
@@ -55,7 +57,7 @@ const certificateTitles = [
 
 const FORM_ENDPOINT = 'https://formdrop.clientra.tech/f/3smopezh';
 const PAYSTACK_URL = 'https://paystack.shop/pay/m26cert';
-const CONTACTS = ['0552133389', '0538415157', '0594606051', '0264861897'];
+const CONTACTS = ['0552133389', '0538415157', '0594606051', '0264861897', '0248113388'];
 
 export function CertificateForm() {
   const [step, setStep] = useState(1);

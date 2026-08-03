@@ -47,6 +47,8 @@ Certificate in Social Media Marketing & Advertising
 
 Certificate in Digital Advertising & Campaign Planning
 
+Certificate in Website Development with Wordpress and SEO
+
 Certificate in Generative AI & Advanced Prompt Engineering
 
 Certificate in UX/UI Design
