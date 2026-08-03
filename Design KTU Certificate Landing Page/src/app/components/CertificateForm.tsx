@@ -33,6 +33,8 @@ const certificateTitles = [
   { value: 'bundle-cyber-cloud', label: 'Certificate in Cybersecurity with Cloud Computing', criteria: 'if you enrolled in both Cybersecurity & Cloud Computing Course' },
   { value: 'bundle-data-eng', label: 'Certificate in Data Engineering', criteria: 'if you enrolled in both Data Science & Analytics and Cloud Computing Course' },
   { value: 'bundle-ai-eng', label: 'Certificate in AI Engineering', criteria: 'if you enrolled in both Machine Learning & AI and Cloud Computing Course' },
+  { value: 'bundle-applied-ai-ml', label: 'Certificate in Applied AI & Machine Learning', criteria: 'if you enrolled in both Machine Learning & AI Course & Generative AI Course' },
+  { value: 'bundle-applied-ai-eng', label: 'Certificate in Applied AI Engineering', criteria: 'if you enrolled in both Machine Learning & AI Course, Cloud Computing Course & Generative AI Course' },
   { value: 'bundle-digital-mktg', label: 'Certificate in Digital Marketing', criteria: 'if you enrolled in both Social Media Marketing & Advertising & Digital Advertising & Campaign Planning or Graphic Design and/or Website Development with Wordpress' },
   { value: 'bundle-digital-mktg-data', label: 'Certificate in Digital Marketing & Data Analytics', criteria: 'if you enrolled in both Social Media Marketing & Advertising & Digital Advertising and Campaign Planning & Data Science & Analytics' },
   { value: 'bundle-software-product', label: 'Certificate in Software Product Design & Development', criteria: 'if you enrolled in both UX/UI Design & Front-End Software Engineering' },

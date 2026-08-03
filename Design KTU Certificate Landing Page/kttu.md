@@ -70,6 +70,10 @@ Certificate in Data Engineering
 
 Certificate in AI Engineering (if you enrolled in both Machine Learning & AI and Cloud Computing Course)
 
+Certificate in Applied AI & Machine Learning (if you enrolled in both Machine Learning & AI Course & Generative AI Course)
+
+Certificate in Applied AI Engineering (if you enrolled in both Machine Learning & AI Course, Cloud Computing Course & Generative AI Course)
+
 Certificate in Digital Marketing (if you enrolled in both Social Media Marketing & Advertising & Digital Advertising & Campaign Planning or Graphic Design and or Website Development with Wordpress)
 
 Certificate in Digital Marketing & Data Analytics (if you enrolled in both Social Media Marketing & Advertising & Digital Advertising and Campaign Planning & Data Science & Analytics)

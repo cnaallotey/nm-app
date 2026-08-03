@@ -86,6 +86,8 @@ export default function App() {
             { title: "Certificate in Cybersecurity with Cloud Computing", combo: "if you enrolled in both Cybersecurity & Cloud Computing Course" },
             { title: "Certificate in Data Engineering", combo: "if you enrolled in both Data Science & Analytics and Cloud Computing Course" },
             { title: "Certificate in AI Engineering", combo: "if you enrolled in both Machine Learning & AI and Cloud Computing Course" },
+            { title: "Certificate in Applied AI & Machine Learning", combo: "if you enrolled in both Machine Learning & AI Course & Generative AI Course" },
+            { title: "Certificate in Applied AI Engineering", combo: "if you enrolled in both Machine Learning & AI Course, Cloud Computing Course & Generative AI Course" },
             { title: "Certificate in Digital Marketing", combo: "if you enrolled in both Social Media Marketing & Advertising & Digital Advertising & Campaign Planning or Graphic Design and/or Website Development with Wordpress" },
             { title: "Certificate in Digital Marketing & Data Analytics", combo: "if you enrolled in both Social Media Marketing & Advertising & Digital Advertising and Campaign Planning & Data Science & Analytics" },
             { title: "Certificate in Software Product Design & Development", combo: "if you enrolled in both UX/UI Design & Front-End Software Engineering" }
